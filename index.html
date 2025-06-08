@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>호주 & 뉴질랜드 허니문 대화형 일정표</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals - 배경(Stone 50), 텍스트(Stone 800), 강조(Teal 600/700) -->
+    <!-- Application Structure Plan: 이 SPA는 사용자가 여행 정보를 보다 체계적이고 직관적으로 탐색할 수 있도록 설계되었습니다. 상단 네비게이션을 통해 '핵심 준비', '전체 여정', '예상 비용' 세 가지 주요 섹션으로 빠르게 이동할 수 있습니다. '전체 여정' 섹션은 단순한 시간 순서 나열을 넘어, 도시별 탭과 세부 카테고리(하이라이트, 액티비티, 다이닝 등)를 통해 사용자가 원하는 정보에 능동적으로 접근하도록 유도합니다. 이 구조는 방대한 텍스트 정보를 소화하기 쉽게 만들고, 여행 계획 과정을 더 즐겁게 만듭니다. -->
+    <!-- Visualization & Content Choices: 보고서의 핵심 정보를 효과적으로 전달하기 위해 다음과 같은 방법을 선택했습니다. 1)핵심 준비사항: 정보를 아이콘과 함께 카드 형태로 제시하여 가독성을 높였습니다. 2)여정: 탭 인터페이스을 사용하여 각 도시의 방대한 정보를 하이라이트, 액티비티, 다이닝, 숙소의 네 가지 주제로 분류했습니다. 이를 통해 사용자는 관심사에 따라 정보를 필터링하여 볼 수 있습니다. 3)예상 비용: Chart.js를 사용한 도넛 차트와 막대 차트로 항공, 투어 등의 비용 데이터를 시각화하여, 복잡한 숫자들을 한눈에 비교하고 이해할 수 있도록 했습니다. 이는 텍스트 기반 정보보다 훨씬 효과적으로 예산의 비중을 전달합니다. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { 
+            font-family: 'Noto Sans KR', sans-serif; 
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* iOS Safari 호환성 개선 */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+        }
+        
+        .chart-container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 500px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 250px; 
+            max-height: 400px; 
+        }
+        @media (min-width: 768px) { 
+            .chart-container { height: 350px; } 
+        }
+        
+        /* 네비게이션 개선 */
+        .nav-link { 
+            transition: color 0.3s, border-color 0.3s; 
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            min-height: 44px; /* iOS 터치 최소 크기 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-link.active { color: #0d9488; border-bottom-color: #0d9488; }
+        
+        /* 탭 버튼 개선 */
+        .tab-button { 
+            transition: background-color 0.3s, color 0.3s; 
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            min-height: 44px;
+            min-width: 44px;
+        }
+        .tab-button.active { background-color: #0f766e; color: white; }
+        
+        /* 도시 탭 버튼 개선 */
+        .city-tab-button {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            min-height: 48px;
+            transition: all 0.3s ease;
+        }
+        
+        .content-card { scroll-margin-top: 80px; }
+        
+        /* 테이블 개선 */
+        .timeline-table {
+            font-size: 14px;
+        }
+        .timeline-table tr { border-bottom: 1px solid #e7e5e4; }
+        .timeline-table tbody tr:last-child { border-bottom: none; }
+        .timeline-table td { 
+            vertical-align: top; 
+            padding: 0.75rem 0.5rem;
+            word-break: keep-all;
+            overflow-wrap: break-word;
+        }
+        @media (min-width: 768px) {
+            .timeline-table td { 
+                padding: 1rem 1.5rem; 
+            }
+            .timeline-table {
+                font-size: 16px;
+            }
+        }
+        
+        .prose-custom ul { 
+            list-style-position: outside; 
+            margin-left: 1rem; 
+            padding-left: 0.25rem;
+        }
+        .prose-custom li { 
+            margin-top: 0.375rem; 
+            line-height: 1.5;
+            font-size: 13px;
+        }
+        @media (min-width: 768px) {
+            .prose-custom ul { margin-left: 1.25rem; }
+            .prose-custom li { 
+                margin-top: 0.5rem; 
+                font-size: 14px;
+            }
+        }
+        
+        /* 헤더 backdrop-blur iOS 호환성 */
+        header {
+            background: rgba(255, 255, 255, 0.95) !important;
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 스크롤 개선 */
+        .scroll-container {
+            -webkit-overflow-scrolling: touch;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+        .scroll-container::-webkit-scrollbar {
+            height: 4px;
+        }
+        .scroll-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 2px;
+        }
+        
+        /* 지도 크기 조정 */
+        #map {
+            height: 50vh !important;
+            min-height: 300px;
+        }
+        @media (min-width: 768px) {
+            #map {
+                height: 60vh !important;
+            }
+        }
+        
+        /* 버튼 터치 영역 개선 */
+        button {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        
+        /* 아코디언 버튼 개선 */
+        .accordion-button {
+            min-height: 60px;
+            padding: 1rem 1.25rem;
+        }
+        
+        /* 모바일에서 폰트 크기 조정 */
+        @media (max-width: 767px) {
+            h1 { font-size: 2rem !important; }
+            h2 { font-size: 1.5rem !important; }
+            h3 { font-size: 1.25rem !important; }
+            .text-lg { font-size: 1rem !important; }
+            .text-xl { font-size: 1.125rem !important; }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <header class="sticky top-0 shadow-md z-40">
+        <nav class="container mx-auto px-2 sm:px-4">
+            <div class="flex justify-center items-center min-h-[64px] py-2">
+                <div class="flex flex-wrap justify-center gap-1 sm:gap-2 md:gap-6 text-xs sm:text-sm">
+                    <a href="#hero" class="nav-link font-medium border-b-2 border-transparent hover:text-teal-600 px-2 py-2 sm:px-3">소개</a>
+                    <a href="#prep" class="nav-link font-medium border-b-2 border-transparent hover:text-teal-600 px-2 py-2 sm:px-3">핵심 준비</a>
+                    <a href="#map-route" class="nav-link font-medium border-b-2 border-transparent hover:text-teal-600 px-2 py-2 sm:px-3">여행 경로</a>
+                    <a href="#timeline" class="nav-link font-medium border-b-2 border-transparent hover:text-teal-600 px-2 py-2 sm:px-3">전체 일정표</a>
+                    <a href="#journey" class="nav-link font-medium border-b-2 border-transparent hover:text-teal-600 px-2 py-2 sm:px-3">상세 여정</a>
+                    <a href="#budget" class="nav-link font-medium border-b-2 border-transparent hover:text-teal-600 px-2 py-2 sm:px-3">예상 비용</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="hero" class="text-center py-16 md:py-24 content-card">
+            <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-4">호주 & 뉴질랜드 허니문</h1>
+            <p class="text-lg md:text-xl text-stone-600 max-w-3xl mx-auto">두 분의 가장 특별한 시작을 위한 12일간의 오세아니아 어드벤처. 시드니의 도시적인 매력부터 뉴질랜드의 대자연까지, 잊지 못할 추억을 만드는 여정을 지금 바로 탐험해보세요.</p>
+            <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <div class="text-3xl font-bold text-teal-600">12일</div>
+                    <div class="text-stone-500 mt-1">꿈같은 여정</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <div class="text-3xl font-bold text-teal-600">2개국</div>
+                    <div class="text-stone-500 mt-1">호주 & 뉴질랜드</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <div class="text-3xl font-bold text-teal-600">5+ 지역</div>
+                    <div class="text-stone-500 mt-1">다채로운 경험</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="prep" class="py-16 md:py-24 content-card">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">여행 전 핵심 준비사항</h2>
+                <p class="text-stone-600 max-w-2xl mx-auto">완벽한 허니문을 위해 출국 전 반드시 확인하고 준비해야 할 필수 정보들입니다. 각 항목을 클릭하여 상세 내용을 확인하세요.</p>
+            </div>
+            <div class="max-w-4xl mx-auto space-y-4" id="prepAccordion">
+            </div>
+        </section>
+
+        <section id="map-route" class="py-16 md:py-24 content-card">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">한눈에 보는 여행 경로</h2>
+                <p class="text-stone-600 max-w-2xl mx-auto">지도 위에서 시드니에서 시작하여 뉴질랜드 남섬을 거쳐 북섬으로 이어지는 전체 여정의 동선을 확인해보세요.</p>
+            </div>
+            <div id="map" class="w-full max-w-6xl mx-auto rounded-lg shadow-md z-0"></div>
+        </section>
+        
+        <section id="timeline" class="py-16 md:py-24 content-card">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">한눈에 보는 전체 일정표</h2>
+                <p class="text-stone-600 max-w-2xl mx-auto">여행 중 쉽게 참고할 수 있도록 전체 여정을 시간 순서대로 정리했습니다.</p>
+            </div>
+            <div class="max-w-full mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="overflow-x-auto scroll-container">
+                    <table class="w-full text-left text-stone-700 timeline-table" style="min-width: 800px;">
+                    <thead class="text-xs text-stone-800 uppercase bg-stone-100">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">일차</th>
+                            <th scope="col" class="px-6 py-3">날짜</th>
+                            <th scope="col" class="px-6 py-3">위치</th>
+                            <th scope="col" class="px-6 py-3 min-w-[350px]">상세 활동 계획</th>
+                            <th scope="col" class="px-6 py-3 min-w-[200px]">특이사항 / 팁</th>
+                            <th scope="col" class="px-6 py-3">숙소</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-stone-50">
+                            <td class="px-6 py-4 font-medium">1일</td>
+                            <td class="px-6 py-4">1월 19일 (월)</td>
+                            <td class="px-6 py-4 font-semibold">🇦🇺 시드니</td>
+                            <td class="px-6 py-4 prose-custom">
+                                <ul>
+                                    <li><strong class="text-teal-700">오전 (10:05~):</strong> <strong class="text-emerald-600">시드니 공항(SYD)</strong> 도착 후 입국 심사. (약 1~1.5시간 소요 예상)</li>
+                                    <li><strong class="text-teal-700">정오 (~14:00):</strong> <strong>공항철도(Airport Link)</strong>로 시티 이동 (약 15분). 호텔에 짐 보관 후, <strong class="text-purple-600">Macchiato Wood Fire Pizza</strong>에서 화덕피자로 늦은 점심.</li>
+                                    <li><strong class="text-teal-700">오후 (14:00~):</strong> 시티 쇼핑. <strong class="text-emerald-600">World Square</strong>에서 <strong class="text-blue-600">Peter Alexander</strong> 잠옷, CBD 지점에서 <strong class="text-blue-600">Stussy</strong> 방문. 이후 <strong class="text-emerald-600">하이드 파크</strong> 산책.</li>
+                                    <li><strong class="text-teal-700">저녁:</strong> <strong class="text-emerald-600">패디스 마켓(Paddy's Markets)</strong>에서 기념품 쇼핑 (폐장 시간 확인 필수). 저녁은 <strong class="text-emerald-600">차이나타운</strong> 또는 <strong class="text-emerald-600">달링 하버</strong>에서 해결.</li>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4"><strong>패디스 마켓:</strong> 폐장 시간 확인</td>
+                            <td class="px-6 py-4">시드니 CBD</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50">
+                            <td class="px-6 py-4 font-medium">2일</td>
+                            <td class="px-6 py-4">1월 20일 (화)</td>
+                            <td class="px-6 py-4 font-semibold">🇦🇺 시드니</td>
+                            <td class="px-6 py-4 prose-custom">
+                               <ul>
+                                    <li><strong class="text-teal-700">오전:</strong> <strong>333번 급행 버스</strong>로 <strong class="text-emerald-600">본다이 비치</strong>로 이동. 해변에서 여유를 즐기고, <strong class="text-emerald-600">본다이 아이스버그 수영장</strong>에서 인생샷 남기기.</li>
+                                    <li><strong class="text-teal-700">점심:</strong> <strong class="text-emerald-600">본다이 비치</strong> 근처 트렌디한 카페에서 브런치.</li>
+                                    <li><strong class="text-teal-700">오후:</strong> 버스/우버로 <strong class="text-emerald-600">왓슨스 베이</strong> 이동. <strong class="text-emerald-600">갭팍(Gap Park)</strong>의 아찔한 절벽과 태평양 절경 감상.</li>
+                                    <li><strong class="text-teal-700">저녁:</strong> <strong class="text-emerald-600">왓슨스 베이</strong> → <strong class="text-emerald-600">서큘러 키</strong>행 페리 탑승 (💡팁: 일몰 시간에 맞춰 탑승, 우측 좌석 추천). 저녁은 <strong class="text-purple-600">허리케인 그릴</strong>에서 폭립 즐기기 (예약 권장).</li>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4"><strong>페리:</strong> 일몰 시간 탑승 추천<br><strong>식당:</strong> 예약 권장</td>
+                            <td class="px-6 py-4">시드니 CBD</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50">
+                            <td class="px-6 py-4 font-medium">3일</td>
+                            <td class="px-6 py-4">1월 21일 (수)</td>
+                            <td class="px-6 py-4 font-semibold">🇦🇺 시드니</td>
+                            <td class="px-6 py-4 prose-custom">
+                               <ul>
+                                    <li><strong class="text-teal-700">오전:</strong> <strong class="text-emerald-600">서큘러 키</strong> 집중 탐방. <strong class="text-emerald-600">오페라 하우스</strong> 주변 산책 및 <strong class="text-emerald-600">하버 브리지 파일런 전망대</strong> 오르기.</li>
+                                    <li><strong class="text-teal-700">점심:</strong> <strong class="text-emerald-600">더 록스(The Rocks)</strong>의 유서 깊은 펍에서 피쉬 앤 칩스와 수제 맥주. (<strong class="text-emerald-600">록스 마켓</strong>은 주말만 운영)</li>
+                                    <li><strong class="text-teal-700">오후:</strong> <strong class="text-emerald-600">시드니 대학교</strong> 방문. 해리포터 느낌의 <strong>메인 쿼드랭글</strong>에서 사진 촬영.</li>
+                                    <li><strong class="text-teal-700">저녁:</strong> <strong class="text-emerald-600">천문대 언덕(Observatory Hill)</strong>에서 <strong class="text-emerald-600">하버 브리지</strong> 너머로 지는 노을 감상. 이후 <strong class="text-emerald-600">바랑가루</strong>의 분위기 좋은 레스토랑에서 저녁.</li>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4"><strong>더 록스 마켓:</strong> 주말만 운영<br><strong>천문대:</strong> 최고의 선셋 명소</td>
+                            <td class="px-6 py-4">서리 힐스</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50">
+                            <td class="px-6 py-4 font-medium">4일</td>
+                            <td class="px-6 py-4">1월 22일 (목)</td>
+                            <td class="px-6 py-4 font-semibold">🇦🇺 시드니</td>
+                            <td class="px-6 py-4 prose-custom">
+                                <ul>
+                                    <li><strong class="text-teal-700">종일:</strong> <strong class="text-emerald-600">블루마운틴</strong> & <strong class="text-emerald-600">동물원</strong> 데이투어 예약. (가장 효율적)</li>
+                                    <li><strong class="text-teal-700">주요 포인트:</strong> <strong class="text-emerald-600">페더데일 동물원</strong>에서 코알라/캥거루 만나기, <strong class="text-emerald-600">세자매봉</strong> 감상, <strong class="text-emerald-600">링컨스 락</strong> 인생샷, <strong class="text-emerald-600">시닉월드</strong>(궤도열차/케이블카). <strong class="text-emerald-600">링컨스 락</strong> 포함 여부 투어사에 확인 필수.</li>
+                                    <li><strong class="text-teal-700">저녁:</strong> 투어 후 시티 복귀, 숙소 근처에서 간단한 저녁식사 및 휴식.</li>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4"><strong>데이투어:</strong> 사전 예약 필수<br>링컨스 락 포함 여부 확인</td>
+                            <td class="px-6 py-4">서리 힐스</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50">
+                            <td class="px-6 py-4 font-medium">5일</td>
+                            <td class="px-6 py-4">1월 23일 (금)</td>
+                            <td class="px-6 py-4 font-semibold">🇳🇿 크라이스트처치</td>
+                            <td class="px-6 py-4 prose-custom">
+                                <ul>
+                                    <li><strong class="text-teal-700">오전 (~08:45):</strong> <strong class="text-emerald-600">시드니 공항</strong>으로 이동, 08:45 <strong class="text-emerald-600">크라이스트처치</strong>행 항공편 탑승.</li>
+                                    <li><strong class="text-teal-700">오후 (14:00~):</strong> <strong class="text-emerald-600">크라이스트처치 공항(CHC)</strong> 도착, 렌터카 인수(<strong class="text-blue-600">Pegasus/RaD</strong> 등), 시내 호텔 체크인.</li>
+                                    <li><strong class="text-teal-700">늦은 오후:</strong> <strong class="text-emerald-600">크라이스트처치 식물원</strong>, <strong class="text-emerald-600">카드보드 대성당</strong> 등 시내 자유 관광.</li>
+                                    <li><strong class="text-teal-700">저녁:</strong> <strong class="text-purple-600">트램웨이 레스토랑</strong>(예약 필수) 또는 <strong class="text-purple-600">큐레이터스 하우스</strong>에서 로맨틱한 저녁 식사.</li>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4"><strong>식당:</strong> 예약 필수 (36석 한정)</td>
+                            <td class="px-6 py-4">크라이스트처치</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50">
+                            <td class="px-6 py-4 font-medium">6일</td>
+                            <td class="px-6 py-4">1월 24일 (토)</td>
+                            <td class="px-6 py-4 font-semibold">🇳🇿 테카포</td>
+                            <td class="px-6 py-4 prose-custom">
+                               <ul>
+                                    <li><strong class="text-teal-700">오전:</strong> 체크아웃 후 <strong class="text-emerald-600">테카포</strong>로 출발 (렌터카, 약 3시간). <strong class="text-emerald-600">라카이아 협곡</strong> 등 경치 좋은 곳에서 잠시 정차.</li>
+                                    <li><strong class="text-teal-700">점심:</strong> <strong class="text-emerald-600">테카포 호숫가</strong>에서 직접 준비한 샌드위치로 피크닉.</li>
+                                    <li><strong class="text-teal-700">오후:</strong> <strong class="text-emerald-600">선한 목자의 교회</strong>, <strong class="text-emerald-600">양몰이 개 동상</strong> 관광. <strong class="text-amber-600">테카포 온천</strong>에서 'Soak in the Stars' 체험(선택).</li>
+                                    <li><strong class="text-teal-700">저녁:</strong> <strong class="text-purple-600">Kohan</strong>(일식) 또는 <strong class="text-purple-600">Dark Sky Diner</strong>(양식)에서 저녁 후, <strong class="text-emerald-600">다크 스카이 프로젝트</strong> 별 관측 투어 참여 (예약 필수, 따뜻한 옷 준비).</li>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4"><strong>별 관측 투어:</strong> 예약 필수, 따뜻한 옷 준비</td>
+                            <td class="px-6 py-4">테카포/마운트쿡</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50">
+                            <td class="px-6 py-4 font-medium">7일</td>
+                            <td class="px-6 py-4">1월 25일 (일)</td>
+                            <td class="px-6 py-4 font-semibold">🇳🇿 마운트쿡</td>
+                            <td class="px-6 py-4 prose-custom">
+                               <ul>
+                                    <li><strong class="text-teal-700">오전:</strong> <strong class="text-emerald-600">마운트쿡 국립공원</strong>으로 이동 (약 1시간). <strong class="text-emerald-600">푸카키 호수 전망대</strong>에서 인생샷.</li>
+                                    <li><strong class="text-teal-700">종일:</strong> <strong class="text-emerald-600">후커 밸리 트랙</strong>(왕복 3시간) 트레킹. 세 개의 출렁다리를 건너 <strong class="text-emerald-600">아오라키/마운트쿡</strong>의 장관을 감상.</li>
+                                    <li><strong class="text-teal-700">점심:</strong> 트레킹 중 간단한 도시락 또는 <strong class="text-emerald-600">마운트쿡 빌리지</strong> 내 <strong class="text-purple-600">허미티지 호텔 카페</strong> 이용.</li>
+                                    <li><strong class="text-teal-700">저녁:</strong> 숙소에서 직접 요리 또는 빌리지 레스토랑 이용. 밤하늘 별 감상.</li>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4"><strong>트레킹:</strong> 편한 신발, 물, 간식 필수</td>
+                            <td class="px-6 py-4">테카포/마운트쿡</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50">
+                            <td class="px-6 py-4 font-medium">8일</td>
+                            <td class="px-6 py-4">1월 26일 (월)</td>
+                            <td class="px-6 py-4 font-semibold">🇳🇿 퀸스타운</td>
+                            <td class="px-6 py-4 prose-custom">
+                                <ul>
+                                    <li><strong class="text-teal-700">오전:</strong> <strong class="text-emerald-600">와나카</strong>로 출발 (약 2.5~3시간). 황금빛 터석 풀로 뒤덮인 <strong class="text-emerald-600">린디스 패스</strong> 경유.</li>
+                                    <li><strong class="text-teal-700">점심:</strong> <strong class="text-emerald-600">와나카</strong> 도착 후, <strong class="text-emerald-600">#댓와나카트리</strong>, <strong class="text-emerald-600">라벤더 팜</strong>(1월 만개) 관광 및 호숫가에서 점심.</li>
+                                    <li><strong class="text-teal-700">오후:</strong> 뉴질랜드 최고 높이 도로인 <strong class="text-emerald-600">크라운 레인지 로드</strong>를 경유하여 <strong class="text-emerald-600">퀸스타운</strong>으로 이동. <strong class="text-emerald-600">카드로나 호텔</strong>, <strong class="text-emerald-600">브래지어 울타리</strong> 경유.</li>
+                                    <li><strong class="text-teal-700">저녁:</strong> <strong class="text-purple-600">Rātā</strong> 또는 <strong class="text-purple-600">Botswana Butchery</strong> 등 파인 다이닝 레스토랑에서 첫 퀸스타운 만찬 (예약 필수).</li>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4"><strong>라벤더 팜:</strong> 1월 만개<br><strong>식당:</strong> 예약 필수</td>
+                            <td class="px-6 py-4">퀸스타운</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50">
+                            <td class="px-6 py-4 font-medium">9일</td>
+                            <td class="px-6 py-4">1월 27일 (화)</td>
+                            <td class="px-6 py-4 font-semibold">🇳🇿 퀸스타운</td>
+                            <td class="px-6 py-4 prose-custom">
+                                <ul>
+                                    <li><strong class="text-teal-700">오전:</strong> 어드벤처(<strong class="text-emerald-600">번지점프</strong>/<strong class="text-emerald-600">젯보트</strong>) 또는 휴식(<strong class="text-emerald-600">TSS 언슬로 크루즈</strong>) 중 선택하여 즐기기.</li>
+                                    <li><strong class="text-teal-700">오후:</strong> <strong class="text-emerald-600">스카이라인 곤돌라</strong> 탑승, <strong class="text-emerald-600">루지</strong> 2~3회 체험 및 파노라마 감상.</li>
+                                    <li><strong class="text-teal-700">저녁:</strong> <strong class="text-amber-600">온센 핫풀</strong> 프라이빗 온천욕 (💡팁: 일몰 시간대는 수개월 전 예약 필수, 잊지 못할 경험 보장).</li>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4"><strong>온센 핫풀:</strong> 수개월 전 예약 필수 (일몰 시간대 추천)</td>
+                            <td class="px-6 py-4">퀸스타운</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50">
+                            <td class="px-6 py-4 font-medium">10일</td>
+                            <td class="px-6 py-4">1월 28일 (수)</td>
+                            <td class="px-6 py-4 font-semibold">🇳🇿 오클랜드</td>
+                            <td class="px-6 py-4 prose-custom">
+                                <ul>
+                                    <li><strong class="text-teal-700">오전:</strong> <strong class="text-emerald-600">퀸스타운 공항</strong> 이동, 렌터카 반납 후 <strong class="text-emerald-600">오클랜드</strong>행 이른 국내선 탑승.</li>
+                                    <li><strong class="text-teal-700">오후:</strong> <strong class="text-emerald-600">오클랜드 공항(AKL)</strong> 도착, 숙소 이동 및 체크인. <strong class="text-emerald-600">스카이 타워</strong>, <strong class="text-emerald-600">앨버트 파크</strong> 등 시티 하이라이트 관광.</li>
+                                    <li><strong class="text-teal-700">저녁:</strong> <strong class="text-emerald-600">바이아덕트 하버</strong>의 <strong class="text-purple-600">Soul Bar & Bistro</strong> 또는 <strong class="text-purple-600">Oyster & Chop</strong>에서 활기찬 분위기 속 저녁 식사.</li>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4">-</td>
+                            <td class="px-6 py-4">오클랜드</td>
+                        </tr>
+                         <tr class="hover:bg-stone-50">
+                            <td class="px-6 py-4 font-medium">11일</td>
+                            <td class="px-6 py-4">1월 29일 (목)</td>
+                            <td class="px-6 py-4 font-semibold">🇳🇿 오클랜드</td>
+                             <td class="px-6 py-4 prose-custom">
+                                <ul>
+                                    <li><strong class="text-teal-700">종일:</strong> 선택 투어. 옵션1) 페리타고 '<strong class="text-emerald-600">와인의 섬</strong>' <strong class="text-emerald-600">와이헤케</strong> 방문, 와이너리 투어. 옵션2) <strong class="text-emerald-600">마운트 이든</strong>에서 파노라마 감상 후 <strong class="text-emerald-600">폰손비 로드</strong>의 트렌디한 거리 탐방.</li>
+                                    <li><strong class="text-teal-700">저녁:</strong> 허니문의 마지막 밤을 기념하는 특별한 저녁 식사.</li>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4"><strong>와이헤케 섬:</strong> 페리 시간표 확인</td>
+                            <td class="px-6 py-4">오클랜드</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50">
+                            <td class="px-6 py-4 font-medium">12일</td>
+                            <td class="px-6 py-4">1월 30일 (금)</td>
+                            <td class="px-6 py-4 font-semibold">✈️ 귀국</td>
+                            <td class="px-6 py-4 prose-custom">
+                                <ul>
+                                    <li><strong class="text-teal-700">오전:</strong> 여유로운 아침식사 후 <strong class="text-emerald-600">오클랜드 공항</strong>으로 이동, 11:45 <strong class="text-emerald-600">인천</strong>행 항공편 출발.</li>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4">국제선: 최소 3시간 전 공항 도착</td>
+                            <td class="px-6 py-4">-</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="journey" class="py-16 md:py-24 content-card">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">지역별 상세 여정</h2>
+                <p class="text-stone-600 max-w-2xl mx-auto">지역별 탭을 클릭하여 각 지역에서의 상세 일정을 확인해보세요. 하이라이트, 액티비티, 추천 다이닝과 숙소 정보를 주제별로 탐색할 수 있습니다.</p>
+            </div>
+
+            <div class="w-full max-w-5xl mx-auto">
+                <div class="mb-8 border-b border-stone-200">
+                    <div class="overflow-x-auto scroll-container">
+                        <div class="flex justify-center min-w-max px-4" style="min-width: 600px;">
+                            <button data-city="sydney" class="city-tab-button flex-shrink-0 px-3 py-3 text-sm sm:text-lg font-semibold text-stone-600 hover:bg-stone-100 whitespace-nowrap">🇦🇺 시드니</button>
+                            <button data-city="christchurch" class="city-tab-button flex-shrink-0 px-3 py-3 text-sm sm:text-lg font-semibold text-stone-600 hover:bg-stone-100 whitespace-nowrap">🇳🇿 크라이스트처치</button>
+                            <button data-city="tekapo" class="city-tab-button flex-shrink-0 px-3 py-3 text-sm sm:text-lg font-semibold text-stone-600 hover:bg-stone-100 whitespace-nowrap">🇳🇿 테카포 & 마운트쿡</button>
+                            <button data-city="queenstown" class="city-tab-button flex-shrink-0 px-3 py-3 text-sm sm:text-lg font-semibold text-stone-600 hover:bg-stone-100 whitespace-nowrap">🇳🇿 퀸스타운</button>
+                            <button data-city="auckland" class="city-tab-button flex-shrink-0 px-3 py-3 text-sm sm:text-lg font-semibold text-stone-600 hover:bg-stone-100 whitespace-nowrap">🇳🇿 오클랜드</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="journeyContent" class="bg-white rounded-lg shadow p-6 md:p-8 min-h-[500px]">
+                </div>
+            </div>
+        </section>
+
+        <section id="budget" class="py-16 md:py-24 content-card">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">예상 비용 분석</h2>
+                <p class="text-stone-600 max-w-2xl mx-auto">주요 항공권과 투어 비용을 시각화하여 전체적인 예산을 가늠해볼 수 있습니다. 가격은 변동될 수 있으며, 보고서 기준의 예상치입니다.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-xl font-semibold text-center mb-4">주요 항목별 비용 비교 (NZD 기준)</h3>
+                    <div class="chart-container">
+                        <canvas id="costBarChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-center mb-4">전체 경비 예상 비중</h3>
+                     <div class="chart-container">
+                        <canvas id="costDoughnutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-800 text-white mt-16">
+        <div class="container mx-auto p-8 text-center">
+            <p>두 분의 행복한 허니문을 기원합니다.</p>
+            <p class="text-sm text-stone-400 mt-2">이 페이지는 제공된 여행 계획서를 기반으로 생성된 대화형 웹 애플리케이션입니다.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const prepData = {
+        visa: {
+            title: "✈️ 입국 비자 (ETA / NZeTA)",
+            content: `<strong>호주 (ETA):</strong> 대한민국 여권 소지자는 관광 목적 방문 시 전자여행허가(ETA)가 필수입니다. 반드시 정부 공식 'Australian ETA' 앱을 통해서만 신청해야 합니다. 출국 전 발급을 완료하세요.<br><br><strong>뉴질랜드 (NZeTA):</strong> 비자 면제 국가이지만, 입국 전 뉴질랜드 전자여행허가(NZeTA)를 발급받아야 합니다. 신청 시 국제 관광객 보존 및 관광 부담금(IVL)도 함께 결제됩니다.`
+        },
+        car: {
+            title: "🚗 렌터카 예약 (남섬 필수)",
+            content: `<strong>필요성:</strong> 남섬의 광활한 풍경을 자유롭게 즐기기 위한 최적의 방법입니다.<br><br><strong>예약 시점:</strong> 1월은 최성수기이므로 최소 2~3개월 전, 최대한 빨리 예약하는 것이 좋습니다.<br><br><strong>추천 업체:</strong> Pegasus, RaD Car Hire 등 현지 업체는 경쟁력 있는 가격을 제공합니다. <strong>크라이스트처치 픽업 → 퀸스타운 반납</strong> 편도 대여 가능 여부를 확인하세요.<br><br><strong>보험:</strong> 만약을 대비해 완전 면책 보험(Full Cover/Zero Excess) 가입을 강력히 권장합니다.<br><br><strong>면허:</strong> 유효한 영문 운전면허증 또는 국제운전면허증을 반드시 소지해야 합니다.`
+        },
+        info: {
+            title: "💡 날씨, 준비물 및 기타",
+            content: `<strong>1월 날씨:</strong> 따뜻하고 화창한 여름이지만, 산악 지역은 서늘할 수 있어 변화무쌍한 날씨에 대비해야 합니다. 레이어드 착용이 가능한 옷(가벼운 여름 옷, 긴팔, 방수 자켓)을 준비하세요.<br><br><strong>필수품:</strong> 자외선 차단 지수가 높은 선크림, 선글라스, 모자는 뉴질랜드의 강한 햇볕에 필수적입니다.<br><br><strong>투어 예약:</strong> 테카포 별 관측 투어, 퀸스타운 온센 핫풀 등 인기가 많은 액티비티는 수개월 전 예약이 필요할 수 있으므로 최대한 빨리 예약하세요.`
+        }
+    };
+    
+    const journeyData = {
+        sydney: {
+            duration: "4박 5일 (1/19 월 ~ 1/23 금)",
+            description: "시드니의 상징적인 랜드마크, 아름다운 동부 해안, 트렌디한 맛집과 쇼핑을 모두 아우르는 맞춤형 플랜입니다. 도시의 활기와 자연의 아름다움, 현지 감성을 모두 느껴보세요.",
+            highlights: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>왓슨스 베이 페리 탑승:</strong> 왓슨스 베이에서 서큘러 키로 돌아오는 페리 위에서 바라보는 하버 브리지와 오페라 하우스의 일몰 풍경은 단연 최고입니다. 💡팁: 일몰 시간에 맞춰 탑승하고, 페리 우측에 앉으면 더 좋은 뷰를 확보할 수 있습니다.</li>
+                    <li><strong>천문대 언덕에서의 선셋:</strong> 하버 브리지 너머로 물드는 시드니의 노을을 감상할 수 있는 최고의 로맨틱 스팟입니다. 피크닉 매트를 챙겨가 여유롭게 즐겨보세요.</li>
+                    <li><strong>본다이 아이스버그:</strong> 바다와 이어진 인피니티 풀에서 시드니의 '힙'한 감성을 담은 인생 사진을 남겨보세요. 수영을 하지 않더라도 클럽에서 커피 한 잔 하며 뷰를 즐길 수 있습니다.</li>
+                    <li><strong>블루마운틴 & 동물원 투어:</strong> 광활한 대자연의 경이로움과 코알라, 캥거루와의 만남을 하루에 모두 경험하는 효율적인 선택입니다. 링컨스 락이 포함된 투어인지 반드시 확인하세요.</li>
+                </ul>
+            `,
+            activities: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>시티 중심부 탐방 (1일차):</strong> 공항 도착 후, 하이드 파크 산책, 월드 스퀘어에서 피터 알렉산더 잠옷 쇼핑, Stussy 매장 방문 후 패디스 마켓에서 기념품을 쇼핑하는 코스입니다. 패디스 마켓은 일찍 닫으니 시간을 확인하세요.</li>
+                    <li><strong>동부 해안 정복 (2일차):</strong> 시티 중심부에서 333번 급행 버스를 이용해 본다이 비치까지 약 45분간 이동합니다. 오전에는 해변의 활기를 느끼고, 오후에는 왓슨스 베이로 넘어가 갭팍의 절경을 감상합니다.</li>
+                    <li><strong>시드니 아이콘 탐방 (3일차):</strong> 오페라 하우스 주변을 산책하고, 하버 브리지 파일런 전망대에 오르면 클라이밍보다 저렴하게 멋진 뷰를 즐길 수 있습니다.</li>
+                    <li><strong>대학교 & 선셋 투어 (3일차):</strong> 영화 속 한 장면 같은 시드니 대학교에서 사진을 찍고, 해질녘에는 천문대 언덕으로 이동해 최고의 선셋을 감상하는 로맨틱 코스입니다.</li>
+                </ul>
+            `,
+            dining: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>Macchiato Wood Fire Pizza:</strong> 시드니 도착 후 첫 식사로 추천하는 맛있는 화덕피자 맛집.</li>
+                    <li><strong>Hurricane's Grill Circular Quay:</strong> 시그니처 메뉴인 폭립을 즐길 수 있는 곳. 환상적인 뷰를 위해 창가 좌석으로 예약 요청하는 것이 좋습니다.</li>
+                    <li><strong>The Rocks의 펍:</strong> The Fortune of War, The Glenmore 등 유서 깊은 펍에서 피쉬 앤 칩스와 함께 시원한 맥주 한 잔의 여유를 즐겨보세요.</li>
+                    <li><strong>Barangaroo 다이닝:</strong> 천문대 선셋 감상 후 저녁 식사를 즐기기 좋은 곳. 모던한 분위기의 고급 레스토랑이 많습니다.</li>
+                </ul>
+            `,
+            lodging: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>초반 2박 (호텔):</strong> 시티 중심부(CBD)인 Town Hall, Wynyard, Circular Quay 근처를 추천합니다. 공항 및 주요 관광지 접근성이 매우 좋습니다.</li>
+                    <li><strong>후반 2박 (에어비앤비):</strong> 현지 감성을 느낄 수 있는 Surry Hills, Paddington, Newtown 지역을 추천합니다. 예쁜 카페, 맛집, 편집샵이 많아 색다른 경험을 할 수 있습니다.</li>
+                    <li><strong>참고:</strong> 록스 마켓은 주말(토,일)에만 열리므로 월-금 일정상 방문은 어렵습니다. 하지만 록스 지역 자체의 매력은 여전하니 산책 코스로는 좋습니다.</li>
+                </ul>
+            `
+        },
+        christchurch: {
+            duration: "1박 2일 (1/23 금 ~ 1/24 토)",
+            description: "뉴질랜드 남섬의 관문이자 재건의 상징인 크라이스트처치에서 여정을 시작합니다. 영국적인 매력의 정원과 현대적으로 재탄생한 도심을 탐험하며 편안한 첫날을 보내세요.",
+            highlights: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>크라이스트처치 식물원:</strong> 아름답게 가꿔진 정원을 거닐며 장시간 비행의 피로를 푸는 평화로운 시간을 가집니다. 입장료는 무료이며, 1월에는 저녁 9시까지 개장합니다.</li>
+                    <li><strong>카드보드 대성당:</strong> 지진 이후 희망의 상징으로 지어진 독특한 종이 대성당의 건축미를 감상합니다. 소정의 가이드 투어($5)로 그 역사를 더 깊이 이해할 수 있습니다.</li>
+                    <li><strong>트램웨이 레스토랑:</strong> 빈티지 트램 안에서 즐기는 파인 다이닝은 허니문의 첫날 밤을 위한 특별하고 로맨틱한 경험입니다. 36석 한정으로 예약은 필수입니다.</li>
+                </ul>
+            `,
+            activities: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>렌터카 인수:</strong> 공항 도착 후 바로 렌터카를 인수하여 남섬 여행의 기동성을 확보합니다. Pegasus나 RaD Car Hire는 공항 셔틀을 제공합니다.</li>
+                    <li><strong>시내 워킹 투어:</strong> 식물원부터 뉴 리젠트 스트리트까지 걸으며 도시의 재건 과정과 새로운 활기를 느껴봅니다. 강변을 따라 걷는 길도 아름답습니다.</li>
+                </ul>
+            `,
+            dining: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>Christchurch Tramway Restaurant:</strong> 반드시 사전 예약이 필요한 독특한 다이닝 경험. 1인당 $149부터 시작 (변동 가능).</li>
+                    <li><strong>The Curator's House:</strong> 식물원 내에 위치한 아름다운 스페인 레스토랑으로 타파스와 빠에야가 유명합니다.</li>
+                    <li><strong>The Priory Restaurant:</strong> 프랑스풍 비스트로에서 즐기는 아늑한 저녁.</li>
+                </ul>
+            `,
+            lodging: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>시내 중심가 호텔:</strong> 식물원, 레스토랑 등 주요 명소에 대한 접근성이 좋은 곳. The George, Sudima Christchurch City 등을 고려해볼 수 있습니다.</li>
+                    <li><strong>공항 근처 호텔:</strong> 늦은 도착이나 이른 출발 시 편리한 옵션. Novotel Christchurch Airport가 좋은 선택입니다.</li>
+                </ul>
+            `
+        },
+        tekapo: {
+            duration: "2박 3일 (1/24 토 ~ 1/26 월)",
+            description: "빙하가 만들어낸 청록색 호수와 세계적인 밤하늘 보호구역이 있는 맥켄지 분지의 심장부로 떠납니다. 낮에는 대자연의 경이로움을, 밤에는 쏟아지는 별들의 향연을 만끽하세요.",
+            highlights: `
+                 <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>다크 스카이 프로젝트 별 관측 투어:</strong> 세계 최대 규모의 밤하늘 보호구역에서 전문 가이드와 함께 14인치 대형 망원경으로 우주의 신비를 탐험하는 잊지 못할 경험입니다. (성인 $129, 예약 필수)</li>
+                    <li><strong>후커 밸리 트랙:</strong> 뉴질랜드 최고봉 아오라키/마운트쿡을 바라보며 걷는, 비교적 쉽고(왕복 3시간) 경치가 뛰어난 최고의 트레킹 코스입니다. 빙하 조각이 떠있는 후커 호수가 최종 목적지입니다.</li>
+                    <li><strong>푸카키 호수 전망:</strong> 마운트쿡을 배경으로 밀키블루 빛의 호수가 펼쳐지는 풍경은 남섬 여행의 상징적인 장면입니다. 방문객 센터 근처에서 신선한 연어회를 맛볼 수 있습니다.</li>
+                    <li><strong>테카포 온천 'Soak in the Stars':</strong> 따뜻한 온천에 몸을 담그고 밤하늘의 별을 감상하는 궁극의 로맨틱 체험. 별 관측 투어와는 또 다른 매력이 있습니다.</li>
+                </ul>
+            `,
+            activities: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>경치 좋은 드라이브:</strong> 크라이스트처치에서 테카포, 테카포에서 마운트쿡으로 이어지는 여정 자체가 하나의 액티비티입니다. 곳곳의 전망대에서 멈춰 풍경을 즐기세요.</li>
+                    <li><strong>트레킹:</strong> 후커 밸리 트랙 외에도 태즈먼 빙하 뷰 트랙 등 다양한 난이도의 트레킹 코스를 즐길 수 있습니다. 항상 편안한 신발과 물, 간식을 준비하세요.</li>
+                    <li><strong>사진 촬영:</strong> 선한 목자의 교회, 푸카키 호수 등 모든 곳이 포토 스팟입니다. 특히 해질녘과 새벽 시간의 빛이 아름답습니다.</li>
+                </ul>
+            `,
+            dining: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>Kohan Restaurant:</strong> 신선한 연어 덮밥 등 맛있는 일식을 제공하는 테카포의 인기 맛집. 창가 자리는 호수 뷰가 좋습니다.</li>
+                    <li><strong>Dark Sky Diner:</strong> 멋진 호수 전망과 함께 현대적인 뉴질랜드 요리를 즐길 수 있는 곳.</li>
+                    <li><strong>Astro Cafe:</strong> 마운트 존 정상에서 탁 트인 전망과 함께 커피 한 잔의 여유를 즐길 수 있습니다 (운영 시간 및 도로 개방 여부 확인 필수).</li>
+                </ul>
+            `,
+            lodging: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>테카포 호수:</strong> Peppers Bluewater Resort, Mantra Lake Tekapo 등 호수 전망의 리조트.</li>
+                    <li><strong>마운트쿡 빌리지:</strong> Aoraki Court Motel, The Hermitage Hotel 등 산악 전망의 숙소.</li>
+                    <li><strong>✨ 특별한 경험:</strong> Skylark Cabin (트와이젤), Mt Cook Lakeside Retreat 등 프라이빗하고 럭셔리한 숙소는 최고의 허니문 경험을 선사합니다 (수개월 전 예약 필수).</li>
+                </ul>
+            `
+        },
+        queenstown: {
+            duration: "2박 3일 (1/26 월 ~ 1/28 수)",
+            description: "남반구의 '모험 수도' 퀸스타운에서 스릴과 평온을 동시에 경험합니다. 짜릿한 액티비티와 그림 같은 풍경, 그리고 로맨틱한 순간들이 완벽한 조화를 이룹니다.",
+            highlights: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>온센 핫풀:</strong> 쇼토버 강이 내려다보이는 절벽 위 프라이빗 온천에서의 휴식은 허니문의 하이라이트. 💡팁: 최고의 경험을 위해 해질녘 시간대를 노리세요. 이를 위해서는 최소 3~4개월 전 예약이 필수적입니다.</li>
+                    <li><strong>크라운 레인지 로드:</strong> 와나카에서 퀸스타운으로 넘어오는 길, 뉴질랜드에서 가장 높은 도로 위에서 감상하는 파노라마는 최고의 드라이브 경험을 선사합니다.</li>
+                    <li><strong>스카이라인 곤돌라 & 루지:</strong> 봅스 피크 정상에서 와카티푸 호수와 리마커블스 산맥의 압도적인 전경을 한눈에 담을 수 있습니다. 루지는 2~3회 타는 것을 추천합니다.</li>
+                    <li><strong>와나카 라벤더 팜:</strong> 1월에 만개하는 보랏빛 라벤더 밭은 로맨틱한 사진을 남기기에 완벽한 장소입니다. 라벤더 아이스크림도 꼭 맛보세요.</li>
+                </ul>
+            `,
+            activities: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>어드벤처:</strong> 번지점프(카와라우 다리), 쇼토버 젯보트, 협곡 스윙 등 세계적으로 유명한 액티비티에 도전해볼 수 있습니다. (사전 예약 권장)</li>
+                    <li><strong>휴식:</strong> TSS 언슬로 증기선을 타고 월터 피크 하이 컨트리 팜을 방문하거나, 퀸스타운 가든을 산책하며 여유로운 시간을 보냅니다.</li>
+                    <li><strong>#ThatWanakaTree:</strong> 와나카 호수 속 버드나무는 놓칠 수 없는 포토 스팟입니다. 시간대에 따라 다른 분위기를 연출합니다.</li>
+                </ul>
+            `,
+            dining: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>Rātā:</strong> 미슐랭 스타 셰프 조쉬 에멧의 레스토랑으로, 현대적인 뉴질랜드 요리의 정수를 맛볼 수 있습니다. (예약 필수)</li>
+                    <li><strong>Botswana Butchery:</strong> 호숫가 아름다운 오두막에서 즐기는 최상급 육류 요리. 로맨틱한 분위기로 허니문에 적합합니다.</li>
+                    <li><strong>Stratosfare Restaurant & Bar:</strong> 스카이라인 정상에서 환상적인 전망과 함께 즐기는 뷔페. 창가 좌석 보장을 위해 프리미엄 다이닝 업그레이드를 고려해보세요.</li>
+                    <li><strong>Fergburger:</strong> 퀸스타운의 명물, 거대한 수제 버거를 맛보기 위해 긴 줄을 설 가치가 있습니다. 비교적 줄이 짧은 시간대를 노려보세요.</li>
+                </ul>
+            `,
+            lodging: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>호숫가 럭셔리 호텔:</strong> Eichardt's Private Hotel, Sofitel Queenstown Hotel & Spa 등에서 최고의 서비스를 경험할 수 있습니다.</li>
+                    <li><strong>서비스 아파트:</strong> 주방 시설이 있어 편리하며, 넓은 공간을 제공합니다. The Rees Hotel & Luxury Apartments 등이 좋은 평을 받습니다.</li>
+                    <li><strong>시내 중심가 호텔:</strong> 모든 편의시설과 레스토랑이 가까워 편리합니다.</li>
+                </ul>
+            `
+        },
+        auckland: {
+            duration: "2박 3일 (1/28 수 ~ 1/30 금)",
+            description: "'항해의 도시' 오클랜드에서 여정의 마지막을 장식합니다. 세련된 도시의 매력과 아름다운 섬, 그리고 최고의 다이닝을 즐기며 허니문의 대미를 장식하세요.",
+            highlights: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>와이헤케 섬:</strong> '와인의 섬'으로 불리는 아름다운 곳. 페리를 타고 당일치기로 와이너리 투어와 해변에서의 휴식을 즐겨보세요. 투어 상품을 이용하면 편리합니다.</li>
+                    <li><strong>바이아덕트 하버:</strong> 활기찬 해안가에서 허니문의 마지막 밤을 위한 특별한 저녁 식사를 하기에 완벽한 장소입니다. 요트가 정박한 항구의 야경이 아름답습니다.</li>
+                    <li><strong>마운트 이든:</strong> 화산 분화구에 올라 오클랜드 시내와 항만의 탁 트인 360도 파노라마 뷰를 감상하세요. 일몰 시간에 맞춰 방문하는 것도 좋습니다.</li>
+                </ul>
+            `,
+            activities: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>와인 투어:</strong> 와이헤케 섬의 Stonyridge, Mudbrick 등 유명 와이너리를 방문하며 다양한 와인을 시음합니다.</li>
+                    <li><strong>시티 탐방:</strong> 스카이 타워, 폰손비 로드, 데번포트 등 오클랜드의 다양한 명소를 둘러봅니다. 데번포트에서는 오클랜드 시티의 멋진 스카이라인을 조망할 수 있습니다.</li>
+                    <li><strong>해안가 산책:</strong> 바이아덕트 하버에서 윈야드 쿼터까지 이어지는 길을 따라 걸으며 세련된 도시 풍경을 즐겨보세요.</li>
+                </ul>
+            `,
+            dining: `
+                 <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>Soul Bar & Bistro:</strong> 바이아덕트 하버의 아이코닉한 레스토랑. 해산물과 멋진 분위기로 유명하며, 예약하는 것이 좋습니다.</li>
+                    <li><strong>Oyster & Chop:</strong> 신선한 굴과 최상급 스테이크를 맛볼 수 있는 곳.</li>
+                    <li><strong>Ponsonby Road:</strong> 개성 있는 카페, 바, 레스토랑이 즐비한 오클랜드의 핫플레이스. 캐주얼한 식사를 즐기기에 좋습니다.</li>
+                    <li><strong>Esther (QT 오클랜드):</strong> 지중해의 풍미를 느낄 수 있는 트렌디한 다이닝.</li>
+                </ul>
+            `,
+            lodging: `
+                <ul class="space-y-3 list-disc list-inside text-stone-700">
+                    <li><strong>바이아덕트 하버:</strong> Park Hyatt Auckland, Hilton Auckland 등 럭셔리 호텔에서 항구의 멋진 전망을 즐길 수 있습니다.</li>
+                    <li><strong>CBD / 브리토마트:</strong> The Hotel Britomart, SO/ Auckland 등 교통, 쇼핑, 다이닝 모두 편리한 스타일리시한 호텔이 많습니다.</li>
+                </ul>
+            `
+        }
+    };
+    
+    const prepAccordion = document.getElementById('prepAccordion');
+    Object.keys(prepData).forEach(key => {
+        const item = prepData[key];
+        const accordionItem = document.createElement('div');
+        accordionItem.className = 'bg-white rounded-lg shadow-sm border border-stone-200 overflow-hidden';
+        accordionItem.innerHTML = `
+            <button class="accordion-button w-full text-left flex justify-between items-center font-semibold text-base sm:text-lg hover:bg-stone-50 transition-colors duration-200">
+                <span>${item.title}</span>
+                <span class="transform transition-transform duration-300 text-teal-600">▼</span>
+            </button>
+            <div class="px-5 pb-5 text-sm sm:text-base text-stone-600 leading-relaxed hidden prose-custom">
+                <p>${item.content}</p>
+            </div>
+        `;
+        prepAccordion.appendChild(accordionItem);
+
+        const button = accordionItem.querySelector('button');
+        const content = accordionItem.querySelector('div');
+        const arrow = accordionItem.querySelector('span:last-child');
+        
+        button.addEventListener('click', () => {
+            const isHidden = content.classList.contains('hidden');
+            if (isHidden) {
+                content.classList.remove('hidden');
+                arrow.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                arrow.classList.remove('rotate-180');
+            }
+        });
+    });
+
+    const cityTabButtonsContainer = document.querySelector('.mb-8.flex');
+    const journeyContent = document.getElementById('journeyContent');
+    const detailTabButtonsContainer = document.createElement('div');
+    detailTabButtonsContainer.className = "flex flex-wrap gap-2 border-b border-stone-200 pb-4 mb-6";
+    const detailContentContainer = document.createElement('div');
+
+    function updateJourneyContent(cityKey) {
+        const cityData = journeyData[cityKey];
+        if (!cityData) return;
+
+        journeyContent.innerHTML = `
+            <div class="mb-6">
+                <h3 class="text-2xl font-bold text-teal-700">${
+                    {'sydney': '시드니', 'christchurch': '크라이스트처치', 'tekapo': '테카포 & 마운트쿡', 'queenstown': '퀸스타운', 'auckland': '오클랜드'}[cityKey]
+                }</h3>
+                <p class="text-sm font-medium text-stone-500 mb-2">${cityData.duration}</p>
+                <p class="text-stone-700 leading-relaxed">${cityData.description}</p>
+            </div>
+        `;
+        
+        detailTabButtonsContainer.innerHTML = `
+            <button data-category="highlights" class="tab-button px-3 py-2 text-xs sm:text-sm font-semibold rounded-md bg-stone-100 hover:bg-teal-600 hover:text-white">⭐ 하이라이트</button>
+            <button data-category="activities" class="tab-button px-3 py-2 text-xs sm:text-sm font-semibold rounded-md bg-stone-100 hover:bg-teal-600 hover:text-white">🏃 액티비티</button>
+            <button data-category="dining" class="tab-button px-3 py-2 text-xs sm:text-sm font-semibold rounded-md bg-stone-100 hover:bg-teal-600 hover:text-white">🍽️ 다이닝</button>
+            <button data-category="lodging" class="tab-button px-3 py-2 text-xs sm:text-sm font-semibold rounded-md bg-stone-100 hover:bg-teal-600 hover:text-white">🏨 추천 숙소</button>
+        `;
+        journeyContent.appendChild(detailTabButtonsContainer);
+        journeyContent.appendChild(detailContentContainer);
+
+        const detailTabButtons = detailTabButtonsContainer.querySelectorAll('.tab-button');
+        
+        function updateDetailContent(category) {
+            detailContentContainer.innerHTML = `<div class="prose-custom">${cityData[category]}</div>`;
+            detailTabButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.category === category);
+                if(btn.dataset.category !== category) {
+                    btn.classList.remove('bg-teal-700', 'text-white');
+                    btn.classList.add('bg-stone-100');
+                }
+            });
+        }
+        
+        detailTabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                updateDetailContent(button.dataset.category);
+            });
+        });
+
+        updateDetailContent('highlights');
+    }
+    
+    document.querySelectorAll('.city-tab-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+            document.querySelectorAll('.city-tab-button').forEach(btn => {
+                btn.classList.remove('bg-teal-600', 'text-white', 'active');
+                btn.classList.add('text-stone-600');
+            });
+            e.currentTarget.classList.add('bg-teal-600', 'text-white', 'active');
+            e.currentTarget.classList.remove('text-stone-600');
+            updateJourneyContent(e.currentTarget.dataset.city);
+        });
+    });
+
+    document.querySelector('.city-tab-button[data-city="sydney"]').click();
+
+    // Map initialization
+    const map = L.map('map').setView([-40, 165], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    const locations = {
+        sydney_cbd: { lat: -33.8651, lng: 151.2099, name: '시드니 CBD' },
+        sydney_bondi: { lat: -33.8915, lng: 151.2767, name: '본다이 비치' },
+        sydney_watsons: { lat: -33.8431, lng: 151.2825, name: '왓슨스 베이' },
+        sydney_quay: { lat: -33.8610, lng: 151.2109, name: '서큘러 키' },
+        sydney_observatory: { lat: -33.8590, lng: 151.2052, name: '천문대 언덕' },
+        christchurch: { lat: -43.5321, lng: 172.6362, name: '크라이스트처치' },
+        tekapo: { lat: -44.0046, lng: 170.4771, name: '테카포 호수' },
+        mountcook: { lat: -43.7335, lng: 170.0962, name: '마운트쿡' },
+        queenstown: { lat: -45.0312, lng: 168.6626, name: '퀸스타운' },
+        auckland: { lat: -36.8485, lng: 174.7633, name: '오클랜드' }
+    };
+
+    for (const key in locations) {
+        if(key.startsWith('sydney')) continue; // 시드니는 경로로만 표시
+        L.marker([locations[key].lat, locations[key].lng]).addTo(map)
+            .bindPopup(locations[key].name);
+    }
+     L.marker([locations.sydney_cbd.lat, locations.sydney_cbd.lng]).addTo(map).bindPopup(locations.sydney_cbd.name);
+
+
+    const sydneyPath = L.polyline([
+        [locations.sydney_cbd.lat, locations.sydney_cbd.lng],
+        [locations.sydney_bondi.lat, locations.sydney_bondi.lng],
+        [locations.sydney_watsons.lat, locations.sydney_watsons.lng],
+        [locations.sydney_quay.lat, locations.sydney_quay.lng],
+        [locations.sydney_observatory.lat, locations.sydney_observatory.lng]
+    ], { color: '#4f46e5', weight: 2, opacity: 0.8, dashArray: '3, 6' }).addTo(map);
+
+    const flightPath1 = L.polyline([[locations.sydney_cbd.lat, locations.sydney_cbd.lng], [locations.christchurch.lat, locations.christchurch.lng]], { color: '#0d9488', weight: 2, opacity: 0.7, dashArray: '5, 10' }).addTo(map);
+    const roadTripPath = L.polyline([
+        [locations.christchurch.lat, locations.christchurch.lng], 
+        [locations.tekapo.lat, locations.tekapo.lng], 
+        [locations.mountcook.lat, locations.mountcook.lng],
+        [locations.queenstown.lat, locations.queenstown.lng]
+    ], { color: '#f97316', weight: 3 }).addTo(map);
+    const flightPath2 = L.polyline([[locations.queenstown.lat, locations.queenstown.lng], [locations.auckland.lat, locations.auckland.lng]], { color: '#0d9488', weight: 2, opacity: 0.7, dashArray: '5, 10' }).addTo(map);
+
+    map.fitBounds([
+        [locations.sydney_cbd.lat, locations.sydney_cbd.lng],
+        [locations.auckland.lat, locations.auckland.lng],
+        [locations.queenstown.lat, locations.queenstown.lng]
+    ], {padding: [50, 50]});
+    
+    // Chart initialization
+    const costBarCtx = document.getElementById('costBarChart').getContext('2d');
+    new Chart(costBarCtx, {
+        type: 'bar',
+        data: {
+            labels: ['퀸스타운-오클랜드 항공', '남섬 렌터카 (5일)', '별 관측 투어', '온센 핫풀'],
+            datasets: [{
+                label: '예상 비용 (NZD, 1인 기준)',
+                data: [200, 250, 129, 88], 
+                backgroundColor: ['#0d9488', '#0f766e', '#115e59', '#134e4a'],
+                borderColor: ['#0d9488', '#0f766e', '#115e59', '#134e4a'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: '#e7e5e4' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    const costDoughnutCtx = document.getElementById('costDoughnutChart').getContext('2d');
+    new Chart(costDoughnutCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['항공 (국제/국내)', '숙박 (11박)', '주요 투어/액티비티', '식사 및 기타', '렌터카'],
+            datasets: [{
+                data: [30, 30, 15, 15, 10],
+                backgroundColor: ['#0f766e', '#0d9488', '#14b8a6', '#5eead4', '#a7f3d0'],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+    
+    // Navigation link handling
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.content-card');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 80) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === current) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    navLinks.forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetElement = document.querySelector(this.getAttribute('href'));
+            if(targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
