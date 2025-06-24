@@ -6,7 +6,7 @@
     <title>컴퓨터 그래픽스 라이팅 입문 - 프레젠테이션</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/shared/css/drawing.css">
+    <link rel="stylesheet" href="css/drawing.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         .visually-hidden {
@@ -376,7 +376,7 @@
         <button class="control-btn" id="toggle-zoom-mode" title="돋보기 모드 토글 (Z)">
             <i class="fas fa-search-plus"></i>
         </button>
-        <a href="/index.html" class="control-btn" title="전체 강의 목록으로 돌아가기">
+        <a href="../index.html" class="control-btn" title="전체 강의 목록으로 돌아가기">
             <i class="fas fa-home"></i>
         </a>
         <button class="control-btn" id="toggle-draw-mode" title="드로잉 모드 토글 (D)">
@@ -391,7 +391,7 @@
     </div>
     <div id="slide-list-trigger"></div>
 
-    <script src="/shared/js/drawing.js"></script>
+    <script src="js/drawing.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // 슬라이드 상하좌우 여백 (픽셀 단위). 이 값을 조절하여 여백 크기를 변경할 수 있습니다.
@@ -485,14 +485,14 @@
             async function fetchSlideList() {
                 showLoading();
                 try {
-                    const slidesJsonPath = `/lighting-lecture-${lectureId}/html/slides.json`;
+                    const slidesJsonPath = `../lighting-lecture-${lectureId}/html/slides.json`;
                     const response = await fetch(slidesJsonPath);
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status} at ${slidesJsonPath}`);
                     }
                     const data = await response.json();
                     slideList = data.slides;
-                    slideBaseUrl = `/lighting-lecture-${lectureId}/html/`;
+                    slideBaseUrl = `../lighting-lecture-${lectureId}/html/`;
 
                     const titlePromises = slideList.map(async (slideFile) => {
                         let fallbackTitle = slideFile.replace('.html', '').replace(/s\d+_/g, '').replace(/_/g, ' ');
@@ -683,7 +683,7 @@
             function handleKeydown(e) {
                 if (e.key === 'h' || e.key === 'H') {
                     e.preventDefault();
-                    window.location.href = '/index.html';
+                    window.location.href = '../index.html';
                     return;
                 }
                 if (e.key === 'z' || e.key === 'Z') {
