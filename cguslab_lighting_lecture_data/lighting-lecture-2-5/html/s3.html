@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>산업 표준 라이팅 파이프라인</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background-color: #121826;
+            position: relative;
+            overflow: hidden;
+        }
+        .content-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-left-color: #fbbf24;
+        }
+        .step-badge {
+            background-color: #fbbf24;
+        }
+        .pipeline-step {
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.3);
+        }
+        .engine-badge {
+            border: 2px solid;
+        }
+        .maya-badge {
+            background-color: rgba(52, 211, 153, 0.2);
+            border-color: #34d399;
+        }
+        .arnold-badge {
+            background-color: rgba(96, 165, 250, 0.2);
+            border-color: #60a5fa;
+        }
+        .renderman-badge {
+            background-color: rgba(248, 113, 113, 0.2);
+            border-color: #f87171;
+        }
+        .tech-tag {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .accent-bar-left {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 40%;
+            background-color: #fbbf24;
+        }
+        .dark-overlay {
+            background-color: rgba(17, 24, 39, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Accent Bar -->
+        <div class="accent-bar-left"></div>
+        
+        <!-- Header Section -->
+        <div class="pt-10 pb-6 px-12 text-center">
+            <div class="inline-flex items-center bg-yellow-500 bg-opacity-20 backdrop-filter backdrop-blur-sm rounded-full px-6 py-2 mb-4">
+                <i class="fas fa-industry mr-3 text-yellow-400 text-lg"></i>
+                <span class="text-white font-medium">Industry Standards & Workflow</span>
+            </div>
+            <h1 class="text-white text-4xl font-bold mb-3">
+                산업 표준 라이팅 파이프라인
+            </h1>
+            <h2 class="text-white text-2xl font-semibold mb-3">
+                <span class="text-yellow-400">Maya-Arnold-RenderMan</span>
+            </h2>
+            <p class="text-gray-300 text-lg opacity-90 max-w-4xl mx-auto">
+                Disney/Pixar 등 세계적 스튜디오에서 사용하는 전문가 수준의 라이팅 워크플로우
+            </p>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="px-12 pb-6">
+            <!-- Pipeline Workflow Section -->
+            <div class="grid grid-cols-5 gap-4 mb-8">
+                <!-- Stage 1: Scene Setup -->
+                <div class="pipeline-step rounded-xl p-4 content-card">
+                    <div class="flex items-center mb-3">
+                        <div class="step-badge w-8 h-8 rounded-full flex items-center justify-center mr-3 text-black font-bold">1</div>
+                        <h3 class="text-white font-bold">씬 셋업</h3>
+                    </div>
+                    <div class="maya-badge engine-badge rounded-lg px-3 py-1 inline-flex items-center mb-2">
+                        <i class="fas fa-cube mr-1 text-green-400"></i>
+                        <span class="text-green-400 text-sm font-semibold">Maya</span>
+                    </div>
+                    <ul class="text-gray-300 text-xs space-y-1">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>모델 임포트 및 배치</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>카메라 설정 및 구도</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>애니메이션 캐싱</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Stage 2: Lighting Setup -->
+                <div class="pipeline-step rounded-xl p-4 content-card">
+                    <div class="flex items-center mb-3">
+                        <div class="step-badge w-8 h-8 rounded-full flex items-center justify-center mr-3 text-black font-bold">2</div>
+                        <h3 class="text-white font-bold">라이팅 구성</h3>
+                    </div>
+                    <div class="maya-badge engine-badge rounded-lg px-3 py-1 inline-flex items-center mb-2">
+                        <i class="fas fa-lightbulb mr-1 text-green-400"></i>
+                        <span class="text-green-400 text-sm font-semibold">Maya</span>
+                    </div>
+                    <ul class="text-gray-300 text-xs space-y-1">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>키 라이트 & 필 라이트</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>HDRI 환경 매핑</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>Volumetric 이펙트</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Stage 3: Render Settings -->
+                <div class="pipeline-step rounded-xl p-4 content-card">
+                    <div class="flex items-center mb-3">
+                        <div class="step-badge w-8 h-8 rounded-full flex items-center justify-center mr-3 text-black font-bold">3</div>
+                        <h3 class="text-white font-bold">렌더 세팅</h3>
+                    </div>
+                    <div class="flex space-x-2 mb-2">
+                        <div class="arnold-badge engine-badge rounded-lg px-2 py-1 inline-flex items-center">
+                            <i class="fas fa-cogs mr-1 text-blue-400 text-xs"></i>
+                            <span class="text-blue-400 text-xs font-semibold">Arnold</span>
+                        </div>
+                        <div class="renderman-badge engine-badge rounded-lg px-2 py-1 inline-flex items-center">
+                            <i class="fas fa-cogs mr-1 text-red-400 text-xs"></i>
+                            <span class="text-red-400 text-xs font-semibold">RenderMan</span>
+                        </div>
+                    </div>
+                    <ul class="text-gray-300 text-xs space-y-1">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>샘플링 최적화</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>GI 세팅 & 최적화</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>셰이더 파라미터</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Stage 4: AOV/Render Passes -->
+                <div class="pipeline-step rounded-xl p-4 content-card">
+                    <div class="flex items-center mb-3">
+                        <div class="step-badge w-8 h-8 rounded-full flex items-center justify-center mr-3 text-black font-bold">4</div>
+                        <h3 class="text-white font-bold">AOV 분리</h3>
+                    </div>
+                    <div class="flex space-x-2 mb-2">
+                        <div class="arnold-badge engine-badge rounded-lg px-2 py-1 inline-flex items-center">
+                            <i class="fas fa-layer-group mr-1 text-blue-400 text-xs"></i>
+                            <span class="text-blue-400 text-xs font-semibold">Arnold</span>
+                        </div>
+                        <div class="renderman-badge engine-badge rounded-lg px-2 py-1 inline-flex items-center">
+                            <i class="fas fa-layer-group mr-1 text-red-400 text-xs"></i>
+                            <span class="text-red-400 text-xs font-semibold">RenderMan</span>
+                        </div>
+                    </div>
+                    <ul class="text-gray-300 text-xs space-y-1">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>디퓨즈/스페큘러 분리</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>뎁스/노말 패스</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>ID/마스크 설정</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Stage 5: Render Output -->
+                <div class="pipeline-step rounded-xl p-4 content-card">
+                    <div class="flex items-center mb-3">
+                        <div class="step-badge w-8 h-8 rounded-full flex items-center justify-center mr-3 text-black font-bold">5</div>
+                        <h3 class="text-white font-bold">결과 출력</h3>
+                    </div>
+                    <div class="flex space-x-2 mb-2">
+                        <div class="arnold-badge engine-badge rounded-lg px-2 py-1 inline-flex items-center">
+                            <i class="fas fa-film mr-1 text-blue-400 text-xs"></i>
+                            <span class="text-blue-400 text-xs font-semibold">Arnold</span>
+                        </div>
+                        <div class="renderman-badge engine-badge rounded-lg px-2 py-1 inline-flex items-center">
+                            <i class="fas fa-film mr-1 text-red-400 text-xs"></i>
+                            <span class="text-red-400 text-xs font-semibold">RenderMan</span>
+                        </div>
+                    </div>
+                    <ul class="text-gray-300 text-xs space-y-1">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>EXR 포맷 저장</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>컬러 프로파일 적용</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-400 mr-1 mt-0.5 text-xs"></i>
+                            <span>후처리 준비</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Engine Comparison and Pixar Case Studies -->
+            <div class="grid grid-cols-3 gap-6">
+                <!-- Arnold Highlights -->
+                <div class="bg-blue-900 bg-opacity-20 rounded-xl p-5 content-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-blue-500 bg-opacity-30 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-bolt text-blue-400 text-lg"></i>
+                        </div>
+                        <h3 class="text-white text-lg font-bold">Arnold 렌더러</h3>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <img src="https://help.autodesk.com/cloudhelp/2024/ENU/AR-Maya/images/tutorials/am-Lighting_the_Natural_History_Museum-interior-tutorial-step18-16.png" alt="Arnold 렌더 샘플" class="w-full h-40 object-cover rounded-lg mb-2">
+                        <p class="text-gray-400 text-xs italic text-center">Arnold 렌더러 내부 조명 예시</p>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="bg-gray-800 bg-opacity-60 rounded-lg p-3">
+                            <h4 class="text-blue-300 font-semibold text-sm mb-2">주요 특징</h4>
+                            <div class="flex flex-wrap">
+                                <span class="tech-tag bg-blue-900 text-blue-300">Monte Carlo GI</span>
+                                <span class="tech-tag bg-blue-900 text-blue-300">GPU 가속</span>
+                                <span class="tech-tag bg-blue-900 text-blue-300">물리 기반 렌더링</span>
+                                <span class="tech-tag bg-blue-900 text-blue-300">노드 기반 셰이더</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-xs">
+                            <i class="fas fa-check text-green-400 mr-1"></i>
+                            <span class="font-medium">업계 활용:</span> Sony Pictures, MPC, Framestore 등에서 주로 사용
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- RenderMan Highlights -->
+                <div class="bg-red-900 bg-opacity-20 rounded-xl p-5 content-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-red-500 bg-opacity-30 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-magic text-red-400 text-lg"></i>
+                        </div>
+                        <h3 class="text-white text-lg font-bold">RenderMan</h3>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <img src="https://www.fxguide.com/wp-content/uploads/2019/07/p572_44m_cs.sel16.834.jpg" alt="Pixar RenderMan 샘플" class="w-full h-40 object-cover rounded-lg mb-2">
+                        <p class="text-gray-400 text-xs italic text-center">Pixar Toy Story 4 RenderMan 렌더링</p>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="bg-gray-800 bg-opacity-60 rounded-lg p-3">
+                            <h4 class="text-red-300 font-semibold text-sm mb-2">주요 특징</h4>
+                            <div class="flex flex-wrap">
+                                <span class="tech-tag bg-red-900 text-red-300">Pixar XPU</span>
+                                <span class="tech-tag bg-red-900 text-red-300">볼륨메트릭 렌더링</span>
+                                <span class="tech-tag bg-red-900 text-red-300">Denoising</span>
+                                <span class="tech-tag bg-red-900 text-red-300">PxrSurface</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-xs">
+                            <i class="fas fa-check text-green-400 mr-1"></i>
+                            <span class="font-medium">업계 활용:</span> Pixar, ILM, Disney Animation 등에서 주력 사용
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Disney/Pixar Case Study -->
+                <div class="bg-purple-900 bg-opacity-20 rounded-xl p-5 content-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-500 bg-opacity-30 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-film text-purple-400 text-lg"></i>
+                        </div>
+                        <h3 class="text-white text-lg font-bold">Disney/Pixar 사례</h3>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="relative">
+                            <img src="https://i.ytimg.com/vi/FScosIMfGsc/maxresdefault.jpg" alt="Elemental 볼륨 렌더링" class="w-full h-40 object-cover rounded-lg">
+                            <div class="absolute inset-0 rounded-lg dark-overlay flex items-center justify-center">
+                                <span class="text-white font-bold">Elemental (2023)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="bg-gray-800 bg-opacity-60 rounded-lg p-3">
+                            <h4 class="text-purple-300 font-semibold text-sm mb-2">기술적 도전</h4>
+                            <ul class="text-gray-300 text-xs space-y-1">
+                                <li class="flex items-start">
+                                    <i class="fas fa-fire-alt text-yellow-500 mr-1 mt-0.5 text-xs"></i>
+                                    <span>150,000개 볼륨메트릭 프레임</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-tint text-blue-500 mr-1 mt-0.5 text-xs"></i>
+                                    <span>캐릭터 내부 발광 시뮬레이션</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-wind text-green-500 mr-1 mt-0.5 text-xs"></i>
+                                    <span>비물리적 아티스틱 볼륨 라이팅</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span class="text-gray-400">RenderMan XPU 렌더 팜:</span>
+                            <span class="text-yellow-400 font-bold">150,000 코어</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Best Practices Footer -->
+            <div class="mt-6">
+                <div class="bg-gray-800 bg-opacity-40 rounded-xl p-4">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-lightbulb text-yellow-400 text-xl mr-3"></i>
+                        <h3 class="text-white text-lg font-bold">실무 워크플로우 핵심 포인트</h3>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-green-500 bg-opacity-20 rounded-full flex items-center justify-center mr-2 flex-shrink-0 mt-0.5">
+                                <span class="text-green-400 text-xs font-bold">01</span>
+                            </div>
+                            <p class="text-gray-300 text-xs">
+                                <span class="text-green-400 font-bold">라이팅 레퍼런스 수집</span> - 실제 사진 또는 영화 장면을 분석하여 조명 구성 전에 참고 이미지 수집
+                            </p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center mr-2 flex-shrink-0 mt-0.5">
+                                <span class="text-blue-400 text-xs font-bold">02</span>
+                            </div>
+                            <p class="text-gray-300 text-xs">
+                                <span class="text-blue-400 font-bold">빠른 테스트 렌더링</span> - 낮은 샘플링으로 빠르게 여러 버전을 비교한 후 최종 세팅 결정
+                            </p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-purple-500 bg-opacity-20 rounded-full flex items-center justify-center mr-2 flex-shrink-0 mt-0.5">
+                                <span class="text-purple-400 text-xs font-bold">03</span>
+                            </div>
+                            <p class="text-gray-300 text-xs">
+                                <span class="text-purple-400 font-bold">자동화 스크립트 활용</span> - 라이팅 세팅을 재사용할 수 있는 Python 스크립트로 워크플로우 최적화
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer Credits -->
+        <div class="absolute bottom-3 right-4">
+            <p class="text-gray-500 text-xs">
+                이미지 출처: Autodesk, Pixar, FXGuide
+            </p>
+        </div>
+    </div>
+</body>
+</html>

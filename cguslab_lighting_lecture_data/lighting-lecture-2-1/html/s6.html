@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>에어리어 라이트와 IES 라이팅</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #0f172a;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .area-highlight {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background-color: rgba(139, 92, 246, 0.15);
+            border-radius: 50%;
+            filter: blur(40px);
+            top: -150px;
+            right: -150px;
+        }
+        
+        .ies-light {
+            position: absolute;
+            width: 3px;
+            height: 200px;
+            background-color: rgba(139, 92, 246, 0.5);
+            transform-origin: top;
+        }
+        
+        .ies-light:nth-child(2) { left: 20%; top: 50px; transform: rotate(-10deg); }
+        .ies-light:nth-child(3) { left: 75%; top: 30px; transform: rotate(12deg); }
+        .ies-light:nth-child(4) { left: 40%; top: 20px; transform: rotate(5deg); }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            padding: 35px 50px;
+            min-height: 720px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .main-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            color: #8b5cf6;
+            font-weight: 500;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            flex: 1;
+        }
+        
+        .area-section, .ies-section {
+            opacity: 1;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .section-icon {
+            width: 45px;
+            height: 45px;
+            background-color: #8b5cf6;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        
+        .definition-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #8b5cf6;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .definition-text {
+            color: #e2e8f0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        
+        .key-term {
+            color: #8b5cf6;
+            font-weight: 600;
+        }
+        
+        .light-types {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .light-type {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .light-type:hover {
+            background-color: rgba(139, 92, 246, 0.1);
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+        
+        .light-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        .rect-icon {
+            background-color: #8b5cf6;
+        }
+        
+        .disk-icon {
+            background-color: #6366f1;
+        }
+        
+        .sphere-icon {
+            background-color: #4f46e5;
+        }
+        
+        .dome-icon {
+            background-color: #7c3aed;
+        }
+        
+        .light-title {
+            color: #e2e8f0;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .light-desc {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .example-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 120px;
+        }
+        
+        .example-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
+        }
+        
+        .example-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .example-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 10px;
+            color: white;
+        }
+        
+        .example-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .example-type {
+            font-size: 0.7rem;
+            color: #8b5cf6;
+            font-weight: 500;
+        }
+        
+        .large-example {
+            grid-column: 1 / -1;
+            height: 140px;
+            margin-bottom: 15px;
+        }
+        
+        .practice-guide {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+        }
+        
+        .guide-title {
+            color: #10b981;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .guide-steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .guide-step {
+            color: #e2e8f0;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .step-number {
+            background-color: #10b981;
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .software-tag {
+            display: inline-block;
+            background-color: rgba(139, 92, 246, 0.2);
+            color: #8b5cf6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Background area light effects -->
+<div class="area-highlight"></div>
+<div class="ies-light"></div>
+<div class="ies-light"></div>
+<div class="ies-light"></div>
+<div class="content-wrapper">
+<!-- Header -->
+<div class="header-section">
+<h1 class="main-title">에어리어 라이트와 IES 라이팅</h1>
+<p class="subtitle">전문적인 스튜디오 라이팅과 건축 시각화 기법</p>
+</div>
+<!-- Main Content Grid -->
+<div class="main-content">
+<!-- Area Lights Section -->
+<div class="area-section">
+<div class="section-header">
+<div class="section-icon">
+<i class="fas fa-lightbulb"></i>
+</div>
+<h2 class="section-title">에어리어 라이트 종류</h2>
+</div>
+<div class="definition-box">
+<div class="definition-text">
+<span class="key-term">에어리어 라이트(Area Light)</span>는 표면에서 빛을 방출하는 <span class="key-term">면 광원</span>으로, 더 부드럽고 사실적인 조명과 그림자를 구현하는 고급 라이팅 기법입니다.
+                        </div>
+<div class="definition-text" style="font-size: 0.95rem; color: #94a3b8;">
+                            실제 세계의 조명 동작을 정확하게 시뮬레이션하여 자연스러운 하이라이트와 반사, 부드러운 그림자를 제공합니다.
+                        </div>
+</div>
+<div class="light-types">
+<div class="light-type">
+<div class="light-icon rect-icon">
+<i class="fas fa-square"></i>
+</div>
+<div class="light-title">Rectangle Light</div>
+<div class="light-desc">
+                                직사각형 면을 가진 라이트, 창문이나 패널 조명 표현에 이상적
+                            </div>
+</div>
+<div class="light-type">
+<div class="light-icon disk-icon">
+<i class="fas fa-circle"></i>
+</div>
+<div class="light-title">Disk Light</div>
+<div class="light-desc">
+                                원형 면을 가진 라이트, 천장 조명이나 원형 광원 표현에 적합
+                            </div>
+</div>
+<div class="light-type">
+<div class="light-icon sphere-icon">
+<i class="fas fa-globe"></i>
+</div>
+<div class="light-title">Sphere Light</div>
+<div class="light-desc">
+                                구형 면을 가진 라이트, 전구나 구형 조명 장치 표현에 활용
+                            </div>
+</div>
+<div class="light-type">
+<div class="light-icon dome-icon">
+<i class="fas fa-adjust"></i>
+</div>
+<div class="light-title">Dome Light</div>
+<div class="light-desc">
+                                반구형 라이트, HDRI 이미지와 함께 환경 조명으로 활용
+                            </div>
+</div>
+</div>
+</div>
+<!-- IES Lighting Section -->
+<div class="ies-section">
+<div class="section-header">
+<div class="section-icon">
+<i class="fas fa-file-alt"></i>
+</div>
+<h2 class="section-title">IES 라이팅 프로필</h2>
+</div>
+<div class="large-example example-card">
+<img alt="IES Lighting Profiles" class="example-image" src="../resources/2fe3f5fa9d4fdfb558139939b6479f76.jpg"/>
+<div class="example-overlay">
+<div class="example-title">IES 프로필 컬렉션</div>
+<div class="example-type">다양한 배광 분포 패턴</div>
+</div>
+</div>
+<div class="examples-grid">
+<div class="example-card">
+<img alt="IES Visualization" class="example-image" src="../resources/886c6e2a83a56e028ba46fbf5dca505f.png"/>
+<div class="example-overlay">
+<div class="example-title">IES 시각화</div>
+<div class="example-type">Unreal Engine</div>
+</div>
+</div>
+<div class="example-card">
+<img alt="KeyShot IES Lighting" class="example-image" src="../resources/2a6081f84dfcbe28184de39eabd22d06.jpg"/>
+<div class="example-overlay">
+<div class="example-title">IES와 Area Light 조합</div>
+<div class="example-type">KeyShot 응용</div>
+</div>
+</div>
+</div>
+<div class="practice-guide">
+<div class="guide-title">
+<i class="fas fa-tools"></i>
+                            IES 라이팅 실습 가이드
+                        </div>
+<div class="guide-steps">
+<div class="guide-step">
+<div class="step-number">1</div>
+<span class="software-tag">일반</span> 적합한 IES 프로필 파일 다운로드 (제조사 사이트 또는 라이브러리)
+                            </div>
+<div class="guide-step">
+<div class="step-number">2</div>
+<span class="software-tag">Maya</span><span class="software-tag">Arnold</span> aiPhotometricLight 생성 후 IES 프로필 연결
+                            </div>
+<div class="guide-step">
+<div class="step-number">3</div>
+<span class="software-tag">V-Ray</span> VRayIES 또는 Area Light에 IES 프로필 적용
+                            </div>
+<div class="guide-step">
+<div class="step-number">4</div>
+                                빛의 강도와 색온도 조정으로 환경에 맞는 설정
+                            </div>
+<div class="guide-step">
+<div class="step-number">5</div>
+<span class="software-tag">건축</span> 벽면 배치 시 45-60도 각도로 설치하여 연출 효과 극대화
+                            </div>
+<div class="guide-step">
+<div class="step-number">6</div>
+<span class="software-tag">스튜디오</span> 다중 IES 라이트 활용으로 복합적 조명 효과 구현
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

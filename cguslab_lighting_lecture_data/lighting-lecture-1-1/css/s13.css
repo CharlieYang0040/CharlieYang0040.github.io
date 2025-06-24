@@ -1,0 +1,13 @@
+.relative-pos {
+    position: relative;
+}
+.emotion-icon-warm { color: #ff6b35; }
+.emotion-icon-neutral { color: #ffcc02; }
+.emotion-icon-cool { color: #4169e1; }
+
+.split-left-warm {
+    background-image: linear-gradient(45deg, #ff6b35, #f7931e);
+}
+.split-right-cool {
+    background-image: linear-gradient(45deg, #87ceeb, #4169e1);
+} 

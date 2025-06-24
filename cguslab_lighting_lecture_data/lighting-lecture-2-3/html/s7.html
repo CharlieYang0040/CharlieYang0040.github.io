@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>노말맵이 왜 파란색인가? - Tangent Space Normal Mapping</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .title-accent {
+            color: #60a5fa;
+        }
+        .card {
+            background-color: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .card-highlight {
+            border-left: 4px solid #60a5fa;
+        }
+        .card-example {
+            border-left: 4px solid #a855f7;
+        }
+        .diagram-border {
+            border: 2px solid rgba(59, 130, 246, 0.4);
+        }
+        .number-badge {
+            background-color: #4f46e5;
+        }
+        .tech-badge {
+            background-color: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+        .progress-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(156, 163, 175, 0.3);
+        }
+        .dot.active {
+            background-color: #3b82f6;
+        }
+        .rgb-arrow {
+            position: relative;
+            height: 30px;
+        }
+        .rgb-arrow:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid #3b82f6;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container relative bg-slate-900">
+<!-- Main Content -->
+<div class="relative z-10 px-12 py-10">
+<!-- Header Section -->
+<div class="mb-6">
+<div class="flex items-center mb-3">
+<div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">
+                        3.1.1
+                    </div>
+<h1 class="text-4xl font-black">노말맵이 왜 <span class="title-accent">파란색</span>인가?</h1>
+</div>
+<p class="text-gray-400 text-lg ml-14">Tangent Space Normal Mapping과 RGB 데이터의 3D 벡터 변환</p>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-2 gap-6">
+<!-- Left Column - Normal Map Explanation -->
+<div>
+<!-- RGB to XYZ Mapping -->
+<div class="card rounded-xl p-5 mb-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-cube text-blue-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">RGB와 법선 벡터의 관계</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-blue-300">데이터 매핑</span>
+</div>
+<div class="mb-4 grid grid-cols-3 gap-2">
+<div class="bg-slate-800 p-2 rounded-lg text-center">
+<div class="w-8 h-8 mx-auto mb-2 rounded-full bg-red-500"></div>
+<p class="text-sm font-medium text-white">R 채널 = X축</p>
+<p class="text-xs text-gray-300">0~255 → -1~1</p>
+</div>
+<div class="bg-slate-800 p-2 rounded-lg text-center">
+<div class="w-8 h-8 mx-auto mb-2 rounded-full bg-green-500"></div>
+<p class="text-sm font-medium text-white">G 채널 = Y축</p>
+<p class="text-xs text-gray-300">0~255 → -1~1</p>
+</div>
+<div class="bg-slate-800 p-2 rounded-lg text-center">
+<div class="w-8 h-8 mx-auto mb-2 rounded-full bg-blue-500"></div>
+<p class="text-sm font-medium text-white">B 채널 = Z축</p>
+<p class="text-xs text-gray-300">0~255 → -1~1</p>
+</div>
+</div>
+<div class="bg-slate-800 bg-opacity-50 p-3 rounded-lg mb-3">
+<div class="flex items-center">
+<div class="w-12 text-center">
+<div class="bg-blue-500 bg-opacity-80 rounded-lg py-1 px-2 text-xs font-semibold">RGB</div>
+</div>
+<div class="flex-grow text-center">
+<p class="text-sm text-white font-medium">128, 128, 255</p>
+</div>
+<div class="w-16 text-center rgb-arrow"></div>
+<div class="w-12 text-center">
+<div class="bg-purple-500 bg-opacity-80 rounded-lg py-1 px-2 text-xs font-semibold">XYZ</div>
+</div>
+<div class="flex-grow text-center">
+<p class="text-sm text-white font-medium">0, 0, 1</p>
+</div>
+</div>
+</div>
+<p class="text-gray-300 text-sm">
+<span class="text-white font-medium">평면의 기본 법선 벡터 (0, 0, 1)</span>은 Z축 방향을 가리키며, 
+                            이것이 RGB 색상으로 변환되면 <span class="text-blue-300 font-medium">푸른색 (128, 128, 255)</span>이 됩니다. 
+                            이것이 대부분의 노말맵이 파란색을 띠는 이유입니다.
+                        </p>
+</div>
+<!-- Tangent Space vs Object Space -->
+<div class="card card-highlight rounded-xl p-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-vector-square text-purple-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">Tangent Space vs Object Space</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-purple-300">좌표계 변환</span>
+</div>
+<div class="grid grid-cols-2 gap-3 mb-3">
+<div class="bg-slate-800 p-3 rounded-lg">
+<h4 class="text-white font-medium mb-2">Tangent Space</h4>
+<p class="text-xs text-gray-300">메시의 로컬 좌표계 기준으로, 서피스 표면에 상대적인 법선 정보를 저장합니다. 이 방식이 <span class="text-white font-medium">파란색 기반</span> 노말맵을 사용합니다.</p>
+<div class="mt-2 text-center">
+<img alt="Tangent Space Vectors" class="h-16 inline-block diagram-border rounded" src="../resources/5b4ac24ffff14222b8ffce5e00658936.png"/>
+</div>
+</div>
+<div class="bg-slate-800 p-3 rounded-lg">
+<h4 class="text-white font-medium mb-2">Object Space</h4>
+<p class="text-xs text-gray-300">3D 오브젝트의 글로벌 좌표계 기준으로 법선 정보를 저장합니다. 다양한 색상이 나타나며 메시와 독립적으로 사용할 수 없습니다.</p>
+<div class="mt-2 text-center">
+<img alt="Object vs Tangent Space" class="h-16 inline-block diagram-border rounded" src="../resources/cf61b5e13dc41eadad7edc5f0ec02773.jpg"/>
+</div>
+</div>
+</div>
+<p class="text-sm text-gray-300">
+<span class="text-white font-medium">Tangent Space</span>가 업계 표준이며, 메시 변형에 대응하고 
+                            다양한 오브젝트에 재사용 가능한 장점이 있습니다.
+                        </p>
+</div>
+</div>
+<!-- Right Column - Practical Examples -->
+<div>
+<!-- Normal Map Examples -->
+<div class="card rounded-xl p-5 mb-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-images text-green-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">노말맵 시각적 예시</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-green-300">시각적 이해</span>
+</div>
+<div class="grid grid-cols-2 gap-3 mb-3">
+<div class="text-center">
+<img alt="Normal Map Example" class="w-full h-28 object-cover diagram-border rounded-lg" src="../resources/2fd880f0a0d9621ce579e7136ee30bc0.png"/>
+<p class="text-xs text-gray-300 mt-1">벽돌 텍스처와 노말맵</p>
+</div>
+<div class="text-center">
+<img alt="Normal Map Applied" class="w-full h-28 object-cover diagram-border rounded-lg" src="../resources/d8c4af47a1521ac71c27efee20cb10da.jpg"/>
+<p class="text-xs text-gray-300 mt-1">평면에 적용된 노말맵 효과</p>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex items-start">
+<i class="fas fa-arrow-right text-blue-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm">
+<span class="text-white font-medium">RGB 값 매핑:</span> 
+                                    R=128, G=128, B=255는 법선 벡터 (0,0,1)로, 평면에 수직인 방향을 의미합니다.
+                                </p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-arrow-right text-blue-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm">
+<span class="text-white font-medium">변환 공식:</span> 
+                                    RGB 값 0~255를 -1~1 범위로 변환: (RGB / 255) * 2 - 1
+                                </p>
+</div>
+</div>
+</div>
+<!-- Practical Application -->
+<div class="card card-example rounded-xl p-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-cogs text-yellow-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">3D 툴에서의 실제 적용</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-yellow-300">실무 활용</span>
+</div>
+<div class="space-y-3">
+<div class="bg-slate-800 p-3 rounded-lg">
+<h4 class="text-white font-medium mb-2">Maya/Houdini 노말맵 설정</h4>
+<div class="flex items-center">
+<div class="w-3/5">
+<p class="text-xs text-gray-300">3D 소프트웨어에서 노말맵 텍스처를 불러올 때 <span class="text-white font-medium">반드시 Raw/Non-Color Data로 설정</span>해야 RGB 값이 정확히 법선 벡터로 변환됩니다.</p>
+</div>
+<div class="w-2/5 pl-2">
+<img alt="Normal Map in 3D Tool" class="h-16 diagram-border rounded inline-block" src="../resources/f7474917a5d9e04ec471df0ac2abf4bd.jpg"/>
+</div>
+</div>
+</div>
+<div class="bg-slate-800 p-3 rounded-lg">
+<h4 class="text-white font-medium mb-2">렌더링 효과</h4>
+<div class="flex items-center">
+<p class="text-xs text-gray-300 w-3/5">
+                                        셰이더에서 노말맵은 <span class="text-white font-medium">라이팅 계산 단계</span>에서 
+                                        지오메트리 법선 벡터 대신 사용되어 빛의 반사 방향을 변경하고 미세한 표면 디테일을 
+                                        시뮬레이션합니다.
+                                    </p>
+<div class="w-2/5 pl-2">
+<img alt="Normal Vector Visualization" class="h-16 diagram-border rounded inline-block" src="../resources/253daf5e4482a2d03ee61fb5ffe6e305.png"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section - Code Example -->
+<div class="card rounded-xl p-4 mt-5">
+<div class="flex items-center mb-2">
+<i class="fas fa-code text-purple-400 mr-2"></i>
+<h3 class="text-lg font-bold text-white">셰이더에서의 노말맵 변환 코드</h3>
+</div>
+<div class="bg-slate-800 rounded-lg p-3 font-mono text-xs text-green-300">
+<span class="text-gray-400">// GLSL에서 노말맵 RGB 값을 -1~1 범위의 노말 벡터로 변환</span><br/>
+                    vec3 normalFromMap = texture(normalMap, texCoords).rgb;<br/>
+<span class="text-gray-400">// RGB(0-1) 값을 -1~1 범위로 변환</span><br/>
+                    vec3 normal = normalize(normalFromMap * 2.0 - 1.0);<br/>
+<span class="text-gray-400">// Tangent Space에서 World Space로 변환</span><br/>
+                    normal = normalize(TBN * normal);
+                </div>
+</div>
+</div>
+<!-- Footer -->
+<div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
+<div class="flex items-center">
+<i class="fas fa-university mr-2"></i>
+<span class="text-sm">Computer Graphics &amp; Data Management Course</span>
+</div>
+<div class="flex items-center space-x-4">
+<div class="progress-dots">
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot active"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+</div>
+<span class="text-sm">Slide 11 of 13</span>
+</div>
+</div>
+</div>
+</body>
+</html>

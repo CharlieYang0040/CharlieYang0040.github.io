@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Volumetric Light 개념 및 활용</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #0f172a;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .volumetric-effect {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background-color: rgba(139, 92, 246, 0.2);
+            border-radius: 50%;
+            filter: blur(40px);
+            top: -200px;
+            right: -200px;
+        }
+        
+        .light-ray {
+            position: absolute;
+            width: 2px;
+            height: 300px;
+            background-color: rgba(139, 92, 246, 0.5);
+            top: 0;
+        }
+        
+        .light-ray:nth-child(1) { left: 15%; }
+        .light-ray:nth-child(2) { left: 25%; }
+        .light-ray:nth-child(3) { right: 20%; }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            padding: 35px 50px;
+            min-height: 720px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .main-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            color: #8b5cf6;
+            font-weight: 500;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            flex: 1;
+        }
+        
+        .concept-section, .examples-section {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .section-icon {
+            width: 45px;
+            height: 45px;
+            background-color: #8b5cf6;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        
+        .definition-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #8b5cf6;
+            padding: 15px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .definition-text {
+            color: #e2e8f0;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .key-term {
+            color: #8b5cf6;
+            font-weight: 600;
+        }
+        
+        .effects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .effect-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .effect-card:hover {
+            background-color: rgba(139, 92, 246, 0.1);
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+        
+        .effect-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        
+        .fog-icon { background-color: #f59e0b; }
+        .rays-icon { background-color: #10b981; }
+        .atmos-icon { background-color: #3b82f6; }
+        .media-icon { background-color: #ec4899; }
+        
+        .effect-title {
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .effect-desc {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        
+        .renderer-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .renderer-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .renderer-logo {
+            height: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        
+        .renderer-name {
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .renderer-tag {
+            display: inline-block;
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        
+        .renderer-feature {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .renderer-feature i {
+            color: #10b981;
+            font-size: 0.7rem;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .example-card {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 80px;
+        }
+        
+        .example-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
+        }
+        
+        .example-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .example-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 8px;
+            color: white;
+        }
+        
+        .example-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .example-type {
+            font-size: 0.7rem;
+            color: #8b5cf6;
+            font-weight: 500;
+        }
+        
+        .large-example {
+            grid-column: 1 / -1;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        
+        .practice-guide {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+        }
+        
+        .guide-title {
+            color: #10b981;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .guide-steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        .guide-step {
+            color: #e2e8f0;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        
+        .step-number {
+            background-color: #10b981;
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .software-tag {
+            display: inline-block;
+            background-color: rgba(139, 92, 246, 0.2);
+            color: #8b5cf6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Background volumetric effects -->
+<div class="volumetric-effect"></div>
+<div class="light-ray"></div>
+<div class="light-ray"></div>
+<div class="light-ray"></div>
+<div class="content-wrapper">
+<!-- Header -->
+<div class="header-section">
+<h1 class="main-title">Volumetric Light 개념 및 활용</h1>
+<p class="subtitle">2024 최신 기술과 트렌드를 반영한 부피감 있는 라이팅 기법</p>
+</div>
+<!-- Main Content Grid -->
+<div class="main-content">
+<!-- Concept Section -->
+<div class="concept-section">
+<div class="section-header">
+<div class="section-icon">
+<i class="fas fa-cloud"></i>
+</div>
+<h2 class="section-title">개념 및 기법</h2>
+</div>
+<div class="definition-box">
+<div class="definition-text">
+<span class="key-term">Volumetric Light</span>는 빛이 공기 중의 안개나 입자와 상호작용하여 <span class="key-term">부피감 있는 효과</span>를 만들어내는 고급 라이팅 기법입니다.
+                        </div>
+<div class="definition-text" style="font-size: 0.9rem; color: #94a3b8;">
+                            2024년 현재 실시간 렌더링에서도 고품질 볼륨 라이팅이 가능해져 영화급 시각 효과를 게임과 실시간 애플리케이션에서도 구현할 수 있게 되었습니다.
+                        </div>
+</div>
+<div class="effects-grid">
+<div class="effect-card">
+<div class="effect-icon fog-icon">
+<i class="fas fa-smog"></i>
+</div>
+<div class="effect-title">Fog 효과</div>
+<div class="effect-desc">
+                                안개를 통과하는 빛의 산란으로 부드럽고 몽환적인 분위기 연출
+                            </div>
+</div>
+<div class="effect-card">
+<div class="effect-icon rays-icon">
+<i class="fas fa-sun"></i>
+</div>
+<div class="effect-title">God Rays</div>
+<div class="effect-desc">
+                                창문이나 구멍을 통해 들어오는 극적인 빛줄기 표현
+                            </div>
+</div>
+<div class="effect-card">
+<div class="effect-icon atmos-icon">
+<i class="fas fa-cloud-sun"></i>
+</div>
+<div class="effect-title">Atmospheric Scattering</div>
+<div class="effect-desc">
+                                대기 내 빛의 산란 현상, 해질녘 하늘 색상 변화와 실외 장면 연출
+                            </div>
+</div>
+<div class="effect-card">
+<div class="effect-icon media-icon">
+<i class="fas fa-atom"></i>
+</div>
+<div class="effect-title">Participating Media</div>
+<div class="effect-desc">
+                                빛이 통과하는 매질(연기, 물, 안개)의 물리적 특성과 빛의 상호작용
+                            </div>
+</div>
+</div>
+<div class="renderer-cards">
+<div class="renderer-card">
+<div class="renderer-logo">
+<span class="renderer-name">Unreal Engine 5</span>
+<span class="renderer-tag">실시간</span>
+</div>
+<div class="renderer-feature">
+<i class="fas fa-check-circle"></i>
+                                Nanite &amp; Lumen 기반 실시간 볼륨 산란
+                            </div>
+<div class="renderer-feature">
+<i class="fas fa-check-circle"></i>
+                                Exponential Height Fog 시스템
+                            </div>
+</div>
+<div class="renderer-card">
+<div class="renderer-logo">
+<span class="renderer-name">Arnold GPU</span>
+<span class="renderer-tag">2024</span>
+</div>
+<div class="renderer-feature">
+<i class="fas fa-check-circle"></i>
+                                GPU 가속 볼륨 렌더링
+                            </div>
+<div class="renderer-feature">
+<i class="fas fa-check-circle"></i>
+                                OpenVDB 지원 고해상도 볼륨
+                            </div>
+</div>
+<div class="renderer-card">
+<div class="renderer-logo">
+<span class="renderer-name">V-Ray 6</span>
+<span class="renderer-tag">하이브리드</span>
+</div>
+<div class="renderer-feature">
+<i class="fas fa-check-circle"></i>
+                                Phoenix FD 통합 시뮬레이션
+                            </div>
+<div class="renderer-feature">
+<i class="fas fa-check-circle"></i>
+                                VRayFog &amp; VRayEnvironmentFog
+                            </div>
+</div>
+<div class="renderer-card">
+<div class="renderer-logo">
+<span class="renderer-name">Maya &amp; Bifrost</span>
+<span class="renderer-tag">볼륨 워크플로우</span>
+</div>
+<div class="renderer-feature">
+<i class="fas fa-check-circle"></i>
+                                Aero 시스템 볼륨 시뮬레이션
+                            </div>
+<div class="renderer-feature">
+<i class="fas fa-check-circle"></i>
+                                프로시저럴 볼륨 생성 그래프
+                            </div>
+</div>
+</div>
+</div>
+<!-- Examples Section -->
+<div class="examples-section">
+<div class="section-header">
+<div class="section-icon">
+<i class="fas fa-film"></i>
+</div>
+<h2 class="section-title">최신 영화 &amp; 게임 예시</h2>
+</div>
+<div class="large-example example-card">
+<img alt="Blade Runner 2049 Volumetric Lighting" class="example-image" src="../resources/90c6b3d5dec06b8282815841bb0ab3c1.png"/>
+<div class="example-overlay">
+<div class="example-title">Blade Runner 2049</div>
+<div class="example-type">Roger Deakins의 볼륨 라이팅 걸작</div>
+</div>
+</div>
+<div class="examples-grid">
+<div class="example-card">
+<img alt="Dune Volumetric Lighting" class="example-image" src="../resources/21d1a7c21a61d713542cdfbec3e4b24b.png"/>
+<div class="example-overlay">
+<div class="example-title">Dune (2021)</div>
+<div class="example-type">사막 먼지와 빛의 상호작용</div>
+</div>
+</div>
+<div class="example-card">
+<img alt="Avengers Endgame Volumetric" class="example-image" src="../resources/bb7154505f2d854b3c1819b4a62e8c23.png"/>
+<div class="example-overlay">
+<div class="example-title">Avengers: Endgame</div>
+<div class="example-type">마블 시네마틱 볼륨 효과</div>
+</div>
+</div>
+<div class="example-card">
+<img alt="UE5 Real-time Volumetric" class="example-image" src="../resources/3d94b306146466cde5e6273d45825bba.jpg"/>
+<div class="example-overlay">
+<div class="example-title">Unreal Engine 5</div>
+<div class="example-type">실시간 볼륨 렌더링</div>
+</div>
+</div>
+<div class="example-card">
+<img alt="The Matrix Resurrections" class="example-image" src="../resources/954c8e441e0ae579a0428da4907e0dca.jpg"/>
+<div class="example-overlay">
+<div class="example-title">The Matrix Resurrections</div>
+<div class="example-type">디지털 볼륨 효과</div>
+</div>
+</div>
+</div>
+<div class="practice-guide">
+<div class="guide-title">
+<i class="fas fa-tools"></i>
+                            렌더러별 실습 가이드
+                        </div>
+<div class="guide-steps">
+<div class="guide-step">
+<div class="step-number">1</div>
+<span class="software-tag">UE5</span> Exponential Height Fog + Volume 조절
+                            </div>
+<div class="guide-step">
+<div class="step-number">2</div>
+<span class="software-tag">Maya</span> Bifrost Aero 시스템 설정
+                            </div>
+<div class="guide-step">
+<div class="step-number">3</div>
+<span class="software-tag">Arnold</span> aiVolume과 aiAtmosphereVolume 설정
+                            </div>
+<div class="guide-step">
+<div class="step-number">4</div>
+<span class="software-tag">V-Ray</span> VRayEnvironmentFog 활성화
+                            </div>
+<div class="guide-step">
+<div class="step-number">5</div>
+<span class="software-tag">UE5</span> Lumen GI + Volumetric 연동
+                            </div>
+<div class="guide-step">
+<div class="step-number">6</div>
+<span class="software-tag">Arnold</span> Volume Scatter 설정 최적화
+                            </div>
+<div class="guide-step">
+<div class="step-number">7</div>
+<span class="software-tag">모든 렌더러</span> 광원 형태와 강도 조절
+                            </div>
+<div class="guide-step">
+<div class="step-number">8</div>
+<span class="software-tag">후처리</span> Denoising 및 디테일 강화
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PBR 워크플로우 및 재질 세팅</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #0f172a;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pbr-highlight {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background-color: rgba(56, 189, 248, 0.15);
+            border-radius: 50%;
+            filter: blur(40px);
+            bottom: -150px;
+            left: -150px;
+        }
+        
+        .pbr-light {
+            position: absolute;
+            width: 3px;
+            height: 200px;
+            background-color: rgba(56, 189, 248, 0.5);
+            transform-origin: top;
+        }
+        
+        .pbr-light:nth-child(2) { right: 20%; top: 50px; transform: rotate(10deg); }
+        .pbr-light:nth-child(3) { right: 35%; top: 30px; transform: rotate(-12deg); }
+        .pbr-light:nth-child(4) { right: 50%; top: 20px; transform: rotate(5deg); }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            padding: 35px 50px;
+            min-height: 720px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .main-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            color: #38bdf8;
+            font-weight: 500;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            flex: 1;
+        }
+        
+        .concept-section, .examples-section {
+            opacity: 1;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .section-icon {
+            width: 45px;
+            height: 45px;
+            background-color: #38bdf8;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        
+        .definition-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #38bdf8;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .definition-text {
+            color: #e2e8f0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        
+        .key-term {
+            color: #38bdf8;
+            font-weight: 600;
+        }
+        
+        .technique-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .technique-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .technique-card:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+            transform: translateY(-5px);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+        
+        .technique-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        .metalness-icon {
+            background-color: #94a3b8;
+        }
+        
+        .roughness-icon {
+            background-color: #0ea5e9;
+        }
+        
+        .arnold-icon {
+            background-color: #8b5cf6;
+        }
+        
+        .energy-icon {
+            background-color: #f59e0b;
+        }
+        
+        .technique-title {
+            color: #e2e8f0;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .technique-desc {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .example-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 120px;
+        }
+        
+        .example-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.2);
+        }
+        
+        .example-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .example-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 10px;
+            color: white;
+        }
+        
+        .example-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .example-type {
+            font-size: 0.7rem;
+            color: #38bdf8;
+            font-weight: 500;
+        }
+        
+        .large-example {
+            grid-column: 1 / -1;
+            height: 140px;
+            margin-bottom: 15px;
+        }
+        
+        .practice-guide {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+        }
+        
+        .guide-title {
+            color: #10b981;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .guide-steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .guide-step {
+            color: #e2e8f0;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .step-number {
+            background-color: #10b981;
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .software-tag {
+            display: inline-block;
+            background-color: rgba(139, 92, 246, 0.2);
+            color: #8b5cf6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Background PBR effects -->
+<div class="pbr-highlight"></div>
+<div class="pbr-light"></div>
+<div class="pbr-light"></div>
+<div class="pbr-light"></div>
+<div class="content-wrapper">
+<!-- Header -->
+<div class="header-section">
+<h1 class="main-title">PBR 워크플로우 및 재질 세팅</h1>
+<p class="subtitle">Physically Based Rendering의 원리와 실사적 재질 표현</p>
+</div>
+<!-- Main Content Grid -->
+<div class="main-content">
+<!-- Concept Section -->
+<div class="concept-section">
+<div class="section-header">
+<div class="section-icon">
+<i class="fas fa-cube"></i>
+</div>
+<h2 class="section-title">PBR 원리와 특성</h2>
+</div>
+<div class="definition-box">
+<div class="definition-text">
+<span class="key-term">Physically Based Rendering(PBR)</span>은 실제 세계의 <span class="key-term">물리적 빛 상호작용</span>을 시뮬레이션하여 사실적인 재질과 조명을 구현하는 렌더링 기법입니다.
+                        </div>
+<div class="definition-text" style="font-size: 0.95rem; color: #94a3b8;">
+                            에너지 보존 법칙, 미세면 이론, 프레넬 효과 등 물리 기반 알고리즘을 활용하여 모든 시점과 조명 조건에서 일관된 재질 표현이 가능합니다.
+                        </div>
+</div>
+<div class="technique-cards">
+<div class="technique-card">
+<div class="technique-icon metalness-icon">
+<i class="fas fa-bolt"></i>
+</div>
+<div class="technique-title">Metalness 워크플로우</div>
+<div class="technique-desc">
+                                금속/비금속 구분을 통한 재질 표현 방식, 다양한 게임 엔진과 호환성 우수
+                            </div>
+</div>
+<div class="technique-card">
+<div class="technique-icon roughness-icon">
+<i class="fas fa-wind"></i>
+</div>
+<div class="technique-title">Roughness 제어</div>
+<div class="technique-desc">
+                                표면 거칠기 정도로 반사의 선명도와 확산 정도를 제어
+                            </div>
+</div>
+<div class="technique-card">
+<div class="technique-icon arnold-icon">
+<i class="fas fa-palette"></i>
+</div>
+<div class="technique-title">aiStandardSurface</div>
+<div class="technique-desc">
+                                Arnold의 올인원 쉐이더로 다양한 PBR 재질 구현 가능
+                            </div>
+</div>
+<div class="technique-card">
+<div class="technique-icon energy-icon">
+<i class="fas fa-sync-alt"></i>
+</div>
+<div class="technique-title">에너지 보존</div>
+<div class="technique-desc">
+                                물리 법칙에 따라 표면에서 반사되는 빛의 총량은 입사광을 초과하지 않음
+                            </div>
+</div>
+</div>
+</div>
+<!-- Examples Section -->
+<div class="examples-section">
+<div class="section-header">
+<div class="section-icon">
+<i class="fas fa-layer-group"></i>
+</div>
+<h2 class="section-title">PBR 셋업 및 예시</h2>
+</div>
+<div class="large-example example-card">
+<img alt="OpenPBR Surface UI in Arnold" class="example-image" src="../resources/700375e533dadc95b06481dee7c7d638.jpg"/>
+<div class="example-overlay">
+<div class="example-title">OpenPBR Surface UI - Arnold</div>
+<div class="example-type">업계 표준 파라미터로 구성된 PBR 쉐이더</div>
+</div>
+</div>
+<div class="examples-grid">
+<div class="example-card">
+<img alt="PBR Shaders Visualization" class="example-image" src="../resources/b1d54346df16cce5a88034f2d817051c.jpg"/>
+<div class="example-overlay">
+<div class="example-title">PBR 쉐이더 시각화</div>
+<div class="example-type">Arnold 매개변수 분석</div>
+</div>
+</div>
+<div class="example-card">
+<img alt="Metal/Roughness/Specular Setup" class="example-image" src="../resources/1648eca2abc69b87b2a90609dfe642cd.jpg"/>
+<div class="example-overlay">
+<div class="example-title">MRS 워크플로우</div>
+<div class="example-type">메탈/러프니스/스페큘러</div>
+</div>
+</div>
+<div class="example-card">
+<img alt="PBR Workflow in Maya" class="example-image" src="../resources/791f1ae20d11ffa48c47a7e9526580f5.jpg"/>
+<div class="example-overlay">
+<div class="example-title">Maya PBR 워크플로우</div>
+<div class="example-type">Arnold 렌더러 적용</div>
+</div>
+</div>
+<div class="example-card">
+<img alt="PBR Material Shader Ball" class="example-image" src="../resources/9eb65790775e5ae52d5ad26caa950e4d.jpg"/>
+<div class="example-overlay">
+<div class="example-title">쉐이더 볼 테스트</div>
+<div class="example-type">재질 검증 기법</div>
+</div>
+</div>
+</div>
+<div class="practice-guide">
+<div class="guide-title">
+<i class="fas fa-tools"></i>
+                            PBR 재질 실습 가이드
+                        </div>
+<div class="guide-steps">
+<div class="guide-step">
+<div class="step-number">1</div>
+<span class="software-tag">Maya</span><span class="software-tag">Arnold</span> aiStandardSurface 쉐이더 생성
+                            </div>
+<div class="guide-step">
+<div class="step-number">2</div>
+                                Base Color에 Albedo/Diffuse 맵 연결
+                            </div>
+<div class="guide-step">
+<div class="step-number">3</div>
+                                Metalness 값 설정 (금속 1.0, 비금속 0.0)
+                            </div>
+<div class="guide-step">
+<div class="step-number">4</div>
+                                Roughness 맵으로 표면 거칠기 제어
+                            </div>
+<div class="guide-step">
+<div class="step-number">5</div>
+                                Normal 맵으로 표면 디테일 강화
+                            </div>
+<div class="guide-step">
+<div class="step-number">6</div>
+<span class="software-tag">OpenPBR</span> 표준 워크플로우로 여러 엔진 호환성 확보
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

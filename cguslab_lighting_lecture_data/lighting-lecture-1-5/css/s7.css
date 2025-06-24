@@ -1,0 +1,37 @@
+.light-beam-1 {
+    top: 100px;
+    left: 200px;
+    width: 600px;
+    height: 50px;
+    opacity: 0.2;
+    transform: rotate(-10deg);
+}
+.light-beam-2 {
+    bottom: 150px;
+    right: 200px;
+    width: 400px;
+    height: 60px;
+    opacity: 0.3;
+    transform: rotate(15deg);
+}
+.light-beam-3 {
+    top: 300px;
+    left: 50%;
+    width: 300px;
+    height: 40px;
+    opacity: 0.15;
+    transform: rotate(0deg);
+}
+.choice-node-root { top: 0; left: 40%; transform: translateX(-50%); }
+.choice-line-1 { top: 20px; left: 40%; width: 80px; transform: translateX(-50%) rotate(-45deg); }
+.choice-line-2 { top: 20px; left: 40%; width: 80px; transform: translateX(-50%) rotate(45deg); }
+.choice-node-motivated { top: 70px; left: 25%; }
+.choice-node-simulation { top: 70px; left: 75%; }
+.choice-line-3 { top: 94px; left: 25%; width: 60px; transform: translateX(-50%) rotate(-30deg); }
+.choice-line-4 { top: 94px; left: 25%; width: 60px; transform: translateX(-50%) rotate(30deg); }
+.choice-line-5 { top: 94px; left: 75%; width: 60px; transform: translateX(-50%) rotate(-30deg); }
+.choice-line-6 { top: 94px; left: 75%; width: 60px; transform: translateX(-50%) rotate(30deg); }
+.choice-node-movie { top: 130px; left: 15%; }
+.choice-node-game { top: 130px; left: 35%; }
+.choice-node-archviz { top: 130px; left: 65%; }
+.choice-node-vr { top: 130px; left: 85%; } 

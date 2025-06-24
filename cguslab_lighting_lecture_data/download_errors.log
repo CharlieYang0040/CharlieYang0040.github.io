@@ -1,0 +1,18 @@
+[오류] 다운로드 실패: https://knilt.arcc.albany.edu/images/3/3c/Lighting_Direction.jpg, 이유: HTTPSConnectionPool(host='knilt.arcc.albany.edu', port=443): Max retries exceeded with url: /images/3/3c/Lighting_Direction.jpg (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1007)')))
+  - 위치: 강의: lighting-lecture-1-1, 슬라이드: 31
+[오류] 다운로드 실패: https://graf1x.com/wp-content/uploads/2014/09/color-scheme.jpg, 이유: 요청 시간 초과 (10초)
+  - 위치: 강의: lighting-lecture-1-1, 슬라이드: 33
+[오류] 다운로드 실패: https://www.photopills.com/sites/default/files/tutorials/2017/exposure-triangle-guide-photography-aperture.jpg, 이유: 404 Client Error: Not Found for url: https://www.photopills.com/sites/default/files/tutorials/2017/exposure-triangle-guide-photography-aperture.jpg
+  - 위치: 강의: lighting-lecture-1-1, 슬라이드: 35
+[오류] 다운로드 실패: https://shuttermuse.com/wp-content/uploads/2020/09/exposure-triangle-shutter-speed.jpg, 이유: 404 Client Error: Not Found for url: https://shuttermuse.com/wp-content/uploads/2020/09/exposure-triangle-shutter-speed.jpg
+  - 위치: 강의: lighting-lecture-1-1, 슬라이드: 35
+[오류] 다운로드 실패: https://vrender.com/wp-content/uploads/2016/10/interior-using-VRaySun.jpg, 이유: 요청 시간 초과 (10초)
+  - 위치: 강의: lighting-lecture-1-2, 슬라이드: 5
+[오류] 다운로드 실패: https://vrender.com/wp-content/uploads/2016/10/interior-using-VRaySun.jpg, 이유: 요청 시간 초과 (10초)
+  - 위치: 강의: lighting-lecture-1-2, 슬라이드: 6
+[오류] 다운로드 실패: https://www.researchgate.net/publication/242383784/figure/fig3/AS:298469525868563@1448172088633/Left-Hard-shadows-from-a-point-light-source-Right-Soft-shadows-from-an-area-light.png, 이유: 403 Client Error: Forbidden for url: https://www.researchgate.net/publication/242383784/figure/fig3/AS:298469525868563@1448172088633/Left-Hard-shadows-from-a-point-light-source-Right-Soft-shadows-from-an-area-light.png
+  - 위치: 강의: lighting-lecture-1-2, 슬라이드: 8
+[오류] 다운로드 실패: https://seemomclick.com/wp-content/uploads/2015/05/Before-Lighting.jpg, 이유: 403 Client Error: Forbidden for url: https://seemomclick.com/wp-content/uploads/2015/05/Before-Lighting.jpg
+  - 위치: 강의: lighting-lecture-1-5, 슬라이드: 4
+[오류] 다운로드 실패: https://www.researchgate.net/publication/242383784/figure/fig3/AS:298469525868563@1448172088633/Left-Hard-shadows-from-a-point-light-source-Right-Soft-shadows-from-an-area-light.png, 이유: 403 Client Error: Forbidden for url: https://www.researchgate.net/publication/242383784/figure/fig3/AS:298469525868563@1448172088633/Left-Hard-shadows-from-a-point-light-source-Right-Soft-shadows-from-an-area-light.png
+  - 위치: 강의: lighting-lecture-1-5, 슬라이드: 5

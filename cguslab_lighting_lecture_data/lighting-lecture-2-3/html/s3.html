@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>컴퓨터의 데이터 저장법과 3D 그래픽스 데이터 구조</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .title-accent {
+            color: #60a5fa;
+        }
+        .card {
+            background-color: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .card-highlight {
+            border-left: 4px solid #60a5fa;
+        }
+        .diagram-border {
+            border: 2px solid rgba(59, 130, 246, 0.4);
+        }
+        .number-badge {
+            background-color: #4f46e5;
+        }
+        .tech-badge {
+            background-color: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+        .code-block {
+            font-family: monospace;
+            background-color: rgba(15, 23, 42, 0.8);
+            border-radius: 0.375rem;
+            padding: 0.75rem;
+            font-size: 0.75rem;
+            line-height: 1.25rem;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .binary-bit {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            margin: 0 2px;
+            border-radius: 3px;
+        }
+        .bit-0 {
+            background-color: rgba(100, 116, 139, 0.5);
+            color: #e2e8f0;
+        }
+        .bit-1 {
+            background-color: rgba(56, 189, 248, 0.6);
+            color: #0f172a;
+        }
+        .progress-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(156, 163, 175, 0.3);
+        }
+        .dot.active {
+            background-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container relative bg-slate-900">
+<!-- Main Content -->
+<div class="relative z-10 px-12 py-10">
+<!-- Header Section -->
+<div class="mb-6">
+<div class="flex items-center mb-3">
+<div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">
+                        3.1.1
+                    </div>
+<h1 class="text-4xl font-black">컴퓨터의 데이터 저장법과 <span class="title-accent">3D 그래픽스 데이터 구조</span></h1>
+</div>
+<p class="text-gray-400 text-lg ml-14">바이너리 데이터에서 Vertex 구조체까지</p>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-2 gap-6">
+<!-- Left Column - Binary & Float Data -->
+<div>
+<!-- Binary Data Representation -->
+<div class="card rounded-xl p-5 mb-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-microchip text-blue-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">컴퓨터 메모리와 이진 데이터</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-blue-300">기본 개념</span>
+</div>
+<!-- Binary Data Visual -->
+<div class="mb-3 flex justify-center">
+<div class="p-3 bg-slate-800 rounded-lg">
+<div class="text-center mb-2 text-xs text-gray-400">4바이트 float 값 (3.14159)</div>
+<div class="flex justify-center mb-1">
+<span class="binary-bit bit-0">0</span>
+<span class="binary-bit bit-1">1</span>
+<span class="binary-bit bit-0">0</span>
+<span class="binary-bit bit-0">0</span>
+<span class="binary-bit bit-0">0</span>
+<span class="binary-bit bit-0">0</span>
+<span class="binary-bit bit-0">0</span>
+<span class="binary-bit bit-1">1</span>
+<span class="text-gray-500 mx-1">|</span>
+<span class="binary-bit bit-1">1</span>
+<span class="binary-bit bit-0">0</span>
+<span class="binary-bit bit-0">0</span>
+<span class="binary-bit bit-0">0</span>
+</div>
+<div class="flex justify-center text-xs text-gray-400">
+<span class="w-[168px] text-center">부호+지수부</span>
+<span class="w-[84px] text-center">가수부</span>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex items-start">
+<i class="fas fa-memory text-green-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">데이터 타입 크기</span> - int(4바이트), float(4바이트), double(8바이트)</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-memory text-green-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">메모리 정렬</span> - 데이터 액세스 최적화를 위한 바이트 정렬</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-memory text-green-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">바이트 순서</span> - 엔디안(Endian) 차이에 따른 데이터 저장 순서</p>
+</div>
+</div>
+</div>
+<!-- Float3 Data Structure -->
+<div class="card card-highlight rounded-xl p-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-cube text-purple-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">Float3 벡터 데이터</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-purple-300">3D 기초</span>
+</div>
+<!-- Float3 Vector Illustration -->
+<div class="mb-3 flex justify-center">
+<div class="code-block text-green-300 w-full">
+<span class="text-gray-400">// C++ 에서의 Float3 벡터 정의</span>
+struct Float3 {
+    float x;  <span class="text-gray-400">// 4바이트</span>
+    float y;  <span class="text-gray-400">// 4바이트</span>
+    float z;  <span class="text-gray-400">// 4바이트</span>
+};  <span class="text-gray-400">// 총 12바이트</span>
+<span class="text-gray-400">// 메모리에서의 모습 (바이트 단위)</span>
+// [x x x x][y y y y][z z z z]
+                            </div>
+</div>
+<div class="space-y-2">
+<div class="flex items-start">
+<i class="fas fa-vector-square text-blue-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">Float3 용도</span> - 위치(position), 방향(direction), 색상(RGB) 표현</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-vector-square text-blue-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">SIMD 최적화</span> - 4개 값(Float4)으로 패딩하여 벡터 연산 가속</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column - Vertex Structure -->
+<div>
+<!-- Vertex Structure -->
+<div class="card rounded-xl p-5 mb-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-draw-polygon text-yellow-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">Vertex 구조체 데이터</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-yellow-300">GPU 데이터</span>
+</div>
+<!-- Vertex Structure Diagram -->
+<div class="mb-3">
+<img alt="Memory Alignment Diagram" class="w-full h-32 object-contain diagram-border rounded-lg" src="../resources/9a7d006f25e1a3aa8056e1539c3bc1f4.jpg"/>
+</div>
+<div class="code-block text-blue-300 w-full mb-3">
+<span class="text-gray-400">// 3D 메시의 일반적인 Vertex 구조체</span>
+struct Vertex {
+    Float3 position;  <span class="text-gray-400">// 위치 (12바이트)</span>
+    Float3 normal;    <span class="text-gray-400">// 법선 벡터 (12바이트)</span>
+    Float2 texCoord;  <span class="text-gray-400">// UV 좌표 (8바이트)</span>
+    Float4 color;     <span class="text-gray-400">// 색상 (16바이트)</span>
+};  <span class="text-gray-400">// 총 48바이트</span>
+</div>
+<div class="space-y-2">
+<div class="flex items-start">
+<i class="fas fa-project-diagram text-green-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">Vertex Buffer</span> - GPU 메모리에 저장되는 정점 데이터 배열</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-project-diagram text-green-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">Stride &amp; Offset</span> - 각 정점 크기와 속성 위치 지정</p>
+</div>
+</div>
+</div>
+<!-- GPU Memory Organization -->
+<div class="card card-highlight rounded-xl p-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-memory text-green-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">GPU 메모리와 데이터 레이아웃</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-green-300">렌더링 파이프라인</span>
+</div>
+<!-- Memory Layout Visualization -->
+<div class="mb-3 bg-slate-800 p-3 rounded-lg">
+<div class="flex flex-col space-y-2">
+<div class="flex items-center">
+<div class="w-24 text-xs text-gray-300">Position 배열:</div>
+<div class="flex-1 flex items-center bg-blue-900 bg-opacity-20 rounded p-1">
+<div class="h-6 bg-blue-600 bg-opacity-40 rounded px-2 flex items-center">
+<span class="text-xs">P₁(x,y,z)</span>
+</div>
+<div class="h-6 bg-blue-600 bg-opacity-40 rounded px-2 ml-1 flex items-center">
+<span class="text-xs">P₂(x,y,z)</span>
+</div>
+<div class="h-6 bg-blue-600 bg-opacity-40 rounded px-2 ml-1 flex items-center">
+<span class="text-xs">P₃(x,y,z)</span>
+</div>
+<div class="text-xs ml-1">...</div>
+</div>
+</div>
+<div class="flex items-center">
+<div class="w-24 text-xs text-gray-300">Normal 배열:</div>
+<div class="flex-1 flex items-center bg-purple-900 bg-opacity-20 rounded p-1">
+<div class="h-6 bg-purple-600 bg-opacity-40 rounded px-2 flex items-center">
+<span class="text-xs">N₁(x,y,z)</span>
+</div>
+<div class="h-6 bg-purple-600 bg-opacity-40 rounded px-2 ml-1 flex items-center">
+<span class="text-xs">N₂(x,y,z)</span>
+</div>
+<div class="h-6 bg-purple-600 bg-opacity-40 rounded px-2 ml-1 flex items-center">
+<span class="text-xs">N₃(x,y,z)</span>
+</div>
+<div class="text-xs ml-1">...</div>
+</div>
+</div>
+<div class="flex items-center">
+<div class="w-24 text-xs text-gray-300">UV 배열:</div>
+<div class="flex-1 flex items-center bg-green-900 bg-opacity-20 rounded p-1">
+<div class="h-6 bg-green-600 bg-opacity-40 rounded px-2 flex items-center">
+<span class="text-xs">UV₁(u,v)</span>
+</div>
+<div class="h-6 bg-green-600 bg-opacity-40 rounded px-2 ml-1 flex items-center">
+<span class="text-xs">UV₂(u,v)</span>
+</div>
+<div class="h-6 bg-green-600 bg-opacity-40 rounded px-2 ml-1 flex items-center">
+<span class="text-xs">UV₃(u,v)</span>
+</div>
+<div class="text-xs ml-1">...</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-blue-900 bg-opacity-20 rounded-lg p-3 border border-blue-800">
+<div class="flex items-start">
+<i class="fas fa-lightbulb text-yellow-400 text-lg mt-1 mr-3"></i>
+<p class="text-gray-300 text-sm">
+<span class="font-medium text-white">메모리 레이아웃:</span> 
+                                    구조체 배열(AoS)은 캐시 친화적, 배열 구조체(SoA)는 SIMD 연산에 최적화됩니다.
+                                    레이팅 계산 시 법선 벡터의 정확한 표현이 중요합니다.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
+<div class="flex items-center">
+<i class="fas fa-university mr-2"></i>
+<span class="text-sm">Computer Graphics &amp; Data Management Course</span>
+</div>
+<div class="flex items-center space-x-4">
+<div class="progress-dots">
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot active"></div>
+</div>
+<span class="text-sm">Slide 10 of 13</span>
+</div>
+</div>
+</div>
+</body>
+</html>

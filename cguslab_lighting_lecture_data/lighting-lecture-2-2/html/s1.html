@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>컬러스페이스와 Render Elements 완전 정복</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;family=Roboto:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', 'Roboto', sans-serif;
+        }
+        .bg-tech-dark {
+            background-color: #0f172a;
+        }
+        .tech-grid {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .slide-in {
+            animation: slideInFromLeft 1s ease-out;
+        }
+        @keyframes slideInFromLeft {
+            0% { transform: translateX(-100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        .fade-in {
+            animation: fadeIn 1.5s ease-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="m-0 p-0">
+<div class="w-full bg-tech-dark tech-grid relative overflow-hidden" style="width: 1280px; min-height: 720px;">
+<!-- Background Decorative Elements -->
+<div class="absolute top-0 right-0 w-96 h-96 opacity-10">
+<img alt="ACES Pipeline" class="w-full h-full object-cover floating-element" src="../resources/7810c4e0cb25b28c030fb9027a1437fe.png"/>
+</div>
+<!-- Geometric Background Elements -->
+<div class="absolute top-20 left-20 w-32 h-32 border-2 border-blue-300 opacity-20 rotate-45 floating-element"></div>
+<div class="absolute bottom-32 right-32 w-24 h-24 border-2 border-purple-300 opacity-20 rotate-12" style="animation-delay: -3s;"></div>
+<!-- Main Content Container -->
+<div class="relative z-10 flex items-center justify-center min-h-screen px-16">
+<div class="max-w-5xl w-full">
+<!-- Course Badge -->
+<div class="slide-in mb-8">
+<div class="inline-flex items-center px-6 py-3 bg-white bg-opacity-10 backdrop-blur-lg rounded-full border border-white border-opacity-20">
+<i class="fas fa-palette text-blue-300 mr-3 text-lg"></i>
+<span class="text-blue-100 font-medium">컴퓨터 그래픽스 고급 과정</span>
+</div>
+</div>
+<!-- Main Title -->
+<div class="slide-in mb-6" style="animation-delay: 0.3s;">
+<h1 class="text-6xl font-black text-white leading-tight mb-4">
+<span class="block">2개월차 2강</span>
+<span class="block text-blue-300">컬러스페이스와</span>
+<span class="block text-purple-300">Render Elements</span>
+<span class="block text-yellow-300">완전 정복</span>
+</h1>
+</div>
+<!-- Subtitle -->
+<div class="fade-in mb-10" style="animation-delay: 0.6s;">
+<p class="text-xl text-blue-100 font-light leading-relaxed max-w-3xl">
+                        전문적인 색상 관리와 효율적인 후반 작업을 위한<br/>
+<span class="text-white font-medium">sRGB, ACES 컬러스페이스</span>와 <span class="text-white font-medium">AOVs 렌더 패스</span> 마스터클래스
+                    </p>
+</div>
+<!-- Key Features -->
+<div class="fade-in grid grid-cols-3 gap-8 mb-12" style="animation-delay: 0.9s;">
+<div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 border border-white border-opacity-20">
+<div class="flex items-center mb-4">
+<i class="fas fa-eye text-blue-400 text-2xl mr-3"></i>
+<h3 class="text-white font-semibold text-lg">색상 일관성</h3>
+</div>
+<p class="text-blue-100 text-sm">ACES &amp; OCIO 파이프라인을 통한 프로젝트 전반의 색상 관리</p>
+</div>
+<div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 border border-white border-opacity-20">
+<div class="flex items-center mb-4">
+<i class="fas fa-layer-group text-purple-400 text-2xl mr-3"></i>
+<h3 class="text-white font-semibold text-lg">렌더 최적화</h3>
+</div>
+<p class="text-blue-100 text-sm">AOVs와 Cryptomatte를 활용한 효율적인 후처리 및 합성 워크플로우</p>
+</div>
+<div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 border border-white border-opacity-20">
+<div class="flex items-center mb-4">
+<i class="fas fa-film text-yellow-400 text-2xl mr-3"></i>
+<h3 class="text-white font-semibold text-lg">실무 적용</h3>
+</div>
+<p class="text-blue-100 text-sm">영화 및 애니메이션 산업의 실제 사례와 베스트 프랙티스</p>
+</div>
+</div>
+<!-- Advanced Topics Banner -->
+<div class="fade-in mb-10" style="animation-delay: 1.1s;">
+<div class="bg-white bg-opacity-5 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-10">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<i class="fas fa-star text-yellow-400 text-xl mr-3"></i>
+<span class="text-white font-medium">확장된 고급 내용 포함</span>
+</div>
+<div class="flex space-x-4">
+<div class="text-center px-3">
+<span class="text-blue-300 text-sm">Linear Workflow</span>
+</div>
+<div class="text-center px-3">
+<span class="text-purple-300 text-sm">ACES 2.0</span>
+</div>
+<div class="text-center px-3">
+<span class="text-green-300 text-sm">Cryptomatte</span>
+</div>
+<div class="text-center px-3">
+<span class="text-red-300 text-sm">OpenEXR</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Instructor Info -->
+<div class="fade-in flex items-center justify-between" style="animation-delay: 1.2s;">
+<div class="flex items-center">
+<div class="w-16 h-16 bg-white bg-opacity-10 backdrop-blur-sm rounded-full flex items-center justify-center mr-4 border border-white border-opacity-20">
+<i class="fas fa-user-graduate text-white text-xl"></i>
+</div>
+<div>
+<p class="text-white font-semibold text-lg">컴퓨터 그래픽스 전문가 과정</p>
+<p class="text-blue-200 text-sm">Professional Color Management &amp; Rendering</p>
+</div>
+</div>
+<div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl px-6 py-4 border border-white border-opacity-20">
+<div class="text-center">
+<p class="text-blue-200 text-sm mb-1">수업 시간</p>
+<p class="text-white font-bold text-xl">120분</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Decorative Line -->
+<div class="absolute bottom-0 left-0 w-full h-2 bg-blue-500"></div>
+</div>
+</body>
+</html>

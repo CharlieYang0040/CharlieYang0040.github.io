@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>서브서피스 스캐터링(SSS)과 스킨 렌더링</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #0f172a;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sss-highlight {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background-color: rgba(244, 114, 182, 0.15);
+            border-radius: 50%;
+            filter: blur(40px);
+            top: -150px;
+            right: -150px;
+        }
+        
+        .sss-light {
+            position: absolute;
+            width: 3px;
+            height: 200px;
+            background-color: rgba(244, 114, 182, 0.5);
+            transform-origin: top;
+        }
+        
+        .sss-light:nth-child(2) { left: 20%; top: 50px; transform: rotate(-10deg); }
+        .sss-light:nth-child(3) { left: 75%; top: 30px; transform: rotate(12deg); }
+        .sss-light:nth-child(4) { left: 40%; top: 20px; transform: rotate(5deg); }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            padding: 35px 50px;
+            min-height: 720px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .main-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            color: #f472b6;
+            font-weight: 500;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            flex: 1;
+        }
+        
+        .concept-section, .examples-section {
+            opacity: 1;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .section-icon {
+            width: 45px;
+            height: 45px;
+            background-color: #f472b6;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(244, 114, 182, 0.3);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        
+        .definition-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #f472b6;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .definition-text {
+            color: #e2e8f0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        
+        .key-term {
+            color: #f472b6;
+            font-weight: 600;
+        }
+        
+        .technique-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .technique-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .technique-card:hover {
+            background-color: rgba(244, 114, 182, 0.1);
+            transform: translateY(-5px);
+            border-color: rgba(244, 114, 182, 0.3);
+        }
+        
+        .technique-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        .skin-icon {
+            background-color: #ec4899;
+        }
+        
+        .wax-icon {
+            background-color: #8b5cf6;
+        }
+        
+        .milk-icon {
+            background-color: #0ea5e9;
+        }
+        
+        .jade-icon {
+            background-color: #10b981;
+        }
+        
+        .technique-title {
+            color: #e2e8f0;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .technique-desc {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .example-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 120px;
+        }
+        
+        .example-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(244, 114, 182, 0.2);
+        }
+        
+        .example-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .example-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 10px;
+            color: white;
+        }
+        
+        .example-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .example-type {
+            font-size: 0.7rem;
+            color: #f472b6;
+            font-weight: 500;
+        }
+        
+        .large-example {
+            grid-column: 1 / -1;
+            height: 140px;
+            margin-bottom: 15px;
+        }
+        
+        .practice-guide {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+        }
+        
+        .guide-title {
+            color: #10b981;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .guide-steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .guide-step {
+            color: #e2e8f0;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .step-number {
+            background-color: #10b981;
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .software-tag {
+            display: inline-block;
+            background-color: rgba(139, 92, 246, 0.2);
+            color: #8b5cf6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Background SSS effects -->
+<div class="sss-highlight"></div>
+<div class="sss-light"></div>
+<div class="sss-light"></div>
+<div class="sss-light"></div>
+<div class="content-wrapper">
+<!-- Header -->
+<div class="header-section">
+<h1 class="main-title">서브서피스 스캐터링(SSS)과 스킨 렌더링</h1>
+<p class="subtitle">Pixar/Disney 스타일 캐릭터 라이팅의 핵심 기술</p>
+</div>
+<!-- Main Content Grid -->
+<div class="main-content">
+<!-- Concept Section -->
+<div class="concept-section">
+<div class="section-header">
+<div class="section-icon">
+<i class="fas fa-tint"></i>
+</div>
+<h2 class="section-title">SSS 개념 및 원리</h2>
+</div>
+<div class="definition-box">
+<div class="definition-text">
+<span class="key-term">서브서피스 스캐터링(SSS)</span>은 빛이 표면에서 반사되지 않고 <span class="key-term">물체 내부로 침투</span>한 후 산란되어 다시 나오는 현상을 시뮬레이션하는 고급 렌더링 기법입니다.
+                        </div>
+<div class="definition-text" style="font-size: 0.95rem; color: #94a3b8;">
+                            인간 피부, 대리석, 우유, 왁스 등 반투명 재질에서 자연스러운 표현을 가능하게 하며, Pixar와 Disney 애니메이션의 캐릭터 표현에 필수적인 기술입니다.
+                        </div>
+</div>
+<div class="technique-cards">
+<div class="technique-card">
+<div class="technique-icon skin-icon">
+<i class="fas fa-user"></i>
+</div>
+<div class="technique-title">피부 렌더링</div>
+<div class="technique-desc">
+                                여러 층의 산란 효과로 피부의 깊이감과 부드러움을 표현
+                            </div>
+</div>
+<div class="technique-card">
+<div class="technique-icon wax-icon">
+<i class="fas fa-fire"></i>
+</div>
+<div class="technique-title">왁스/캔들 효과</div>
+<div class="technique-desc">
+                                빛 투과와 내부 산란으로 불투명도 깊이감 구현
+                            </div>
+</div>
+<div class="technique-card">
+<div class="technique-icon milk-icon">
+<i class="fas fa-wine-glass"></i>
+</div>
+<div class="technique-title">액체/우유 효과</div>
+<div class="technique-desc">
+                                깊이에 따른 빛 감쇠와 컬러 변화 표현
+                            </div>
+</div>
+<div class="technique-card">
+<div class="technique-icon jade-icon">
+<i class="fas fa-gem"></i>
+</div>
+<div class="technique-title">대리석/옥 효과</div>
+<div class="technique-desc">
+                                미세한 내부 구조를 통한 빛의 투과 시뮬레이션
+                            </div>
+</div>
+</div>
+</div>
+<!-- Examples Section -->
+<div class="examples-section">
+<div class="section-header">
+<div class="section-icon">
+<i class="fas fa-laptop-code"></i>
+</div>
+<h2 class="section-title">렌더러별 설정 및 예시</h2>
+</div>
+<div class="large-example example-card">
+<img alt="Realistic Skin Rendering in Arnold" class="example-image" src="../resources/f335b53cc9f934936479794dfab62b96.jpg"/>
+<div class="example-overlay">
+<div class="example-title">사실적 피부 렌더링 - Arnold 6 워크플로우</div>
+<div class="example-type">Random Walk SSS 알고리즘 활용</div>
+</div>
+</div>
+<div class="examples-grid">
+<div class="example-card">
+<img alt="Arnold SSS Setup" class="example-image" src="../resources/4367f16e8a7a86a7d9631aeb2bee06b9.jpg"/>
+<div class="example-overlay">
+<div class="example-title">Arnold aiStandardSurface</div>
+<div class="example-type">Maya SSS 설정</div>
+</div>
+</div>
+<div class="example-card">
+<img alt="SSS Layers in Arnold" class="example-image" src="../resources/276e8c8b3b0a801a39a3d8e781528e6a.png"/>
+<div class="example-overlay">
+<div class="example-title">다층 SSS 렌더링</div>
+<div class="example-type">피부 깊이별 산란 효과</div>
+</div>
+</div>
+<div class="example-card">
+<img alt="SSS Setup in Maya" class="example-image" src="../resources/0c9cb1c5ddf1a2b25f5f5f15a9f256a6.jpg"/>
+<div class="example-overlay">
+<div class="example-title">Maya 레이어드 쉐이더</div>
+<div class="example-type">쉐이더 네트워크 설정</div>
+</div>
+</div>
+<div class="example-card">
+<img alt="Subsurface Scattering Principles" class="example-image" src="../resources/b5bc01cbdeed463fad96ad7192c4a767.jpg"/>
+<div class="example-overlay">
+<div class="example-title">확산 프로파일 이해</div>
+<div class="example-type">SSS 물리적 원리</div>
+</div>
+</div>
+</div>
+<div class="practice-guide">
+<div class="guide-title">
+<i class="fas fa-tools"></i>
+                            SSS 실습 가이드
+                        </div>
+<div class="guide-steps">
+<div class="guide-step">
+<div class="step-number">1</div>
+<span class="software-tag">Maya</span><span class="software-tag">Arnold</span> aiStandardSurface 쉐이더의 Subsurface 가중치 설정 (0.3~0.8)
+                            </div>
+<div class="guide-step">
+<div class="step-number">2</div>
+<span class="software-tag">V-Ray</span> VRayMtl의 SSS 파라미터와 산란 반경 조정
+                            </div>
+<div class="guide-step">
+<div class="step-number">3</div>
+                                SSS Radius 컬러 설정으로 RGB 채널별 침투 깊이 제어
+                            </div>
+<div class="guide-step">
+<div class="step-number">4</div>
+                                디테일 부위(귀, 코)에 특수 마스크 맵 적용
+                            </div>
+<div class="guide-step">
+<div class="step-number">5</div>
+<span class="software-tag">Disney</span> 다층 SSS 기법으로 Epidermal/Subdermal 레이어 분리
+                            </div>
+<div class="guide-step">
+<div class="step-number">6</div>
+                                랜덤 워크 알고리즘 활용으로 사실적 피부 톤 구현
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

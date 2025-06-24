@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>USD Layer Composition을 활용한 라이팅 레이어 관리</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .title-accent {
+            color: #60a5fa;
+        }
+        .card {
+            background-color: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .card-highlight {
+            border-left: 4px solid #60a5fa;
+        }
+        .feature-card {
+            border-left: 4px solid #8b5cf6;
+        }
+        .diagram-border {
+            border: 2px solid rgba(59, 130, 246, 0.4);
+        }
+        .number-badge {
+            background-color: #8b5cf6;
+        }
+        .tech-badge {
+            background-color: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+        .progress-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(156, 163, 175, 0.3);
+        }
+        .dot.active {
+            background-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container relative bg-slate-900">
+<!-- Main Content -->
+<div class="relative z-10 px-12 py-10">
+<!-- Header Section -->
+<div class="mb-6">
+<div class="flex items-center mb-3">
+<div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">
+                        3.4
+                    </div>
+<h1 class="text-4xl font-black">USD Layer Composition <span class="title-accent">라이팅 레이어 관리</span></h1>
+</div>
+<p class="text-gray-400 text-lg ml-14">Sublayer, Reference, Variant를 활용한 라이팅 비파괴 워크플로우</p>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-2 gap-6">
+<!-- Left Column - Layer Composition Concepts -->
+<div>
+<!-- USD Layer Structure -->
+<div class="card rounded-xl p-5 mb-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-layer-group text-purple-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">USD 레이어링 구조</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-purple-300">핵심 개념</span>
+</div>
+<!-- Layer Structure Diagram -->
+<div class="mb-3">
+<img alt="USD Layer Structure" class="w-full h-32 object-contain diagram-border rounded-lg" src="../resources/e6a5f6e7595c94291cbf2480fa88a6f7.jpg"/>
+</div>
+<div class="space-y-2">
+<div class="flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">Sublayer</span> - 여러 USD 파일을 논리적으로 결합하는 기법</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">Reference</span> - 에셋 재사용 및 인스턴스화 기법</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">Variant/Payload</span> - 변형 관리 및 지연 로딩 기술</p>
+</div>
+</div>
+</div>
+<!-- Layer Composition Benefits -->
+<div class="card feature-card rounded-xl p-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-lightbulb text-yellow-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">라이팅 아티스트 이점</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-yellow-300">실무 적용</span>
+</div>
+<div class="space-y-3">
+<div class="bg-slate-800 bg-opacity-50 rounded-lg p-3">
+<h4 class="text-white font-medium mb-1">비파괴적 작업 방식</h4>
+<p class="text-gray-300 text-sm">원본 에셋을 수정하지 않고 라이팅 오버라이드 적용 가능</p>
+</div>
+<div class="bg-slate-800 bg-opacity-50 rounded-lg p-3">
+<h4 class="text-white font-medium mb-1">병렬 작업 워크플로우</h4>
+<p class="text-gray-300 text-sm">여러 라이팅 아티스트가 동시에 씬의 다른 부분 작업 가능</p>
+</div>
+<div class="bg-slate-800 bg-opacity-50 rounded-lg p-3">
+<h4 class="text-white font-medium mb-1">버전 및 룩 관리</h4>
+<p class="text-gray-300 text-sm">Variant Sets으로 다양한 라이팅 버전을 쉽게 전환</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column - Practical Examples -->
+<div>
+<!-- Production Example -->
+<div class="card rounded-xl p-5 mb-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-film text-blue-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">실제 제작 파이프라인</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-blue-300">사례 연구</span>
+</div>
+<!-- Production Pipeline Image -->
+<div class="mb-3">
+<img alt="USD Production Pipeline" class="w-full h-32 object-contain diagram-border rounded-lg" src="../resources/60b5cf7642015eafd675b864c84154ef.png"/>
+</div>
+<div class="space-y-2">
+<div class="flex items-start">
+<i class="fas fa-star text-yellow-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">모델링/룩개발 레이어</span> - 기본 에셋 구조와 머티리얼 정의</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-star text-yellow-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">레이아웃/애니메이션 레이어</span> - 캐릭터 및 카메라 모션</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-star text-yellow-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">라이팅 레이어</span> - 조명, 렌더 설정 및 룩 마무리</p>
+</div>
+</div>
+</div>
+<!-- Practical Workflow -->
+<div class="card card-highlight rounded-xl p-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-code-branch text-green-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">라이팅 레이어 관리 기법</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-green-300">실습 워크플로우</span>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-slate-800 rounded-lg p-3">
+<h4 class="text-white font-medium text-sm mb-2">키 라이트 레이어</h4>
+<p class="text-gray-300 text-xs">주요 조명 설정을 독립적인 레이어로 분리하여 관리</p>
+<div class="text-xs text-gray-400 mt-1 bg-slate-900 bg-opacity-50 p-2 rounded">
+                                    ~/lighting/key_lights.usd
+                                </div>
+</div>
+<div class="bg-slate-800 rounded-lg p-3">
+<h4 class="text-white font-medium text-sm mb-2">필/림 라이트 레이어</h4>
+<p class="text-gray-300 text-xs">보조 조명 및 림 라이트를 별도 레이어로 관리</p>
+<div class="text-xs text-gray-400 mt-1 bg-slate-900 bg-opacity-50 p-2 rounded">
+                                    ~/lighting/fill_lights.usd
+                                </div>
+</div>
+<div class="bg-slate-800 rounded-lg p-3">
+<h4 class="text-white font-medium text-sm mb-2">환경광 레이어</h4>
+<p class="text-gray-300 text-xs">HDRI 및 환경 라이팅 설정을 별도 관리</p>
+<div class="text-xs text-gray-400 mt-1 bg-slate-900 bg-opacity-50 p-2 rounded">
+                                    ~/lighting/env_lights.usd
+                                </div>
+</div>
+<div class="bg-slate-800 rounded-lg p-3">
+<h4 class="text-white font-medium text-sm mb-2">마스터 컴포지션</h4>
+<p class="text-gray-300 text-xs">모든 라이팅 레이어를 통합하는 최종 USD</p>
+<div class="text-xs text-gray-400 mt-1 bg-slate-900 bg-opacity-50 p-2 rounded">
+                                    ~/lighting/master.usd
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section - Implementation Example -->
+<div class="card rounded-xl p-4 mt-5">
+<div class="flex items-center mb-2">
+<i class="fas fa-code text-purple-400 mr-2"></i>
+<h3 class="text-lg font-bold text-white">레이어 컴포지션 예제 코드</h3>
+</div>
+<div class="bg-slate-800 rounded-lg p-3 font-mono text-xs text-green-300">
+<span class="text-gray-400"># 마스터 USD 생성 및 서브레이어 추가</span><br/>
+                    stage = Usd.Stage.CreateNew('lighting/master.usd')<br/>
+                    rootLayer = stage.GetRootLayer()<br/>
+<br/>
+<span class="text-gray-400"># 서브레이어 설정 (상향식 구성)</span><br/>
+                    rootLayer.subLayerPaths = [<br/>
+                        'assets/set.usd',         <span class="text-gray-400"># 기본 세트/에셋</span><br/>
+                        'anim/layout.usd',        <span class="text-gray-400"># 레이아웃/애니메이션</span><br/>
+                        'lighting/key_lights.usd', <span class="text-gray-400"># 키 라이트</span><br/>
+                        'lighting/fill_lights.usd', <span class="text-gray-400"># 필/림 라이트</span><br/>
+                        'lighting/env_lights.usd'   <span class="text-gray-400"># 환경광</span><br/>
+                    ]<br/>
+<br/>
+<span class="text-gray-400"># 라이팅 변형 세트 생성</span><br/>
+                    prim = stage.GetPrimAtPath('/World/LightRig')<br/>
+                    vset = prim.GetVariantSets().AddVariantSet('LightingVariants')<br/>
+                    vset.AddVariant('day')<br/>
+                    vset.AddVariant('night')<br/>
+                    vset.SetVariantSelection('day')
+                </div>
+</div>
+</div>
+<!-- Footer -->
+<div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
+<div class="flex items-center">
+<i class="fas fa-university mr-2"></i>
+<span class="text-sm">Computer Graphics &amp; Data Management Course</span>
+</div>
+<div class="flex items-center space-x-4">
+<div class="progress-dots">
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot active"></div>
+<div class="dot"></div>
+</div>
+<span class="text-sm">Slide 8 of 9</span>
+</div>
+</div>
+</div>
+</body>
+</html>

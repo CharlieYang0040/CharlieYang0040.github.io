@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACES 2.0 컬러 워크플로우 심화</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background-color: #0F172A;
+            position: relative;
+            overflow: hidden;
+        }
+        .content-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-left-color: #3B82F6;
+        }
+        .accent-bar-left {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 40%;
+            background-color: #3B82F6;
+        }
+        .comparison-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .workflow-step {
+            position: relative;
+            padding-left: 20px;
+        }
+        .workflow-step:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #3B82F6;
+        }
+        .workflow-step:after {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 10px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #3B82F6;
+        }
+        .tech-tag {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Accent Bar -->
+        <div class="accent-bar-left"></div>
+        
+        <!-- Header Section -->
+        <div class="pt-10 pb-5 px-12 text-center">
+            <div class="inline-flex items-center bg-blue-500 bg-opacity-20 rounded-full px-6 py-2 mb-4">
+                <i class="fas fa-palette mr-3 text-blue-400 text-lg"></i>
+                <span class="text-white font-medium">Color Management System</span>
+            </div>
+            <h1 class="text-white text-4xl font-bold mb-3">
+                ACES 2.0 컬러 워크플로우 심화
+            </h1>
+            <p class="text-gray-300 text-lg opacity-90 max-w-4xl mx-auto">
+                2024년 VFX 파이프라인의 핵심, Academy Color Encoding System의 실전 활용법
+            </p>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="px-12 pb-6 grid grid-cols-2 gap-8">
+            <!-- Left Column: ACES Overview & Diagram -->
+            <div class="space-y-6">
+                <!-- ACES Diagram Section -->
+                <div class="content-card bg-gray-800 bg-opacity-50 rounded-xl p-5">
+                    <h3 class="text-blue-400 text-xl font-bold mb-4">
+                        ACES 파이프라인 구조
+                    </h3>
+                    <div class="mb-4">
+                        <img src="https://blog.frame.io/wp-content/uploads/2019/09/ACES-Pipeline.png" alt="ACES 워크플로우 다이어그램" class="w-full h-auto object-contain rounded-lg border border-gray-700">
+                    </div>
+                    <div class="bg-black bg-opacity-30 rounded-lg p-3">
+                        <h4 class="text-blue-300 font-semibold text-sm mb-2">핵심 컴포넌트</h4>
+                        <div class="flex flex-wrap">
+                            <span class="tech-tag bg-blue-900 text-blue-300">Input Transform (IDT)</span>
+                            <span class="tech-tag bg-green-900 text-green-300">ACES 2065-1</span>
+                            <span class="tech-tag bg-purple-900 text-purple-300">RRT (Reference Rendering Transform)</span>
+                            <span class="tech-tag bg-red-900 text-red-300">ODT (Output Device Transform)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ACES vs sRGB Section -->
+                <div class="content-card bg-gray-800 bg-opacity-50 rounded-xl p-5">
+                    <h3 class="text-blue-400 text-xl font-bold mb-4">
+                        ACES 2.0 vs sRGB 비교
+                    </h3>
+                    <div class="mb-4 comparison-container">
+                        <img src="https://blog.frame.io/wp-content/uploads/2019/09/aces_image_quality_preservation.png" alt="ACES vs sRGB 비교" class="w-full h-auto object-contain">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-blue-900 bg-opacity-20 rounded-lg p-3">
+                            <h4 class="text-blue-300 font-semibold text-sm mb-1">ACES 장점</h4>
+                            <ul class="text-gray-300 text-xs space-y-1">
+                                <li>• 더 넓은 컬러 영역 (wide gamut)</li>
+                                <li>• 더 높은 다이나믹 레인지 (HDR)</li>
+                                <li>• 장치 간 일관된 색상 표현</li>
+                                <li>• 미래 호환성 보장</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-700 bg-opacity-30 rounded-lg p-3">
+                            <h4 class="text-gray-300 font-semibold text-sm mb-1">sRGB 한계</h4>
+                            <ul class="text-gray-300 text-xs space-y-1">
+                                <li>• 제한된 컬러 영역</li>
+                                <li>• 8비트 제한적 다이나믹 레인지</li>
+                                <li>• 하이라이트 클리핑 발생</li>
+                                <li>• 미묘한 색상 차이 표현 불가</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Practical Implementation -->
+            <div class="space-y-6">
+                <!-- ACES 2.0 New Features -->
+                <div class="content-card bg-gray-800 bg-opacity-50 rounded-xl p-5">
+                    <h3 class="text-blue-400 text-xl font-bold mb-4">
+                        ACES 2.0 주요 업데이트 (2024)
+                    </h3>
+                    <div class="mb-4">
+                        <img src="https://www.mdpi.com/jimaging/jimaging-03-00040/article_deploy/html/images/jimaging-03-00040-g001.png" alt="ACES 2.0 개요" class="w-full h-44 object-cover object-center rounded-lg border border-gray-700">
+                    </div>
+                    <div class="bg-black bg-opacity-30 rounded-lg p-3">
+                        <ul class="text-gray-300 text-sm space-y-2">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mr-2 mt-1 text-xs"></i>
+                                <span><span class="text-green-400 font-semibold">향상된 외부 연동:</span> ILM과 같은 메이저 스튜디오 공동 개발</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mr-2 mt-1 text-xs"></i>
+                                <span><span class="text-green-400 font-semibold">개선된 Look Transform:</span> 영화적 룩 통합 강화</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mr-2 mt-1 text-xs"></i>
+                                <span><span class="text-green-400 font-semibold">단순화된 메타데이터:</span> 복잡한 파이프라인 간 호환성 향상</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Implementation Workflow -->
+                <div class="content-card bg-gray-800 bg-opacity-50 rounded-xl p-5">
+                    <h3 class="text-blue-400 text-xl font-bold mb-4">
+                        실전 구현 워크플로우
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="workflow-step pl-6 pb-3">
+                            <h4 class="text-white font-bold text-sm">1. 입력 변환 (Input Transform)</h4>
+                            <p class="text-gray-300 text-xs mt-1">카메라 Raw, EXR, 텍스처 등 소스 이미지를 ACES AP0/AP1 색공간으로 변환</p>
+                            <div class="mt-1 flex flex-wrap">
+                                <span class="tech-tag bg-blue-900 text-blue-300">Maya IDT</span>
+                                <span class="tech-tag bg-blue-900 text-blue-300">Nuke IDT</span>
+                            </div>
+                        </div>
+                        <div class="workflow-step pl-6 pb-3">
+                            <h4 class="text-white font-bold text-sm">2. 작업 변환 (Working Transform)</h4>
+                            <p class="text-gray-300 text-xs mt-1">ACEScg 작업 색공간에서 라이팅, 합성, 효과 작업 진행</p>
+                            <div class="mt-1 flex flex-wrap">
+                                <span class="tech-tag bg-green-900 text-green-300">OCIO 설정</span>
+                                <span class="tech-tag bg-green-900 text-green-300">Arnold/RenderMan</span>
+                            </div>
+                        </div>
+                        <div class="workflow-step pl-6 pb-3">
+                            <h4 class="text-white font-bold text-sm">3. 출력 변환 (Output Transform)</h4>
+                            <p class="text-gray-300 text-xs mt-1">최종 디스플레이/배포 색공간으로 변환 (Rec.709, DCI-P3 등)</p>
+                            <div class="mt-1 flex flex-wrap">
+                                <span class="tech-tag bg-red-900 text-red-300">RRT+ODT</span>
+                                <span class="tech-tag bg-red-900 text-red-300">디스플레이 캘리브레이션</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Maya-Arnold Integration -->
+                <div class="content-card bg-gray-800 bg-opacity-50 rounded-xl p-5">
+                    <h3 class="text-blue-400 text-xl font-bold mb-4">
+                        Maya/Arnold에서의 ACES 설정
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <img src="https://help.autodesk.com/cloudhelp/2024/ENU/AR-Maya/images/tutorials/am-Setting_Up_Skydome-image2017-4-5-11-26-42-1.png" alt="Arnold ACES 렌더링" class="w-full h-28 object-cover rounded-lg border border-gray-700 mb-2">
+                            <div class="bg-black bg-opacity-30 rounded-lg p-2 text-xs text-gray-300">
+                                <p><span class="text-blue-300 font-semibold">Color Manager</span> → ACES 2.0 선택</p>
+                                <p>Input 설정: <span class="text-green-300">Raw or ACEScg</span></p>
+                            </div>
+                        </div>
+                        <div>
+                            <img src="https://help.autodesk.com/cloudhelp/2024/ENU/AR-Maya/images/mtoa_lights3.png" alt="Arnold ACES 라이팅" class="w-full h-28 object-cover rounded-lg border border-gray-700 mb-2">
+                            <div class="bg-black bg-opacity-30 rounded-lg p-2 text-xs text-gray-300">
+                                <p><span class="text-blue-300 font-semibold">Arnold Renderer</span> → Color Space</p>
+                                <p>Working: <span class="text-green-300">ACEScg</span> / 출력: <span class="text-green-300">ACES 2.0</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Tips Section -->
+        <div class="px-12 pb-8">
+            <div class="bg-blue-900 bg-opacity-20 rounded-xl p-4">
+                <div class="flex items-center mb-3">
+                    <i class="fas fa-lightbulb text-yellow-400 text-xl mr-3"></i>
+                    <h3 class="text-white text-lg font-bold">실무 적용 핵심 팁</h3>
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="flex items-start">
+                        <div class="w-6 h-6 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center mr-2 flex-shrink-0 mt-0.5">
+                            <span class="text-blue-400 text-xs font-bold">01</span>
+                        </div>
+                        <p class="text-gray-300 text-xs">
+                            <span class="text-blue-400 font-bold">모든 텍스처 점검</span> - 모든 텍스처와 맵에 적절한 색공간 태그가 적용되었는지 확인 (sRGB vs Linear)
+                        </p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-6 h-6 bg-green-500 bg-opacity-20 rounded-full flex items-center justify-center mr-2 flex-shrink-0 mt-0.5">
+                            <span class="text-green-400 text-xs font-bold">02</span>
+                        </div>
+                        <p class="text-gray-300 text-xs">
+                            <span class="text-green-400 font-bold">참조 모니터 사용</span> - 색상 정확도를 위해 캘리브레이션된 참조 모니터로 최종 결과물 확인
+                        </p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-6 h-6 bg-purple-500 bg-opacity-20 rounded-full flex items-center justify-center mr-2 flex-shrink-0 mt-0.5">
+                            <span class="text-purple-400 text-xs font-bold">03</span>
+                        </div>
+                        <p class="text-gray-300 text-xs">
+                            <span class="text-purple-400 font-bold">LUT 테스트</span> - 다양한 출력 환경(극장, TV, 웹)을 위한 LUT와 ODT 테스트로 색상 일관성 유지
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer Credits -->
+        <div class="absolute bottom-3 right-4">
+            <p class="text-gray-500 text-xs">
+                이미지 출처: Academy of Motion Picture Arts and Sciences, Frame.io, Autodesk
+            </p>
+        </div>
+    </div>
+</body>
+</html>

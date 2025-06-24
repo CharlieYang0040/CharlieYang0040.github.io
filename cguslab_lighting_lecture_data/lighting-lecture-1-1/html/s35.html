@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Exposure (노출) - 추가 예시</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="../css/s35.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1721 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem 3rem;
+            border-bottom: 2px solid rgba(163, 198, 255, 0.4);
+            display: flex;
+            align-items: center;
+        }
+        .header-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: #a3c6ff;
+            font-size: 1.5rem;
+        }
+        .content {
+            padding: 1.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            height: calc(100% - 120px);
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        .example-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .example-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .example-desc {
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .large-example {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .large-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .large-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .large-title i {
+            margin-right: 0.75rem;
+        }
+        .highlight {
+            color: #a3c6ff;
+            font-weight: bold;
+        }
+        .tips-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tips-title {
+            font-weight: bold;
+            color: #ffcc66;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        .tips-title i {
+            margin-right: 0.75rem;
+        }
+        .tip-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+        }
+        .tip-item:before {
+            content: "▸";
+            color: #a3c6ff;
+            font-weight: bold;
+            margin-right: 0.75rem;
+            margin-top: 0.1rem;
+        }
+        .footer {
+            padding: 1rem 3rem;
+            text-align: right;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        .animation-highlight {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(163, 198, 255, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(163, 198, 255, 0.8);
+            }
+        }
+        .exposure-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 204, 102, 0.9);
+            color: #1a2a3a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .histogram-demo {
+            background: linear-gradient(to bottom, #333, #111);
+            height: 80px;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: end;
+            padding: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .histogram-demo:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .histogram-bar {
+            background: linear-gradient(to top, #4CAF50, #81C784);
+            width: 4px;
+            margin: 0 1px;
+            border-radius: 1px 1px 0 0;
+            transition: all 0.3s ease;
+        }
+        .histogram-bar:hover {
+            background: linear-gradient(to top, #66BB6A, #A5D6A7);
+        }
+        .exposure-triangle {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .triangle-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .triangle-item:hover {
+            background-color: rgba(255, 204, 102, 0.2);
+            transform: translateY(-2px);
+        }
+        .triangle-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .aperture-icon { color: #ff6b6b; }
+        .shutter-icon { color: #4ecdc4; }
+        .iso-icon { color: #ffe66d; }
+        .exposure-slider {
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(to right, #000, #666, #fff);
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            width: 8px;
+            height: 40px;
+            background: #ffcc66;
+            border-radius: 4px;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+        }
+        .slider-handle:hover {
+            width: 24px;
+            height: 24px;
+            background: #ffcc66;
+        }
+        .slider-label {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .exposure-comparison {
+            display: flex;
+            height: 60px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .exposure-comparison:hover {
+            transform: scale(1.02);
+        }
+        .exposure-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .underexposed {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+        }
+        .correct-exposure {
+            background: linear-gradient(135deg, #4a90e2, #7bb3f0);
+        }
+        .overexposed {
+            background: linear-gradient(135deg, #f0f0f0, #ffffff);
+            color: #333 !important;
+            text-shadow: none;
+        }
+        .dynamic-meter {
+            height: 100px;
+            background: #2a2a2a;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(163, 198, 255, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .dynamic-meter:hover {
+            border-color: rgba(255, 204, 102, 0.6);
+            transform: scale(1.02);
+        }
+        .meter-indicator {
+            color: #a3c6ff;
+            font-size: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+        .zone-system {
+            display: flex;
+            height: 40px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+        .zone {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .zone:hover {
+            transform: scaleY(1.2);
+            z-index: 1;
+            position: relative;
+        }
+        .zone-0 { background: #000; color: #fff; }
+        .zone-1 { background: #1a1a1a; color: #fff; }
+        .zone-2 { background: #333; color: #fff; }
+        .zone-3 { background: #4d4d4d; color: #fff; }
+        .zone-4 { background: #666; color: #fff; }
+        .zone-5 { background: #808080; color: #fff; }
+        .zone-6 { background: #999; color: #000; }
+        .zone-7 { background: #b3b3b3; color: #000; }
+        .zone-8 { background: #ccc; color: #000; }
+        .zone-9 { background: #e6e6e6; color: #000; }
+        .zone-10 { background: #fff; color: #000; }
+        .practical-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .practical-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .practical-item:hover {
+            background-color: rgba(163, 198, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .practical-icon {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<div class="header">
+<div class="header-icon">
+<i class="fas fa-camera-retro"></i>
+</div>
+<div>
+<h1 class="text-3xl font-bold">Exposure (노출) - 추가 예시</h1>
+<p class="text-sm opacity-70 mt-1">실무 적용 사례와 심화 학습</p>
+</div>
+</div>
+<div class="content">
+<div>
+<div class="large-example">
+<div class="large-title">
+<i class="fas fa-chart-area"></i> 히스토그램 분석 실습
+                    </div>
+<div class="relative-pos">
+<img alt="히스토그램 분석" class="large-image" src="../resources/c3d103598d69a16405e489f815522e05.jpg"/>
+<div class="exposure-badge">Analysis</div>
+</div>
+<p class="text-sm"><span class="highlight">톤 분포</span>를 통한 <span class="highlight">노출 상태 진단</span> 및 최적화</p>
+</div>
+<div class="tips-container">
+<div class="tips-title">
+<i class="fas fa-cogs"></i> 노출 제어
+                    </div>
+<div class="exposure-triangle">
+<div class="triangle-item">
+<i class="triangle-icon aperture-icon fas fa-circle"></i>
+<div>Aperture</div>
+<div class="font-sm text-hard">f/1.4 ~ f/22</div>
+</div>
+<div class="triangle-item">
+<i class="triangle-icon shutter-icon fas fa-stopwatch"></i>
+<div>Shutter</div>
+<div class="font-sm text-soft">1/1000 ~ 30s</div>
+</div>
+<div class="triangle-item">
+<i class="triangle-icon iso-icon fas fa-sliders-h"></i>
+<div>ISO</div>
+<div class="font-sm text-iso">100 ~ 6400</div>
+</div>
+</div>
+<div class="exposure-slider">
+<div class="slider-handle left-33"></div>
+<div class="slider-label left-10 text-aaa">-2</div>
+<div class="slider-label left-30 text-aaa">-1</div>
+<div class="slider-label left-50 text-fff">0</div>
+<div class="slider-label left-70 text-ffcc66">+1</div>
+<div class="slider-label left-90 text-ffcc66">+2</div>
+</div>
+<div class="tip-item"><span class="highlight">조리개(Aperture)</span>: F-stop 값으로 조절, 피사계 심도에 영향</div>
+<div class="tip-item"><span class="highlight">셔터 스피드(Shutter)</span>: 속도로 조절, 모션 블러에 영향</div>
+</div>
+</div>
+<div class="examples-grid">
+<div class="example-item animation-highlight">
+<div class="relative-pos">
+<img alt="히스토그램 읽기" class="example-image" src="../resources/f60df4c4ec4406164951690fbe02f015.jpg"/>
+<div class="exposure-badge">Analysis</div>
+</div>
+<div class="example-title">히스토그램 해석 가이드</div>
+<div class="example-desc"><span class="highlight">히스토그램</span>을 통한 <span class="highlight">노출 상태 진단</span> 및 최적화 방법</div>
+</div>
+<div class="example-item">
+<div class="exposure-comparison">
+<div class="exposure-section underexposed">노출 부족</div>
+<div class="exposure-section correct-exposure">적정 노출</div>
+<div class="exposure-section overexposed">과다 노출</div>
+</div>
+<div class="example-title">노출 비교 분석</div>
+<div class="example-desc"><span class="highlight">시각적 차이</span>와 <span class="highlight">디테일 손실</span> 패턴 이해</div>
+</div>
+<div class="example-item">
+<div class="histogram-demo">
+<div class="histogram-bar h-20"></div>
+<div class="histogram-bar h-35"></div>
+<div class="histogram-bar h-60"></div>
+<div class="histogram-bar h-85"></div>
+<div class="histogram-bar h-70"></div>
+<div class="histogram-bar h-45"></div>
+<div class="histogram-bar h-25"></div>
+<div class="histogram-bar h-15"></div>
+<div class="histogram-bar h-30"></div>
+<div class="histogram-bar h-50"></div>
+<div class="histogram-bar h-75"></div>
+<div class="histogram-bar h-40"></div>
+<div class="histogram-bar h-20"></div>
+<div class="histogram-bar h-10"></div>
+</div>
+<div class="example-title">실시간 히스토그램</div>
+<div class="example-desc"><span class="highlight">톤 분포</span> 시각화와 <span class="highlight">클리핑 감지</span></div>
+</div>
+<div class="example-item">
+<div class="relative-pos">
+<img alt="조리개와 노출" class="example-image img-h-200 img-contain" src="https://www.photopills.com/sites/default/files/tutorials/2017/exposure-triangle-guide-photography-aperture.jpg"/>
+<div class="exposure-badge">Aperture</div>
+</div>
+<div class="example-title">조리개와 노출</div>
+<div class="example-desc"><span class="highlight">F-stop</span> 값이 노출과 <span class="highlight">피사계 심도</span>에 미치는 영향</div>
+</div>
+<div class="example-item">
+<div class="relative-pos">
+<img alt="셔터 스피드와 노출" class="example-image img-h-200 img-contain" src="https://shuttermuse.com/wp-content/uploads/2020/09/exposure-triangle-shutter-speed.jpg"/>
+<div class="exposure-badge">Shutter Speed</div>
+</div>
+<div class="example-title">셔터 스피드와 노출</div>
+<div class="example-desc"><span class="highlight">셔터 속도</span>가 노출과 <span class="highlight">모션 블러</span>에 미치는 영향</div>
+</div>
+</div>
+</div>
+<div class="footer">
+            컴퓨터 그래픽스 라이팅 입문 | Exposure(노출) 심화 학습
+        </div>
+</div>
+</body>
+</html>

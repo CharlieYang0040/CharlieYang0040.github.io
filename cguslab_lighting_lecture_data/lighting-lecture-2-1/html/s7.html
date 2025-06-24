@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Depth &amp; Dramatic Mood / 캐릭터 분리 실습</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #0f172a;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dramatic-effect {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background-color: rgba(245, 158, 11, 0.25);
+            border-radius: 50%;
+            filter: blur(25px);
+            top: -150px;
+            left: -150px;
+        }
+        
+        .depth-ray {
+            position: absolute;
+            width: 3px;
+            height: 250px;
+            background-color: rgba(245, 158, 11, 0.6);
+            transform-origin: top;
+        }
+        
+        .depth-ray:nth-child(2) { right: 10%; top: 50px; transform: rotate(15deg); }
+        .depth-ray:nth-child(3) { right: 25%; top: 100px; transform: rotate(-10deg); }
+        .depth-ray:nth-child(4) { left: 70%; top: 80px; transform: rotate(8deg); }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            padding: 35px 50px;
+            min-height: 720px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .main-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            color: #f59e0b;
+            font-weight: 500;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            flex: 1;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .section-icon {
+            width: 45px;
+            height: 45px;
+            background-color: #f59e0b;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        
+        .techniques-wrapper {
+            height: 555px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .techniques-wrapper::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .techniques-wrapper::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .techniques-wrapper::-webkit-scrollbar-thumb {
+            background: rgba(245, 158, 11, 0.5);
+            border-radius: 8px;
+        }
+        
+        .technique-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .technique-card:hover {
+            background-color: rgba(245, 158, 11, 0.1);
+            transform: translateX(8px);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+        
+        .technique-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .technique-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        .key-icon {
+            background-color: #f59e0b;
+        }
+        
+        .fill-icon {
+            background-color: #3b82f6;
+        }
+        
+        .rim-icon {
+            background-color: #8b5cf6;
+        }
+        
+        .depth-icon {
+            background-color: #10b981;
+        }
+        
+        .three-point-icon {
+            background-color: #ec4899;
+        }
+        
+        .separation-icon {
+            background-color: #ef4444;
+        }
+        
+        .technique-title {
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .technique-desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .technique-bullet {
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-left: 12px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        
+        .bullet-marker {
+            color: #f59e0b;
+            font-size: 0.7rem;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .example-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 110px;
+        }
+        
+        .example-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.2);
+        }
+        
+        .example-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .example-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 10px;
+            color: white;
+        }
+        
+        .example-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .example-type {
+            font-size: 0.7rem;
+            color: #f59e0b;
+            font-weight: 500;
+        }
+        
+        .large-example {
+            grid-column: 1 / -1;
+            height: 140px;
+            margin-bottom: 15px;
+        }
+        
+        .practice-guide {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .guide-title {
+            color: #10b981;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .guide-steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .guide-step {
+            color: #e2e8f0;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .step-number {
+            background-color: #10b981;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .software-tag {
+            display: inline-block;
+            background-color: rgba(139, 92, 246, 0.2);
+            color: #8b5cf6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Background dramatic effects -->
+<div class="dramatic-effect"></div>
+<div class="depth-ray"></div>
+<div class="depth-ray"></div>
+<div class="depth-ray"></div>
+<div class="content-wrapper">
+<!-- Header -->
+<div class="header-section">
+<h1 class="main-title">Depth &amp; Dramatic Mood / 캐릭터 분리 실습</h1>
+<p class="subtitle">깊이감 연출과 드라마틱한 무드 조성을 위한 고급 라이팅 기법</p>
+</div>
+<!-- Main Content Grid -->
+<div class="main-content">
+<!-- Techniques Section -->
+<div class="techniques-section">
+<div class="section-header">
+<div class="section-icon">
+<i class="fas fa-theater-masks"></i>
+</div>
+<h2 class="section-title">핵심 라이팅 기법</h2>
+</div>
+<div class="techniques-wrapper">
+<div class="technique-card">
+<div class="technique-header">
+<div class="technique-icon key-icon">
+<i class="fas fa-sun"></i>
+</div>
+<div class="technique-title">키 라이트 고급 테크닉</div>
+</div>
+<div class="technique-desc">
+                                주요 광원으로 캐릭터의 형태를 정의하고 주요 특징을 드러내는 핵심 조명 기술
+                            </div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>Rembrandt Lighting: 얼굴 한쪽에 삼각형 형태의 빛 패턴 형성</span>
+</div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>Split Lighting: 얼굴의 절반만 조명하여 극적인 효과 강화</span>
+</div>
+</div>
+<div class="technique-card">
+<div class="technique-header">
+<div class="technique-icon fill-icon">
+<i class="fas fa-lightbulb"></i>
+</div>
+<div class="technique-title">필 라이트 디테일</div>
+</div>
+<div class="technique-desc">
+                                키 라이트가 만든 그림자 영역을 부드럽게 채워 디테일 복원 및 대비 조절
+                            </div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>비율 조절: 키:필 비율(2:1~8:1)로 분위기 미세 조정</span>
+</div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>컬러 필: 보색 사용으로 시각적 깊이감과 분위기 강화</span>
+</div>
+</div>
+<div class="technique-card">
+<div class="technique-header">
+<div class="technique-icon rim-icon">
+<i class="fas fa-adjust"></i>
+</div>
+<div class="technique-title">림 라이트 &amp; 엣지 라이트</div>
+</div>
+<div class="technique-desc">
+                                캐릭터 윤곽을 따라 빛을 비춰 배경과 분리하고 실루엣을 강조하는 기법
+                            </div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>Kicker Light: 45° 후면에서 얼굴 윤곽 강조</span>
+</div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>Hair Light: 머리카락 질감과 볼륨감 강조</span>
+</div>
+</div>
+<div class="technique-card">
+<div class="technique-header">
+<div class="technique-icon depth-icon">
+<i class="fas fa-layer-group"></i>
+</div>
+<div class="technique-title">깊이감 &amp; DoF 상호작용</div>
+</div>
+<div class="technique-desc">
+                                피사계 심도(Depth of Field)와 조명의 상호작용으로 입체감과 공간감 강화
+                            </div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>거리별 빛 감쇠 설정으로 깊이감 강화</span>
+</div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>볼륨 라이팅으로 피사계 심도 시각화</span>
+</div>
+</div>
+<div class="technique-card">
+<div class="technique-header">
+<div class="technique-icon" style="background-color: #ec4899;">
+<i class="fas fa-bezier-curve"></i>
+</div>
+<div class="technique-title">3-Point Lighting의 현대적 응용</div>
+</div>
+<div class="technique-desc">
+                                Chris Brejon의 CG Cinematography 기법을 활용한 3점 조명의 진화된 활용법
+                            </div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>키-필-림의 비대칭 배치로 자연스러운 연출</span>
+</div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>복합적 광원으로 사실적 빛 산란 구현</span>
+</div>
+</div>
+<div class="technique-card">
+<div class="technique-header">
+<div class="technique-icon separation-icon">
+<i class="fas fa-user-slash"></i>
+</div>
+<div class="technique-title">영화급 캐릭터 분리 기법</div>
+</div>
+<div class="technique-desc">
+                                픽사와 디즈니 애니메이션에서 사용되는 고급 실루엣 및 분리 기법
+                            </div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>Negative Fill: 특정 영역의 빛을 차단해 명암 대비 강화</span>
+</div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>컬러 콘트라스트: 캐릭터와 배경의 색상 대비 극대화</span>
+</div>
+</div>
+<div class="technique-card">
+<div class="technique-header">
+<div class="technique-icon" style="background-color: #0ea5e9;">
+<i class="fas fa-link"></i>
+</div>
+<div class="technique-title">Maya &amp; Arnold Light Linking</div>
+</div>
+<div class="technique-desc">
+                                특정 오브젝트에만 선택적으로 라이트를 적용하거나 제외하는 고급 제어 기법
+                            </div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>Light Linking Editor를 통한 빛-오브젝트 관계 설정</span>
+</div>
+<div class="technique-bullet">
+<span class="bullet-marker"><i class="fas fa-angle-right"></i></span>
+<span>Light Groups로 렌더링 후 조명 밸런스 조정</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Examples Section -->
+<div class="examples-section">
+<div class="section-header">
+<div class="section-icon">
+<i class="fas fa-film"></i>
+</div>
+<h2 class="section-title">영화 &amp; 실습 예시</h2>
+</div>
+<div class="large-example example-card">
+<img alt="Character Lighting Breakdown" class="example-image" src="../resources/ccf2269c91b92e7be6d436c244f718b7.jpg"/>
+<div class="example-overlay">
+<div class="example-title">Character Lighting Breakdown - Chris Brejon</div>
+<div class="example-type">Professional 3D Cinematography</div>
+</div>
+</div>
+<div class="examples-grid">
+<div class="example-card">
+<img alt="Dramatic Character Lighting" class="example-image" src="../resources/f05c6f23a8120b6ec3f2e1fb428db950.jpg"/>
+<div class="example-overlay">
+<div class="example-title">Dramatic Wrap Lighting</div>
+<div class="example-type">고급 필 &amp; 엣지 조합</div>
+</div>
+</div>
+<div class="example-card">
+<img alt="E.T. Back Lighting" class="example-image" src="../resources/54b13bd4f6031e429ac96812b5d1602f.jpg"/>
+<div class="example-overlay">
+<div class="example-title">E.T. 실루엣 기법</div>
+<div class="example-type">스필버그의 조명 미학</div>
+</div>
+</div>
+<div class="example-card">
+<img alt="Roger Deakins Lighting" class="example-image" src="../resources/2cc2dfebd473c3e8ccbb3be09f346f69.jpg"/>
+<div class="example-overlay">
+<div class="example-title">Deakins 탑 라이팅</div>
+<div class="example-type">드라마틱 분위기 연출</div>
+</div>
+</div>
+<div class="example-card">
+<img alt="Dragon Lighting Breakdown" class="example-image" src="../resources/bd9d319e9cc8a97055df40fb25d55cb6.jpg"/>
+<div class="example-overlay">
+<div class="example-title">Dragon Lighting</div>
+<div class="example-type">캐릭터 입체감 분석</div>
+</div>
+</div>
+</div>
+<div class="practice-guide">
+<div class="guide-title">
+<i class="fas fa-tools"></i>
+                            실습 단계별 가이드
+                        </div>
+<div class="guide-steps">
+<div class="guide-step">
+<div class="step-number">1</div>
+<span class="software-tag">Maya</span> 3-Point Lighting 기본 셋업 (키:필:백 = 4:1:2 비율)
+                            </div>
+<div class="guide-step">
+<div class="step-number">2</div>
+<span class="software-tag">Arnold</span> Area Light 사용으로 소프트 섀도우 구현
+                            </div>
+<div class="guide-step">
+<div class="step-number">3</div>
+                                Light Linking Editor에서 캐릭터 파츠별 분리 조명
+                            </div>
+<div class="guide-step">
+<div class="step-number">4</div>
+<span class="software-tag">Maya</span> 고블린(Gobos) 활용한 텍스처드 섀도우
+                            </div>
+<div class="guide-step">
+<div class="step-number">5</div>
+<span class="software-tag">Arnold</span> aiVolume으로 대기 산란 효과 구현
+                            </div>
+<div class="guide-step">
+<div class="step-number">6</div>
+                                DoF 설정과 연계한 조명 거리 최적화
+                            </div>
+<div class="guide-step">
+<div class="step-number">7</div>
+<span class="software-tag">Arnold</span> AOV 패스 분리 (Diffuse/Specular/SSS)
+                            </div>
+<div class="guide-step">
+<div class="step-number">8</div>
+<span class="software-tag">Arnold</span> Light Groups로 렌더 후 밸런스 조정
+                            </div>
+<div class="guide-step">
+<div class="step-number">9</div>
+                                캐릭터 실루엣 강화를 위한 림 라이트 미세 조정
+                            </div>
+<div class="guide-step">
+<div class="step-number">10</div>
+<span class="software-tag">Composite</span> 레이어별 조명 밸런스 최종 조정
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

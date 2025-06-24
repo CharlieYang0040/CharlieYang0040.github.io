@@ -1,0 +1,15 @@
+.time-marker-sunrise { left: 15%; }
+.time-marker-morning { left: 30%; }
+.time-marker-noon { left: 50%; }
+.time-marker-afternoon { left: 70%; }
+.time-marker-sunset { left: 85%; }
+
+.time-icon-golden { background-color: rgba(255,204,102,0.2); color: #ffcc66; }
+.time-icon-blue { background-color: rgba(102,153,255,0.2); color: #6699ff; }
+.time-icon-midday { background-color: rgba(255,255,255,0.2); color: #ffffff; }
+.time-icon-night { background-color: rgba(51,51,102,0.2); color: #8888cc; }
+
+.time-title-golden { color: #ffcc66; }
+.time-title-blue { color: #6699ff; }
+.time-title-midday { color: #ffffff; }
+.time-title-night { color: #8888cc; } 

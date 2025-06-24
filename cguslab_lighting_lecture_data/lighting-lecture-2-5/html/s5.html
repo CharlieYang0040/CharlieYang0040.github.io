@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixar/Disney 볼륨메트릭 라이팅 심화 분석</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background-color: #0F172A;
+            position: relative;
+            overflow: hidden;
+        }
+        .content-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-left-color: #F87171;
+        }
+        .accent-bar-left {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 40%;
+            background-color: #F87171;
+        }
+        .tech-tag {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .step-number {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Accent Bar -->
+        <div class="accent-bar-left"></div>
+        
+        <!-- Header Section -->
+        <div class="pt-10 pb-5 px-12 text-center">
+            <div class="inline-flex items-center bg-red-500 bg-opacity-20 rounded-full px-6 py-2 mb-4">
+                <i class="fas fa-fire-alt mr-3 text-red-400 text-lg"></i>
+                <span class="text-white font-medium">Advanced Volumetric Techniques</span>
+            </div>
+            <h1 class="text-white text-4xl font-bold mb-3">
+                Pixar/Disney 볼륨메트릭 라이팅 심화 분석
+            </h1>
+            <p class="text-gray-300 text-lg opacity-90 max-w-4xl mx-auto">
+                최신 애니메이션에서 사용된 예술적 볼륨 라이팅 기법과 기술적 구현 과정
+            </p>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="px-12 pb-6">
+            <div class="grid grid-cols-2 gap-8">
+                <!-- Left Column: Case Studies -->
+                <div class="space-y-5">
+                    <!-- Elemental Case Study -->
+                    <div class="content-card bg-gray-800 bg-opacity-50 rounded-xl p-5">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-red-500 bg-opacity-30 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-fire text-red-400 text-lg"></i>
+                            </div>
+                            <h3 class="text-red-400 text-xl font-bold">Pixar Elemental (2023)</h3>
+                        </div>
+                        <div class="mb-3">
+                            <img src="https://www.fxguide.com/wp-content/uploads/2018/03/COCO1-660x283.jpg" alt="Elemental 볼륨 렌더링" class="w-full h-32 object-cover rounded-lg border border-gray-700">
+                        </div>
+                        <div class="bg-black bg-opacity-30 rounded-lg p-3">
+                            <h4 class="text-yellow-300 font-semibold text-sm mb-2">주요 기술적 도전</h4>
+                            <ul class="text-gray-300 text-xs space-y-1">
+                                <li class="flex items-start">
+                                    <i class="fas fa-fire-alt text-red-400 mr-2 mt-0.5"></i>
+                                    <span>비물리적 캐릭터 발광 시뮬레이션 (150,000 볼륨메트릭 프레임)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-lightbulb text-yellow-400 mr-2 mt-0.5"></i>
+                                    <span>발광 요소의 감정 표현을 위한 아트 디렉티드 볼륨</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-tint text-blue-400 mr-2 mt-0.5"></i>
+                                    <span>산란광 시뮬레이션 및 다중 바운스 조명 최적화</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Encanto Case Study -->
+                    <div class="content-card bg-gray-800 bg-opacity-50 rounded-xl p-5">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 bg-purple-500 bg-opacity-30 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-magic text-purple-400 text-lg"></i>
+                            </div>
+                            <h3 class="text-purple-400 text-xl font-bold">Disney Encanto (2021)</h3>
+                        </div>
+                        <div class="mb-3">
+                            <img src="https://www.cartoonbrew.com/wp-content/uploads/2021/11/encanto_reviews_2-580x326.jpg" alt="Encanto 마법 라이팅" class="w-full h-32 object-cover rounded-lg border border-gray-700">
+                        </div>
+                        <div class="bg-black bg-opacity-30 rounded-lg p-3">
+                            <h4 class="text-yellow-300 font-semibold text-sm mb-2">주요 볼륨메트릭 활용</h4>
+                            <ul class="text-gray-300 text-xs space-y-1">
+                                <li class="flex items-start">
+                                    <i class="fas fa-sun text-yellow-400 mr-2 mt-0.5"></i>
+                                    <span>마법의 빛 효과를 위한 비등방성 산란 라이팅</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-mountain text-green-400 mr-2 mt-0.5"></i>
+                                    <span>안개와 대기 효과를 통한 깊이감 증대</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-moon text-blue-400 mr-2 mt-0.5"></i>
+                                    <span>감정 표현을 위한 색상 변화 볼륨 라이팅</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column: Implementation Guide -->
+                <div class="space-y-5">
+                    <!-- Technical Implementation Steps -->
+                    <div class="content-card bg-gray-800 bg-opacity-50 rounded-xl p-5">
+                        <h3 class="text-white text-xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-code text-blue-400 mr-2"></i>
+                            볼륨메트릭 라이팅 구현 단계
+                        </h3>
+                        
+                        <div class="space-y-3">
+                            <div class="flex">
+                                <div class="step-number bg-blue-500 text-white mr-3">1</div>
+                                <div class="bg-blue-900 bg-opacity-20 rounded-lg p-3 flex-1">
+                                    <h4 class="text-blue-300 font-semibold text-sm mb-1">볼륨 미디엄 설정</h4>
+                                    <p class="text-gray-300 text-xs">대기 밀도, 입자 산란 계수, 위상 함수 등의 매개변수 설정</p>
+                                    <div class="mt-1 flex flex-wrap">
+                                        <span class="tech-tag bg-blue-900 text-blue-300">Arnold VolumeScattering</span>
+                                        <span class="tech-tag bg-blue-900 text-blue-300">PxrVolume</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex">
+                                <div class="step-number bg-green-500 text-white mr-3">2</div>
+                                <div class="bg-green-900 bg-opacity-20 rounded-lg p-3 flex-1">
+                                    <h4 class="text-green-300 font-semibold text-sm mb-1">광원 및 산란 설정</h4>
+                                    <p class="text-gray-300 text-xs">볼륨에 영향을 미치는 방향성 및 영역 광원 설정, 다중 산란 샘플링 최적화</p>
+                                    <div class="mt-1 flex flex-wrap">
+                                        <span class="tech-tag bg-green-900 text-green-300">Light Linking</span>
+                                        <span class="tech-tag bg-green-900 text-green-300">Multiple Scattering</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex">
+                                <div class="step-number bg-yellow-500 text-white mr-3">3</div>
+                                <div class="bg-yellow-900 bg-opacity-20 rounded-lg p-3 flex-1">
+                                    <h4 class="text-yellow-300 font-semibold text-sm mb-1">볼륨 쉐이더 제어</h4>
+                                    <p class="text-gray-300 text-xs">텍스처 및 노이즈 맵을 통한 비균일 볼륨 밀도 제어, 컬러 그라데이션</p>
+                                    <div class="mt-1 flex flex-wrap">
+                                        <span class="tech-tag bg-yellow-900 text-yellow-300">Procedural Noise</span>
+                                        <span class="tech-tag bg-yellow-900 text-yellow-300">VDB Volumes</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex">
+                                <div class="step-number bg-red-500 text-white mr-3">4</div>
+                                <div class="bg-red-900 bg-opacity-20 rounded-lg p-3 flex-1">
+                                    <h4 class="text-red-300 font-semibold text-sm mb-1">렌더링 최적화</h4>
+                                    <p class="text-gray-300 text-xs">샘플링 품질과 렌더 시간 균형 조정, 볼륨 바운딩 박스 최적화</p>
+                                    <div class="mt-1 flex flex-wrap">
+                                        <span class="tech-tag bg-red-900 text-red-300">Path Tracing</span>
+                                        <span class="tech-tag bg-red-900 text-red-300">Denoising</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Best Practices & Performance Tips -->
+                    <div class="content-card bg-gray-800 bg-opacity-50 rounded-xl p-5">
+                        <h3 class="text-white text-xl font-bold mb-3 flex items-center">
+                            <i class="fas fa-star text-yellow-400 mr-2"></i>
+                            최적화 및 아트 디렉션 팁
+                        </h3>
+                        
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-black bg-opacity-30 rounded-lg p-3">
+                                <h4 class="text-purple-300 font-semibold text-sm mb-1">아트 디렉션</h4>
+                                <ul class="text-gray-300 text-xs space-y-1">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-palette text-purple-400 mr-1 mt-0.5 text-xs"></i>
+                                        <span>명확한 빛의 스토리텔링 목적 설정</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-palette text-purple-400 mr-1 mt-0.5 text-xs"></i>
+                                        <span>감정 표현을 위한 색상 심리학 활용</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-palette text-purple-400 mr-1 mt-0.5 text-xs"></i>
+                                        <span>물리적 정확성보다 시각적 효과 우선</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-black bg-opacity-30 rounded-lg p-3">
+                                <h4 class="text-green-300 font-semibold text-sm mb-1">성능 최적화</h4>
+                                <ul class="text-gray-300 text-xs space-y-1">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-tachometer-alt text-green-400 mr-1 mt-0.5 text-xs"></i>
+                                        <span>볼륨 해상도를 통한 디테일/속도 조절</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-tachometer-alt text-green-400 mr-1 mt-0.5 text-xs"></i>
+                                        <span>다중 산란은 주요 요소에만 제한적 사용</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-tachometer-alt text-green-400 mr-1 mt-0.5 text-xs"></i>
+                                        <span>GPU 가속 볼륨 렌더링 활용</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3 p-2 bg-black bg-opacity-20 rounded-lg text-center">
+                            <p class="text-yellow-300 text-xs font-semibold">
+                                <i class="fas fa-lightbulb mr-1"></i>
+                                픽사의 Elemental 프로젝트는 총 150,000개의 컴퓨팅 코어로 볼륨메트릭 장면을 렌더링
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer Credits -->
+        <div class="absolute bottom-3 right-4">
+            <p class="text-gray-500 text-xs">
+                이미지 출처: Pixar Animation Studios, Walt Disney Animation, FXGuide
+            </p>
+        </div>
+    </div>
+</body>
+</html>

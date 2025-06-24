@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ACES 2.0 &amp; HDR 워크플로우 완전 이해</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;family=Roboto+Mono:wght@400;600&amp;family=Roboto:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', 'Roboto', sans-serif;
+        }
+        .bg-tech-dark {
+            background-color: #0f172a;
+        }
+        .tech-grid {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .code-font {
+            font-family: 'Roboto Mono', monospace;
+        }
+        .content-container {
+            max-height: 550px;
+            overflow-y: auto;
+        }
+        .content-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .content-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        .content-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        .theory-card, .practical-card, .example-card, .feature-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .theory-card:hover, .practical-card:hover, .example-card:hover, .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="m-0 p-0">
+<div class="w-full bg-tech-dark tech-grid relative overflow-hidden" style="width: 1280px; min-height: 720px;">
+<!-- Header Section -->
+<div class="relative z-10 pt-8 pb-4 px-12">
+<div class="flex items-center justify-between">
+<div>
+<h1 class="text-3xl font-bold text-white mb-2">ACES 2.0 &amp; HDR 워크플로우 완전 이해</h1>
+<p class="text-purple-300 text-base">차세대 컬러 파이프라인과 최신 Output Transform 기술</p>
+</div>
+<div class="bg-purple-900 bg-opacity-40 backdrop-blur-sm rounded-xl px-5 py-3 border border-purple-700 border-opacity-30">
+<div class="flex items-center">
+<i class="fas fa-film text-yellow-400 mr-2"></i>
+<span class="text-white font-medium">2024년 최신 기술</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="relative z-10 px-12 pb-8">
+<div class="content-container">
+<div class="grid grid-cols-2 gap-8">
+<!-- Left Column: ACES 2.0 Features & Output Transforms -->
+<div class="space-y-6">
+<!-- ACES 2.0 Features -->
+<div class="theory-card bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 border border-white border-opacity-20">
+<h2 class="text-xl font-bold text-white mb-4 flex items-center">
+<i class="fas fa-sync-alt text-purple-400 mr-3"></i>
+                                ACES 2.0 주요 특징
+                            </h2>
+<div class="relative bg-black bg-opacity-30 rounded-lg p-3 mb-4">
+<img alt="ACES 2.0 Pipeline" class="w-full h-32 object-cover rounded-lg" src="../resources/29013ae233317586aa26a4040261e31b.png"/>
+<div class="absolute bottom-1 left-1 bg-black bg-opacity-70 rounded px-2 py-1">
+<span class="text-white text-xs">ACES 2.0 통합 파이프라인 구조</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-start">
+<div class="mt-1 mr-3 text-purple-400"><i class="fas fa-circle text-xs"></i></div>
+<div>
+<p class="text-white text-sm font-medium">향상된 색상 처리</p>
+<p class="text-purple-100 text-xs">개선된 컬러 매핑 알고리즘과 넓은 색 영역 지원</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="mt-1 mr-3 text-purple-400"><i class="fas fa-circle text-xs"></i></div>
+<div>
+<p class="text-white text-sm font-medium">통합된 룩 개발</p>
+<p class="text-purple-100 text-xs">Look Development 과정의 일관성 보장과 표준화</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="mt-1 mr-3 text-purple-400"><i class="fas fa-circle text-xs"></i></div>
+<div>
+<p class="text-white text-sm font-medium">단일 마스터 파이프라인</p>
+<p class="text-purple-100 text-xs">SDR과 HDR을 동시에 지원하는 통합 워크플로우</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Output Transforms -->
+<div class="theory-card bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 border border-white border-opacity-20">
+<h2 class="text-xl font-bold text-white mb-4 flex items-center">
+<i class="fas fa-random text-blue-400 mr-3"></i>
+                                최신 Output Transforms
+                            </h2>
+<div class="grid grid-cols-2 gap-4 mb-4">
+<div class="feature-card bg-blue-900 bg-opacity-20 rounded-lg p-3 border border-blue-700 border-opacity-30">
+<h3 class="text-white font-semibold text-sm mb-2">SDR Transforms</h3>
+<ul class="text-blue-100 text-xs space-y-1">
+<li>• Rec.709 (HD 방송)</li>
+<li>• sRGB (웹/모니터)</li>
+<li>• DCI-P3 (디지털 시네마)</li>
+<li>• 개선된 톤 매핑</li>
+</ul>
+</div>
+<div class="feature-card bg-indigo-900 bg-opacity-20 rounded-lg p-3 border border-indigo-700 border-opacity-30">
+<h3 class="text-white font-semibold text-sm mb-2">HDR Transforms</h3>
+<ul class="text-indigo-100 text-xs space-y-1">
+<li>• Rec.2100 PQ (최대 10,000 nits)</li>
+<li>• Rec.2100 HLG (방송용)</li>
+<li>• Dolby Cinema</li>
+<li>• HDR10/HDR10+</li>
+</ul>
+</div>
+</div>
+<div class="feature-card bg-green-900 bg-opacity-20 rounded-lg p-3 border border-green-700 border-opacity-30">
+<h3 class="text-white font-semibold text-sm mb-2">주요 개선점</h3>
+<ul class="text-green-100 text-xs space-y-1">
+<li>• 새로운 Reference Rendering Transform (RRT)</li>
+<li>• 개선된 하이라이트 &amp; 그림자 처리</li>
+<li>• 더 정확한 컬러 표현</li>
+<li>• OpenColorIO 2.4 통합 지원</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Right Column: HDR/Dolby Vision & Implementation Guide -->
+<div class="space-y-6">
+<!-- HDR & Dolby Vision Pipeline -->
+<div class="practical-card bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 border border-white border-opacity-20">
+<h2 class="text-xl font-bold text-white mb-4 flex items-center">
+<i class="fas fa-tv text-red-400 mr-3"></i>
+                                HDR &amp; Dolby Vision 파이프라인
+                            </h2>
+<div class="relative bg-black bg-opacity-30 rounded-lg p-3 mb-4">
+<img alt="HDR Workflow Pipeline" class="w-full h-32 object-cover rounded-lg" src="../resources/cdf59d3f15372d38f7e2ca4175889a6d.jpg"/>
+<div class="absolute bottom-1 left-1 bg-black bg-opacity-70 rounded px-2 py-1">
+<span class="text-white text-xs">ACES 기반 HDR/Dolby Vision 워크플로우</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-start">
+<div class="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+<span class="text-white font-bold text-xs">1</span>
+</div>
+<div>
+<p class="text-white text-sm font-medium">HDR 마스터링</p>
+<p class="text-red-100 text-xs">1,000-4,000 nits로 기본 HDR 마스터 생성 (Rec.2100 PQ)</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+<span class="text-white font-bold text-xs">2</span>
+</div>
+<div>
+<p class="text-white text-sm font-medium">Dolby Vision 매핑</p>
+<p class="text-red-100 text-xs">L1 (HDR) 메타데이터 생성 및 분석 알고리즘 적용</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+<span class="text-white font-bold text-xs">3</span>
+</div>
+<div>
+<p class="text-white text-sm font-medium">SDR 파생물 생성</p>
+<p class="text-red-100 text-xs">L8 (SDR) 트림패스를 통한 Rec.709 변환 자동화</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+<span class="text-white font-bold text-xs">4</span>
+</div>
+<div>
+<p class="text-white text-sm font-medium">다중 배포 최적화</p>
+<p class="text-red-100 text-xs">단일 마스터로 HDR10, HLG, SDR 동시 지원</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Studio Examples & Implementation Guide -->
+<div class="practical-card bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 border border-white border-opacity-20">
+<h2 class="text-xl font-bold text-white mb-4 flex items-center">
+<i class="fas fa-industry text-cyan-400 mr-3"></i>
+                                실제 스튜디오 사례 &amp; 실습 가이드
+                            </h2>
+<div class="grid grid-cols-2 gap-4 mb-4">
+<div class="example-card bg-cyan-900 bg-opacity-20 rounded-lg p-3 border border-cyan-700 border-opacity-30">
+<h3 class="text-white font-semibold text-sm mb-2">Netflix</h3>
+<ul class="text-cyan-100 text-xs space-y-1">
+<li>• ACES 2.0 + Dolby Vision</li>
+<li>• 4,000 nits HDR 마스터링</li>
+<li>• 단일 그레이드 워크플로우</li>
+</ul>
+</div>
+<div class="example-card bg-teal-900 bg-opacity-20 rounded-lg p-3 border border-teal-700 border-opacity-30">
+<h3 class="text-white font-semibold text-sm mb-2">디즈니/픽사</h3>
+<ul class="text-teal-100 text-xs space-y-1">
+<li>• ACES 2.0 + RenderMan</li>
+<li>• 렌더부터 마스터링까지 통합</li>
+<li>• Scene-Referred 워크플로우</li>
+</ul>
+</div>
+</div>
+<div class="bg-yellow-900 bg-opacity-20 rounded-lg p-4 border border-yellow-700 border-opacity-30">
+<h3 class="text-white font-semibold text-sm mb-2">ACES 2.0 + HDR 실습 설정</h3>
+<div class="grid grid-cols-2 gap-2">
+<div class="text-yellow-100 text-xs">• OCIO 2.4 Config 설치</div>
+<div class="text-yellow-100 text-xs">• ACEScg 작업공간 설정</div>
+<div class="text-yellow-100 text-xs">• HDR 모니터 캘리브레이션</div>
+<div class="text-yellow-100 text-xs">• PQ/HLG 변환 이해</div>
+<div class="text-yellow-100 text-xs">• EXR 32-bit 파일 관리</div>
+<div class="text-yellow-100 text-xs">• Dolby Vision 분석 도구</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row: Key Takeaways -->
+<div class="mt-6 bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<i class="fas fa-lightbulb text-yellow-400 text-lg mr-3"></i>
+<span class="text-white font-semibold">핵심 포인트</span>
+</div>
+<div class="flex space-x-6">
+<div class="text-center">
+<div class="text-purple-300 font-semibold text-sm">표준화</div>
+<div class="text-purple-100 text-xs">단일 마스터 소스</div>
+</div>
+<div class="text-center">
+<div class="text-blue-300 font-semibold text-sm">호환성</div>
+<div class="text-blue-100 text-xs">SDR/HDR 동시지원</div>
+</div>
+<div class="text-center">
+<div class="text-red-300 font-semibold text-sm">메타데이터</div>
+<div class="text-red-100 text-xs">Dolby Vision 기술</div>
+</div>
+<div class="text-center">
+<div class="text-cyan-300 font-semibold text-sm">출력 유연성</div>
+<div class="text-cyan-100 text-xs">다양한 포맷 변환</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Decorative Elements -->
+<div class="absolute top-16 right-16 w-20 h-20 border-2 border-purple-300 opacity-10 rounded-full"></div>
+<div class="absolute bottom-16 left-16 w-24 h-24 border-2 border-blue-300 opacity-10 rounded-full"></div>
+</div>
+</body>
+</html>
