@@ -38,24 +38,23 @@
             align-items: center;
             overflow: hidden;
             background-color: #000;
-            padding: 60px;
+            padding: 0;
             box-sizing: border-box;
         }
         .slide-frame {
             position: relative;
-            width: 100%;
-            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             transition: opacity 0.5s ease-in-out;
-            overflow: hidden;
+            overflow: visible;
         }
         .slide-frame iframe {
             border: none;
             background-color: #000;
-            transform-origin: center center;
-            transition: transform 0.2s ease-out, width 0.2s ease-out, height 0.2s ease-out;
+            display: block;
+            transition: transform 0.2s ease-out;
+            flex-shrink: 0;
         }
         .controls {
             position: fixed;
@@ -150,6 +149,9 @@
             backdrop-filter: blur(5px);
         }
         @media (max-width: 768px) {
+            #presentation-container {
+                padding: 20px;
+            }
             .controls {
                 bottom: 5px;
                 padding: 0.2rem 0.6rem;
@@ -232,13 +234,12 @@
         /* Drawing Canvas 스타일 */
         #drawing-canvas {
             position: absolute;
-            top: 0;
-            left: 0;
             display: none; 
             cursor: crosshair;
             z-index: 999;
             touch-action: none;
             pointer-events: none; /* 기본적으로 클릭 이벤트 차단 */
+            transform-origin: center center;
         }
         
         #drawing-canvas.active {
@@ -330,9 +331,9 @@
     
     <div id="presentation-container">
         <div class="slide-frame" id="slide-container">
+            <canvas id="drawing-canvas"></canvas>
         </div>
         <div id="zoom-overlay"></div>
-        <canvas id="drawing-canvas"></canvas>
     </div>
     
     <!-- Drawing Toolbar -->
@@ -394,10 +395,6 @@
     <script src="js/drawing.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // 슬라이드 상하좌우 여백 (픽셀 단위). 이 값을 조절하여 여백 크기를 변경할 수 있습니다.
-            const VERTICAL_PADDING = 80;
-            const HORIZONTAL_PADDING = 40;
-
             // 디버그 모드. true로 설정하면 콘솔에 상세 로그 출력
             const DEBUG_MODE = true;
             const log = (...args) => DEBUG_MODE && console.log('[View]', ...args);
@@ -582,6 +579,9 @@
                                 window.drawingUtils.setupCanvas(slideContentDimensions);
                                 const incomingSlideId = slideList[currentSlide];
                                 window.drawingUtils.loadDrawingForSlide(incomingSlideId);
+                                
+                                // Canvas 기본 위치 설정
+                                syncCanvasWithIframe();
                             }
 
                         } catch (e) {
@@ -612,8 +612,10 @@
             function resizeAndPositionSlide() {
                 if (!iframe) return;
 
-                const availableWidth = Math.max(0, presentationContainer.clientWidth - (HORIZONTAL_PADDING * 2));
-                const availableHeight = Math.max(0, presentationContainer.clientHeight - (VERTICAL_PADDING * 2));
+                // 컨테이너의 실제 가용 공간을 정확히 계산
+                const containerRect = presentationContainer.getBoundingClientRect();
+                const availableWidth = containerRect.width;
+                const availableHeight = containerRect.height;
                 
                 const slideWidth = slideContentDimensions.width;
                 const slideHeight = slideContentDimensions.height;
@@ -627,11 +629,26 @@
                 const containerAspectRatio = availableWidth / availableHeight;
 
                 let scale;
+                let scaledWidth, scaledHeight;
+                
+                // 컨테이너에 맞는 최적 스케일 계산
                 if (containerAspectRatio > slideAspectRatio) {
+                    // 높이에 맞춤
                     scale = availableHeight / slideHeight;
+                    scaledWidth = slideWidth * scale;
+                    scaledHeight = availableHeight;
                 } else {
+                    // 너비에 맞춤
                     scale = availableWidth / slideWidth;
+                    scaledWidth = availableWidth;
+                    scaledHeight = slideHeight * scale;
                 }
+                
+                // 약간의 여백을 위해 스케일을 조금 줄임 (선택사항)
+                const MARGIN_FACTOR = 0.95;
+                scale *= MARGIN_FACTOR;
+                scaledWidth *= MARGIN_FACTOR;
+                scaledHeight *= MARGIN_FACTOR;
                 
                 view.baseScale = scale;
                 log(`Resized: slide[${slideWidth}x${slideHeight}], container[${availableWidth}x${availableHeight}] -> baseScale: ${scale.toFixed(4)}`);
@@ -641,20 +658,27 @@
                     view.scale = scale;
                     view.offsetX = 0;
                     view.offsetY = 0;
-                    if (isInitialLoad) isInitialLoad = false; // 플래그 업데이트
+                    if (isInitialLoad) isInitialLoad = false;
                 }
                 
+                // iframe 크기를 원본 슬라이드 크기로 설정
                 iframe.style.width = `${slideWidth}px`;
                 iframe.style.height = `${slideHeight}px`;
-                iframe.style.transformOrigin = `center center`;
+                
+                // slide-frame은 flex로 자동 중앙 정렬되도록 크기 설정 제거
                 
                 const canvas = document.getElementById('drawing-canvas');
                 if (canvas) {
                     canvas.style.transformOrigin = `center center`;
                 }
+                
+                iframe.style.transformOrigin = `center center`;
 
                 applyView();
                 resizeAndPositionZoomOverlay();
+                
+                // Canvas 위치 동기화 (리사이즈 후 추가 동기화)
+                setTimeout(() => syncCanvasWithIframe(), 100);
             }
 
             function updateControls() {
@@ -763,21 +787,27 @@
                 const mouseX = e.clientX - containerRect.left;
                 const mouseY = e.clientY - containerRect.top;
                 
-                const s1 = view.scale;
-                // 이미지의 중심에서 마우스까지의 벡터 (스케일 적용된 상태)
-                const img_coords_x = mouseX - (containerRect.width / 2 + view.offsetX);
-                const img_coords_y = mouseY - (containerRect.height / 2 + view.offsetY);
+                // 컨테이너 중심점 계산
+                const containerCenterX = containerRect.width / 2;
+                const containerCenterY = containerRect.height / 2;
+                
+                // 마우스 위치에서 컨테이너 중심까지의 거리
+                const offsetFromCenterX = mouseX - containerCenterX;
+                const offsetFromCenterY = mouseY - containerCenterY;
+                
+                // 새로운 스케일 적용
+                const newScale = view.baseScale * ZOOM_FACTOR;
+                const scaleRatio = newScale / view.scale;
+                
+                // 줌 후 마우스 위치가 그대로 유지되도록 오프셋 계산
+                const newOffsetX = view.offsetX - offsetFromCenterX * (scaleRatio - 1);
+                const newOffsetY = view.offsetY - offsetFromCenterY * (scaleRatio - 1);
 
-                const s2 = view.baseScale * ZOOM_FACTOR;
-
-                const newOffsetX = view.offsetX - (img_coords_x / s1) * (s2 - s1);
-                const newOffsetY = view.offsetY - (img_coords_y / s1) * (s2 - s1);
-
-                log(`Zoom In: mouse=[${mouseX.toFixed(2)}, ${mouseY.toFixed(2)}], s1=${s1.toFixed(4)}, s2=${s2.toFixed(4)}, oldOffset=[${view.offsetX.toFixed(2)}, ${view.offsetY.toFixed(2)}], newOffset=[${newOffsetX.toFixed(2)}, ${newOffsetY.toFixed(2)}]`);
+                log(`Zoom In: mouse=[${mouseX.toFixed(2)}, ${mouseY.toFixed(2)}], offsetFromCenter=[${offsetFromCenterX.toFixed(2)}, ${offsetFromCenterY.toFixed(2)}], newOffset=[${newOffsetX.toFixed(2)}, ${newOffsetY.toFixed(2)}]`);
 
                 view.offsetX = newOffsetX;
                 view.offsetY = newOffsetY;
-                view.scale = s2;
+                view.scale = newScale;
                 
                 applyView();
 
@@ -830,6 +860,8 @@
                 zoomOverlay.style.display = 'block';
                 zoomOverlay.style.cursor = 'zoom-in';
 
+                // Canvas transform 동기화
+                applyView();
                 syncZoomAndDrawStates();
                 
                 zoomOverlay.addEventListener('click', handleZoomIn);
@@ -862,12 +894,23 @@
 
             function applyView(transition) {
                 const canvas = document.getElementById('drawing-canvas');
-                const elements = [iframe, canvas].filter(Boolean);
-                const transform = `translate(${view.offsetX.toFixed(2)}px, ${view.offsetY.toFixed(2)}px) scale(${view.scale.toFixed(4)})`;
+                
+                let transform;
+                
+                if (isZoomModeActive()) {
+                    // 줌 모드일 때 사용자 오프셋 추가
+                    transform = `translate(${view.offsetX.toFixed(2)}px, ${view.offsetY.toFixed(2)}px) scale(${view.scale.toFixed(4)})`;
+                    log(`Applying View (Zoom): scale=${view.scale.toFixed(4)}, offset=[${view.offsetX.toFixed(2)}, ${view.offsetY.toFixed(2)}]`);
+                } else {
+                    // 일반 모드일 때는 스케일만 적용
+                    transform = `scale(${view.scale.toFixed(4)})`;
+                    log(`Applying View (Normal): scale=${view.scale.toFixed(4)}`);
+                }
 
-                log(`Applying View: scale=${view.scale.toFixed(4)}, offsetX=${view.offsetX.toFixed(2)}, offsetY=${view.offsetY.toFixed(2)}`);
                 log(` -> transform: ${transform}`);
 
+                // iframe과 canvas에 동일한 transform 적용
+                const elements = [iframe, canvas].filter(Boolean);
                 elements.forEach(el => {
                     el.style.transform = transform;
                     el.style.transition = transition || '';
@@ -973,7 +1016,7 @@
                 const slideId = slideList[currentSlide];
 
                 if (isCurrentlyActive) {
-                    // Turn OFF
+                    // Turn OFF - 드로잉 저장
                     window.drawingUtils.saveDrawingForSlide(slideId);
                 }
 
@@ -981,10 +1024,23 @@
                 window.drawingUtils.toggleDrawMode();
 
                 if (!isCurrentlyActive) {
-                    // Just turned ON
+                    // Just turned ON - 드로잉 모드를 켤 때
                     window.drawingUtils.setupCanvas(slideContentDimensions);
                     window.drawingUtils.loadDrawingForSlide(slideId);
+                    
+                    // **중요**: Canvas 위치 동기화 및 view 적용
+                    syncCanvasWithIframe();
+                    applyView();
+                    
+                    // 추가: 색상이 제대로 적용되었는지 확인
+                    setTimeout(() => {
+                        const canvas = document.getElementById('drawing-canvas');
+                        const ctx = canvas.getContext('2d');
+                        console.log(`[presentation.html] Final check - strokeStyle: ${ctx.strokeStyle}, lineWidth: ${ctx.lineWidth}, globalCompositeOperation: ${ctx.globalCompositeOperation}`);
+                        console.log(`[presentation.html] Canvas dimensions: ${canvas.width}x${canvas.height}, style: ${canvas.style.width}x${canvas.style.height}`);
+                    }, 100);
                 }
+                
                 syncZoomAndDrawStates();
             }
 
@@ -1007,6 +1063,20 @@
                     // }
                 }
             });
+
+            function syncCanvasWithIframe() {
+                const canvas = document.getElementById('drawing-canvas');
+                if (!iframe || !canvas) return;
+
+                // Canvas 위치만 중앙 정렬로 설정 (크기는 setupCanvas에서 이미 설정됨)
+                canvas.style.position = 'absolute';
+                canvas.style.left = '50%';
+                canvas.style.top = '50%';
+                canvas.style.marginLeft = `-${slideContentDimensions.width/2}px`;
+                canvas.style.marginTop = `-${slideContentDimensions.height/2}px`;
+                
+                log(`Canvas synced: positioned at center, size unchanged (${slideContentDimensions.width}x${slideContentDimensions.height})`);
+            }
         });
     </script>
 </body>

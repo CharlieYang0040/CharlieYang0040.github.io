@@ -102,33 +102,30 @@
 
     // --- Canvas Setup and Resizing ---
     function setupCanvas(slideDimensions) {
-        const slideContainer = document.getElementById('slide-container');
-        const iframe = slideContainer.querySelector('iframe');
-        const presentationContainer = document.getElementById('presentation-container');
+        if (!slideDimensions) return;
 
-        if (iframe && presentationContainer) {
-            const iframeRect = iframe.getBoundingClientRect();
-            const presentationContainerRect = presentationContainer.getBoundingClientRect();
+        // Canvas를 원본 슬라이드 크기로 설정 (이때 2D context가 리셋됨!)
+        canvas.width = slideDimensions.width;
+        canvas.height = slideDimensions.height;
+        canvas.style.width = `${slideDimensions.width}px`;
+        canvas.style.height = `${slideDimensions.height}px`;
 
-            const slideWidth = slideDimensions ? slideDimensions.width : canvas.width;
-            const slideHeight = slideDimensions ? slideDimensions.height : canvas.height;
-
-            canvas.width = slideWidth;
-            canvas.height = slideHeight;
-
-            canvas.style.width = iframeRect.width + 'px';
-            canvas.style.height = iframeRect.height + 'px';
-            canvas.style.left = (iframeRect.left - presentationContainerRect.left) + 'px';
-            canvas.style.top = (iframeRect.top - presentationContainerRect.top) + 'px';
-            canvas.style.transform = getComputedStyle(iframe).transform;
-            canvas.style.transformOrigin = getComputedStyle(iframe).transformOrigin;
-        }
-
-        ctx.strokeStyle = currentColor;
-        ctx.lineWidth = currentLineWidth;
+        // Canvas 크기 변경으로 리셋된 2D context 속성들을 모두 다시 설정
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
-        ctx.globalCompositeOperation = (currentTool === 'eraser') ? 'destination-out' : 'source-over';
+        
+        // 현재 도구에 맞는 속성 재설정
+        if (currentTool === 'pen') {
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = penLineWidth;
+        } else if (currentTool === 'eraser') {
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.lineWidth = eraserLineWidth;
+        }
+        
+        console.log(`[drawing.js] Canvas setup complete: ${slideDimensions.width}x${slideDimensions.height}`);
+        console.log(`[drawing.js] Applied styles - color: ${currentColor}, strokeStyle: ${ctx.strokeStyle}, tool: ${currentTool}`);
     }
 
     // --- Drawing Mode Toggle ---
@@ -138,18 +135,21 @@
         canvas.classList.toggle('active', isDrawingModeActive);
         drawingToolbar.style.display = isDrawingModeActive ? 'flex' : 'none';
         toggleDrawModeBtn.classList.toggle('active', isDrawingModeActive);
-        if (isDrawingModeActive) {
-            setupCanvas();
-        }
+        
+        console.log(`[drawing.js] Drawing mode: ${isDrawingModeActive ? 'ON' : 'OFF'}`);
     }
 
     // --- Drawing Event Handlers ---
     function getEventPos(e) {
         const rect = canvas.getBoundingClientRect();
-        const scaleX = canvas.width / rect.width;
-        const scaleY = canvas.height / rect.height;
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        
+        // Canvas의 실제 크기와 표시 크기 간의 비율 계산
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        
+        // 좌표 변환
         const x = (clientX - rect.left) * scaleX;
         const y = (clientY - rect.top) * scaleY;
         
@@ -157,8 +157,8 @@
             console.groupCollapsed('[Draw] getEventPos');
             console.log(`- Mouse/Touch: clientX=${clientX.toFixed(2)}, clientY=${clientY.toFixed(2)}`);
             console.log(`- Canvas Rect: left=${rect.left.toFixed(2)}, top=${rect.top.toFixed(2)}, width=${rect.width.toFixed(2)}, height=${rect.height.toFixed(2)}`);
-            console.log(`- Canvas Attrs: width=${canvas.width}, height=${canvas.height}`);
-            console.log(`- Calculated Scale: scaleX=${scaleX.toFixed(4)}, scaleY=${scaleY.toFixed(4)}`);
+            console.log(`- Canvas Size: width=${canvas.width}, height=${canvas.height}`);
+            console.log(`- Scale: scaleX=${scaleX.toFixed(4)}, scaleY=${scaleY.toFixed(4)}`);
             console.log(`- Final Coords: x=${x.toFixed(2)}, y=${y.toFixed(2)}`);
             console.groupEnd();
         }
@@ -210,6 +210,7 @@
             ctx.globalCompositeOperation = 'source-over';
             currentLineWidth = penLineWidth;
             ctx.strokeStyle = currentColor;
+            console.log(`[drawing.js] Pen tool activated with color: ${currentColor}`);
         } else if (tool === 'eraser') {
             ctx.globalCompositeOperation = 'destination-out';
             currentLineWidth = eraserLineWidth;
@@ -248,6 +249,10 @@
             initHistory();
         }
         updateUndoRedoButtons();
+        
+        // 그림 복원 후 현재 도구 스타일 재적용 (중요!)
+        setActiveTool(currentTool);
+        console.log(`[drawing.js] Drawing loaded for slide: ${slideId}, reapplied tool: ${currentTool}, color: ${currentColor}`);
     }
 
     function clearDrawingForSlide(slideId) {
@@ -309,8 +314,14 @@
         }
     });
 
-    // Initial setup
-    setActiveTool('pen');
+    // Initial setup - 색상 피커를 먼저 동기화한 후 펜 툴 설정
+    // 색상 피커의 초기값과 동기화
+    if (colorPicker.value) {
+        currentColor = colorPicker.value;
+        console.log(`[drawing.js] Initial color set to: ${currentColor}`);
+    }
+    
+    setActiveTool('pen'); // 이때 currentColor가 올바르게 적용됨
     updateUndoRedoButtons();
 })();
 
