@@ -88,11 +88,10 @@
             height: 100%;
             object-fit: cover;
             transition: all 0.4s ease;
-            filter: brightness(0.9);
+            cursor: pointer;
         }
         .visual-card:hover .comparison-image {
             transform: scale(1.08);
-            filter: brightness(1.1);
         }
         .image-overlay {
             position: absolute;
@@ -275,6 +274,88 @@
         .visual-card:hover .interactive-hint {
             opacity: 1;
         }
+        .slideshow-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 3;
+        }
+        .slideshow-dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .slideshow-dot.active {
+            background-color: white;
+        }
+        .lightbox {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            animation: lightbox-zoom 0.3s ease-out;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 25px;
+            right: 40px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .lightbox-close:hover {
+            color: #bbb;
+        }
+        @keyframes lightbox-zoom {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 45px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .lightbox-nav:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .lightbox-prev {
+            left: 25px;
+        }
+        .lightbox-next {
+            right: 25px;
+        }
     </style>
 </head>
 <body>
@@ -302,7 +383,6 @@
 <div class="visual-card large-card">
 <div class="image-container">
 <img alt="조명 대비 비교" class="comparison-image" src="../resources/5a1e3528714c80e249aed3dc936c490c.webp"/>
-<div class="image-overlay"></div>
 <div class="comparison-slider"></div>
 <div class="interactive-hint">
 <i class="fas fa-eye mb-1"></i><br/>
@@ -326,8 +406,7 @@
 <!-- Light direction -->
 <div class="visual-card">
 <div class="image-container">
-<img alt="빛의 방향 효과" class="comparison-image" src="../resources/73bf1df862993b81166859e6a172dee8.png"/>
-<div class="image-overlay"></div>
+<img alt="빛의 방향 효과" class="comparison-image" src="../resources/d105192197adab6c293a7fefb7b2522f.jpg"/>
 <div class="interactive-hint">
 <i class="fas fa-compass mb-1"></i><br/>
                                 방향별 효과
@@ -357,10 +436,11 @@
                 </div>
 <div class="grid-container">
 <!-- Hard light example -->
-<div class="visual-card">
+<div class="visual-card slideshow-card">
 <div class="image-container">
-<img alt="하드 라이트 그림자" class="comparison-image" src="../resources/9c9983c9fd49187ac61907d265c36b3d.jpg"/>
-<div class="image-overlay"></div>
+<img alt="하드 라이트 예시 1" class="comparison-image" src="../resources/hardlight/example_pointlight_01.png"/>
+<img alt="하드 라이트 예시 2" class="comparison-image" src="../resources/hardlight/example_pointlight_02.png"/>
+<div class="slideshow-dots"></div>
 <div class="interactive-hint">
 <i class="fas fa-sun mb-1"></i><br/>
                                 선명한 그림자
@@ -381,10 +461,12 @@
 </div>
 </div>
 <!-- Soft light example -->
-<div class="visual-card">
+<div class="visual-card slideshow-card">
 <div class="image-container">
-<img alt="소프트 라이트 그림자" class="comparison-image" src="../resources/23e49b7ab94fdb5e49724526a0e293bb.jpg"/>
-<div class="image-overlay"></div>
+<img alt="소프트 라이트 예시 1" class="comparison-image" src="../resources/softlight/example_arealight_01.png"/>
+<img alt="소프트 라이트 예시 2" class="comparison-image" src="../resources/softlight/example_arealight_02.png"/>
+<img alt="소프트 라이트 예시 3" class="comparison-image" src="../resources/softlight/example_arealight_03.png"/>
+<div class="slideshow-dots"></div>
 <div class="interactive-hint">
 <i class="fas fa-cloud mb-1"></i><br/>
                                 부드러운 그림자
@@ -408,7 +490,6 @@
 <div class="visual-card">
 <div class="image-container">
 <img alt="빛과 형태" class="comparison-image" src="../resources/16cab12ac280c15cc6b4a06d996e555b.jpg"/>
-<div class="image-overlay"></div>
 <div class="interactive-hint">
 <i class="fas fa-cube mb-1"></i><br/>
                                 형태와 질감
@@ -430,18 +511,20 @@
 </div>
 </div>
 </div>
+</div>
 <!-- V-Ray Interface Section -->
-<div>
+<div class="mb-6">
 <div class="section-header">
 <i class="fas fa-desktop text-green-300"></i>
                     V-Ray 인터페이스 &amp; 설정
                 </div>
 <div class="grid-container">
 <!-- V-Ray sun settings -->
-<div class="visual-card">
+<div class="visual-card slideshow-card">
 <div class="image-container">
-<img alt="V-Ray Sun 설정" class="comparison-image" src="../resources/ef5e301d57644e483b825a4f042e5eaa.jpg"/>
-<div class="image-overlay"></div>
+<img alt="V-Ray Sun 예시 1" class="comparison-image" src="../resources/sunlight/example_Untitled.png"/>
+<img alt="V-Ray Sun 예시 2" class="comparison-image" src="../resources/sunlight/example_vray_sunlight.png"/>
+<div class="slideshow-dots"></div>
 <div class="interactive-hint">
 <i class="fas fa-cog mb-1"></i><br/>
                                 태양광 설정
@@ -462,10 +545,12 @@
 </div>
 </div>
 <!-- V-Ray light settings -->
-<div class="visual-card">
+<div class="visual-card slideshow-card">
 <div class="image-container">
-<img alt="V-Ray 라이트 설정" class="comparison-image" src="../resources/7f9ebf811f58b06f44ddd2ce6b132490.jpg"/>
-<div class="image-overlay"></div>
+<img alt="IES Light 예시 1" class="comparison-image" src="../resources/ieslight/example_vray_IESLight_01.png"/>
+<img alt="IES Light 예시 2" class="comparison-image" src="../resources/ieslight/example_vray_IESLight_02.png"/>
+<img alt="IES Light 예시 3" class="comparison-image" src="../resources/ieslight/example_vray_IESLight_03.png"/>
+<div class="slideshow-dots"></div>
 <div class="interactive-hint">
 <i class="fas fa-sliders-h mb-1"></i><br/>
                                 조명 제어
@@ -486,10 +571,11 @@
 </div>
 </div>
 <!-- V-Ray material editor -->
-<div class="visual-card">
+<div class="visual-card slideshow-card">
 <div class="image-container">
-<img alt="V-Ray 발광 재질" class="comparison-image" src="../resources/859eafc29a6fb9d264db8abea39ba4d1.jpg"/>
-<div class="image-overlay"></div>
+<img alt="발광 재질 예시 1" class="comparison-image" src="../resources/lightmtl/example_vray_LightMtl_01.png"/>
+<img alt="발광 재질 예시 2" class="comparison-image" src="../resources/lightmtl/example_vray_LightMtl_02.png"/>
+<div class="slideshow-dots"></div>
 <div class="interactive-hint">
 <i class="fas fa-palette mb-1"></i><br/>
                                 발광 재질
@@ -513,5 +599,148 @@
 </div>
 </div>
 </div>
+</div>
+<div id="lightbox" class="lightbox">
+<span id="lightbox-close" class="lightbox-close">&times;</span>
+<button id="lightbox-prev" class="lightbox-nav lightbox-prev" style="display: none;">&#10094;</button>
+<img id="lightbox-image" class="lightbox-content" src=""/>
+<button id="lightbox-next" class="lightbox-nav lightbox-next" style="display: none;">&#10095;</button>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const slideshows = document.querySelectorAll('.slideshow-card .image-container');
+
+    slideshows.forEach(slideshow => {
+        const images = slideshow.querySelectorAll('.comparison-image');
+        const dotsContainer = slideshow.querySelector('.slideshow-dots');
+        let currentIndex = 0;
+        let intervalId;
+
+        if (images.length <= 1) {
+            if(images.length === 1) images[0].style.display = 'block';
+            if(dotsContainer) dotsContainer.style.display = 'none';
+            return;
+        }
+
+        // Create dots
+        images.forEach((_, index) => {
+            const dot = document.createElement('span');
+            dot.classList.add('slideshow-dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+                resetInterval();
+            });
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = dotsContainer.querySelectorAll('.slideshow-dot');
+
+        function goToSlide(index) {
+            images[currentIndex].style.display = 'none';
+            dots[currentIndex].classList.remove('active');
+            currentIndex = index;
+            images[currentIndex].style.display = 'block';
+            dots[currentIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            let nextIndex = (currentIndex + 1) % images.length;
+            goToSlide(nextIndex);
+        }
+        
+        function resetInterval() {
+            clearInterval(intervalId);
+            intervalId = setInterval(nextSlide, 3000);
+        }
+
+        // Initial state
+        images.forEach(img => img.style.display = 'none');
+        images[0].style.display = 'block';
+        
+        intervalId = setInterval(nextSlide, 3000);
+    });
+
+    // Lightbox logic
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxClose = document.getElementById('lightbox-close');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+    const allImages = document.querySelectorAll('.comparison-image');
+
+    let currentGalleryImages = [];
+    let currentImageIndex = 0;
+
+    allImages.forEach(image => {
+        image.addEventListener('click', () => {
+            const isVisible = window.getComputedStyle(image).display !== 'none';
+            if (isVisible) {
+                const slideshowCard = image.closest('.slideshow-card');
+                if (slideshowCard) {
+                    const galleryImages = slideshowCard.querySelectorAll('.comparison-image');
+                    currentGalleryImages = Array.from(galleryImages).map(img => img.src);
+                    currentImageIndex = Array.from(galleryImages).findIndex(img => img.src === image.src);
+                    
+                    lightboxPrev.style.display = 'block';
+                    lightboxNext.style.display = 'block';
+                } else {
+                    currentGalleryImages = [image.src];
+                    currentImageIndex = 0;
+                    lightboxPrev.style.display = 'none';
+                    lightboxNext.style.display = 'none';
+                }
+                
+                updateLightboxImage();
+                lightbox.style.display = 'flex';
+            }
+        });
+    });
+
+    function updateLightboxImage() {
+        if (currentGalleryImages.length > 0) {
+            lightboxImage.src = currentGalleryImages[currentImageIndex];
+        }
+    }
+
+    function showPrevImage() {
+        currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+        updateLightboxImage();
+    }
+
+    function showNextImage() {
+        currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
+        updateLightboxImage();
+    }
+
+    function closeLightbox() {
+        lightbox.style.display = 'none';
+        lightboxImage.src = '';
+        currentGalleryImages = [];
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', showPrevImage);
+    lightboxNext.addEventListener('click', showNextImage);
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (lightbox.style.display === 'flex') {
+            if (e.key === 'ArrowLeft') {
+                showPrevImage();
+            } else if (e.key === 'ArrowRight') {
+                showNextImage();
+            } else if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        }
+    });
+});
+</script>
 </body>
 </html>
