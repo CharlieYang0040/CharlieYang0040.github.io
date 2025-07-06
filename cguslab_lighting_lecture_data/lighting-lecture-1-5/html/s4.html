@@ -198,6 +198,115 @@
             background: rgba(236, 201, 75, 0.8);
             color: black;
         }
+        
+        /* 비교 슬라이더 스타일 */
+        .comparison-card {
+            position: relative;
+        }
+        .comparison-container {
+            position: relative;
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .comparison-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+        .comparison-slider:active {
+            cursor: grabbing;
+        }
+        .comparison-images {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .comparison-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        .before-image {
+            z-index: 2;
+            clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+        }
+        .after-image {
+            z-index: 1;
+        }
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            transform: translateX(-50%);
+            z-index: 10;
+            pointer-events: none;
+        }
+        .slider-line {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(251, 191, 36, 0.8), rgba(251, 191, 36, 0.6));
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: rgba(251, 191, 36, 0.9);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            cursor: grab;
+        }
+        .slider-button:hover {
+            background: rgba(251, 191, 36, 1);
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        .slider-button:active {
+            cursor: grabbing;
+        }
+        .comparison-labels {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 12px;
+            z-index: 5;
+        }
+        .label-before, .label-after {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .label-before {
+            background: rgba(239, 68, 68, 0.8);
+        }
+        .label-after {
+            background: rgba(34, 197, 94, 0.8);
+        }
         .software-badge {
             background: rgba(34, 197, 94, 0.8);
             color: white;
@@ -311,17 +420,34 @@
                                     </div>
 </div>
 </div>
-<div class="example-card">
-<div class="brand-badge pixar-badge">PIXAR</div>
-<img alt="Inside Out Lighting" class="example-image" src="https://seemomclick.com/wp-content/uploads/2015/05/Before-Lighting.jpg"/>
-<div class="example-title">Inside Out - 감정 표현</div>
-<div class="example-overlay">
-<p class="text-sm text-yellow-200">각 감정 캐릭터마다 다른 Falloff 패턴으로 개성 부여</p>
-<div class="tech-info">
-<i class="fas fa-palette mr-1"></i>Character-specific Light Curves
-                                    </div>
-</div>
-</div>
+                <div class="example-card comparison-card">
+                    <div class="brand-badge pixar-badge">PIXAR</div>
+                    <div class="comparison-container">
+                        <div class="comparison-slider">
+                            <div class="comparison-images">
+                                <img alt="Before Lighting" class="comparison-image before-image" src="../resources/Before-Lighting.jpg"/>
+                                <img alt="After Lighting" class="comparison-image after-image" src="../resources/After-Lighting.jpg"/>
+                            </div>
+                            <div class="slider-handle">
+                                <div class="slider-line"></div>
+                                <div class="slider-button">
+                                    <i class="fas fa-arrows-alt-h"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comparison-labels">
+                            <span class="label-before">Before</span>
+                            <span class="label-after">After</span>
+                        </div>
+                    </div>
+                    <div class="example-title">Inside Out - 라이팅 비교</div>
+                    <div class="example-overlay">
+                        <p class="text-sm text-yellow-200">라이팅 전후 비교로 Falloff 효과 확인</p>
+                        <div class="tech-info">
+                            <i class="fas fa-palette mr-1"></i>Character-specific Light Curves
+                        </div>
+                    </div>
+                </div>
 <div class="example-card">
 <div class="brand-badge disney-badge">DISNEY</div>
 <img alt="Frozen Ice Palace" class="example-image" src="../resources/219db9a985b4419a8da82168de455445.jpg"/>
@@ -493,5 +619,91 @@
 </div>
 </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const comparisonSlider = document.querySelector('.comparison-slider');
+    const beforeImage = document.querySelector('.before-image');
+    const sliderHandle = document.querySelector('.slider-handle');
+    const sliderButton = document.querySelector('.slider-button');
+    
+    if (!comparisonSlider || !beforeImage || !sliderHandle || !sliderButton) {
+        return;
+    }
+    
+    let isDragging = false;
+    let startX = 0;
+    let currentX = 50; // 초기 위치 50%
+    
+    function updateSlider(percentage) {
+        // 0%에서 100% 사이로 제한
+        percentage = Math.max(0, Math.min(100, percentage));
+        
+        // Before 이미지의 clip-path 업데이트
+        beforeImage.style.clipPath = `polygon(0 0, ${percentage}% 0, ${percentage}% 100%, 0 100%)`;
+        
+        // 슬라이더 핸들 위치 업데이트
+        sliderHandle.style.left = `${percentage}%`;
+        
+        currentX = percentage;
+    }
+    
+    function getPercentageFromEvent(event) {
+        const rect = comparisonSlider.getBoundingClientRect();
+        const x = (event.clientX || event.touches[0].clientX) - rect.left;
+        return (x / rect.width) * 100;
+    }
+    
+    // 마우스 이벤트
+    sliderButton.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        startX = e.clientX;
+        e.preventDefault();
+    });
+    
+    comparisonSlider.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        
+        const percentage = getPercentageFromEvent(e);
+        updateSlider(percentage);
+    });
+    
+    document.addEventListener('mouseup', function() {
+        isDragging = false;
+    });
+    
+    // 터치 이벤트 (모바일 지원)
+    sliderButton.addEventListener('touchstart', function(e) {
+        isDragging = true;
+        startX = e.touches[0].clientX;
+        e.preventDefault();
+    });
+    
+    comparisonSlider.addEventListener('touchmove', function(e) {
+        if (!isDragging) return;
+        
+        const percentage = getPercentageFromEvent(e);
+        updateSlider(percentage);
+        e.preventDefault();
+    });
+    
+    document.addEventListener('touchend', function() {
+        isDragging = false;
+    });
+    
+    // 클릭으로 슬라이더 이동
+    comparisonSlider.addEventListener('click', function(e) {
+        if (e.target === sliderButton || e.target.closest('.slider-button')) {
+            return;
+        }
+        
+        const percentage = getPercentageFromEvent(e);
+        updateSlider(percentage);
+    });
+    
+    // 초기 상태 설정
+    updateSlider(currentX);
+});
+</script>
 </body>
 </html>

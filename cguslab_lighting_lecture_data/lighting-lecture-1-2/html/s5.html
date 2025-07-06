@@ -123,65 +123,98 @@
             position: relative;
             overflow: hidden;
             border-radius: 8px 8px 0 0;
+            cursor: grab;
+        }
+        .image-comparison:active {
+            cursor: grabbing;
+        }
+        .image-comparison-images {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .image-before, .image-after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        .image-before {
+            z-index: 2;
+            clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+        }
+        .image-after {
+            z-index: 1;
         }
         .image-slider {
             position: absolute;
             top: 0;
-            bottom: 0;
             left: 50%;
             width: 4px;
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 10;
-            cursor: ew-resize;
-        }
-        .image-slider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 30px;
-            height: 30px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        .image-slider::after {
-            content: '⟷';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #0a2342;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        .image-slider .slider-hint {
-            position: absolute;
-            top: 20px;
-            left: 50%;
+            height: 100%;
             transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            opacity: 0.8;
-            white-space: nowrap;
+            z-index: 10;
             pointer-events: none;
         }
-        .image-before, .image-after {
+        .slider-line {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            background: linear-gradient(to bottom, rgba(96, 165, 250, 0.8), rgba(96, 165, 250, 0.6));
+            box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
         }
-        .image-after {
+        .slider-button {
             position: absolute;
-            top: 0;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: rgba(96, 165, 250, 0.9);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            cursor: grab;
+        }
+        .slider-button:hover {
+            background: rgba(96, 165, 250, 1);
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        .slider-button:active {
+            cursor: grabbing;
+        }
+        .comparison-labels {
+            position: absolute;
+            bottom: 8px;
             left: 0;
-            width: 50%;
-            overflow: hidden;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 12px;
+            z-index: 5;
+        }
+        .label-cool, .label-warm {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .label-cool {
+            background: rgba(59, 130, 246, 0.8);
+        }
+        .label-warm {
+            background: rgba(245, 101, 101, 0.8);
         }
         .accent-circle {
             position: absolute;
@@ -306,143 +339,171 @@
 <h1 class="title">V-Ray 실습 예시 및 단계별 안내</h1>
 </div>
 <!-- Main content container -->
-<div class="flex flex-1 space-x-6 relative z-10">
-<!-- Left column: Examples and comparisons -->
-<div class="w-7/12 space-y-6">
-<div class="section-title flex items-center mb-4">
-<i class="fas fa-images text-blue-300 mr-3"></i>
-                    조명 세팅 변경에 따른 결과물 비교
+<div class="grid grid-cols-12 gap-6 flex-1 relative z-10">
+    <!-- Left column: Examples and comparisons -->
+    <div class="col-span-5 flex flex-col space-y-6">
+        <div class="section-title flex items-center mb-4">
+            <i class="fas fa-images text-blue-300 mr-3"></i>
+            조명 세팅 변경에 따른 결과물 비교
+        </div>
+        <!-- Example 1: Interior lighting comparison -->
+        <div class="example-card">
+            <div class="image-comparison" style="height: 250px;">
+                <div class="image-comparison-images">
+                    <img alt="실내 라이팅 - 차가운 설정" class="image-before" src="../resources/vray_interior_cool.png"/>
+                    <img alt="실내 라이팅 - 따뜻한 설정" class="image-after" src="../resources/vray_interior_warm.png"/>
                 </div>
-<!-- Example 1: Interior lighting comparison -->
-<div class="example-card">
-<div class="image-comparison" style="height: 250px;">
-<img alt="실내 라이팅 - 밝은 설정" class="image-before" src="../resources/vray_interior_cool.png"/>
-<div class="image-after">
-<img alt="실내 라이팅 - 따뜻한 설정" class="image-after" src="../resources/vray_interior_warm.png" style="width: 200%; right: 0;"/>
-</div>
-<div class="image-slider">
-<div class="slider-hint">드래그하여 비교</div>
-</div>
-</div>
-<div class="p-4">
-<h3 class="text-xl font-semibold mb-2">실내 라이팅 컨트라스트 비교</h3>
-<div class="flex flex-wrap mt-3">
-<span class="feature-badge">자연광 활용</span>
-<span class="feature-badge">V-Ray Sun</span>
-<span class="feature-badge">반사광 설정</span>
-<span class="feature-badge">온도 조절</span>
-</div>
-</div>
-</div>
-<!-- Example 2: Materials and shadows -->
-<div class="example-card mt-6">
-<div class="p-4">
-<h3 class="text-xl font-semibold mb-3">V-Ray의 주요 라이팅 도구</h3>
-<div class="grid grid-cols-2 gap-4">
-<div class="tooltip">
-<div class="bg-blue-900 bg-opacity-40 p-3 rounded-lg text-center hover:bg-opacity-60 transition-all">
-<i class="fas fa-sun text-yellow-300 text-2xl mb-2" style="filter: drop-shadow(0 0 5px rgba(252, 211, 77, 0.5));"></i>
-<div class="font-medium">V-Ray Sun</div>
-</div>
-<span class="tooltip-text">태양광 시뮬레이션. 위치와 강도 조절로 자연스러운 조명 구현</span>
-</div>
-<div class="tooltip">
-<div class="bg-blue-900 bg-opacity-40 p-3 rounded-lg text-center hover:bg-opacity-60 transition-all">
-<i class="fas fa-cloud-sun text-blue-300 text-2xl mb-2" style="filter: drop-shadow(0 0 5px rgba(147, 197, 253, 0.5));"></i>
-<div class="font-medium">V-Ray Sky</div>
-</div>
-<span class="tooltip-text">전체 하늘 조명. 광범위한 확산광 제공으로 실내 조명 보완</span>
-</div>
-<div class="tooltip">
-<div class="bg-blue-900 bg-opacity-40 p-3 rounded-lg text-center hover:bg-opacity-60 transition-all">
-<i class="fas fa-lightbulb text-yellow-200 text-2xl mb-2" style="filter: drop-shadow(0 0 5px rgba(254, 240, 138, 0.5));"></i>
-<div class="font-medium">V-Ray Light</div>
-</div>
-<span class="tooltip-text">다양한 인공 조명. 면적, 강도, 색상, 형태 등 세부 조절 가능</span>
-</div>
-<div class="tooltip">
-<div class="bg-blue-900 bg-opacity-40 p-3 rounded-lg text-center hover:bg-opacity-60 transition-all">
-<i class="fas fa-sliders-h text-green-300 text-2xl mb-2" style="filter: drop-shadow(0 0 5px rgba(134, 239, 172, 0.5));"></i>
-<div class="font-medium">Light Mix</div>
-</div>
-<span class="tooltip-text">렌더링 후 조명 세팅 변경 가능. 실시간으로 다양한 설정 시험</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Right column: Steps and workflow -->
-<div class="w-5/12 flex flex-col space-y-6">
-<div class="section-title flex items-center mb-4">
-<i class="fas fa-tasks text-blue-300 mr-3"></i>
-                    V-Ray 실습 단계별 가이드
+                <div class="image-slider">
+                    <div class="slider-line"></div>
+                    <div class="slider-button">
+                        <i class="fas fa-arrows-alt-h"></i>
+                    </div>
                 </div>
-<!-- Workflow diagram -->
-<div class="workflow-container">
-<h3 class="text-lg font-semibold mb-3 text-blue-200">V-Ray 라이팅 워크플로우</h3>
-<div class="mermaid-container" onclick="this.classList.toggle('scale-110'); this.classList.toggle('shadow-lg'); this.style.transition='all 0.3s';" style="background-color: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 10px; cursor: pointer;">
-<div class="mermaid">
-                            graph TD
-                                A[기본 씬 준비] --&gt; B[기본 조명 설정]
-                                B --&gt; C[렌더 테스트]
-                                C --&gt; D{결과 평가}
-                                D --&gt;|개선 필요| E[조명 조절]
-                                E --&gt; C
-                                D --&gt;|만족| F[최종 렌더링]
-                                style A fill:#3b82f6,color:#fff
-                                style B fill:#3b82f6,color:#fff
-                                style C fill:#3b82f6,color:#fff
-                                style D fill:#9333ea,color:#fff
-                                style E fill:#3b82f6,color:#fff
-                                style F fill:#10b981,color:#fff
+                <div class="comparison-labels">
+                    <span class="label-cool">Cool</span>
+                    <span class="label-warm">Warm</span>
+                </div>
+            </div>
+            <div class="p-4">
+                <h3 class="text-xl font-semibold mb-2">실내 라이팅 컨트라스트 비교</h3>
+                <div class="flex flex-wrap mt-3">
+                    <span class="feature-badge">자연광 활용</span>
+                    <span class="feature-badge">V-Ray Sun</span>
+                    <span class="feature-badge">반사광 설정</span>
+                    <span class="feature-badge">온도 조절</span>
+                </div>
+            </div>
+        </div>
+        <!-- Example 2: Materials and shadows -->
+        <div class="example-card mt-6">
+            <div class="p-4">
+                <h3 class="text-xl font-semibold mb-3">V-Ray의 주요 라이팅 도구</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="tooltip">
+                        <div class="bg-blue-900 bg-opacity-40 p-3 rounded-lg text-center hover:bg-opacity-60 transition-all">
+                            <i class="fas fa-sun text-yellow-300 text-2xl mb-2" style="filter: drop-shadow(0 0 5px rgba(252, 211, 77, 0.5));"></i>
+                            <div class="font-medium">V-Ray Sun</div>
                         </div>
-</div>
-</div>
-<!-- Step-by-step instructions -->
-<div class="space-y-4">
-<div class="step-card p-4 rounded-r">
-<h3 class="text-lg font-semibold text-blue-200 flex items-center">
-<div class="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center mr-3 shadow-md">1</div>
-                            기본 조명 설정
-                        </h3>
-<ul class="list-disc pl-12 text-gray-200 mt-2 space-y-1">
-<li>기본 <span class="highlight">V-Ray Sun</span> 추가 (Menu → Create → Lights)</li>
-<li>태양 위치 및 <span class="highlight">강도 설정</span> (Multiplier 값 조절)</li>
-<li>환경광 구성을 위한 <span class="highlight">V-Ray Sky</span> 추가</li>
-</ul>
-</div>
-<div class="step-card p-4 rounded-r">
-<h3 class="text-lg font-semibold text-blue-200 flex items-center">
-<div class="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center mr-3 shadow-md">2</div>
-                            조명 세부 조절 및 테스트
-                        </h3>
-<ul class="list-disc pl-12 text-gray-200 mt-2 space-y-1">
-<li>그림자 설정: <span class="highlight">Soft/Sharp 조절</span></li>
-<li>조명 각도 변경하며 <span class="highlight">그림자 위치</span> 관찰</li>
-<li>매트리얼의 반사/흡수 특성에 따른 빛 효과 비교</li>
-</ul>
-</div>
-<div class="step-card p-4 rounded-r">
-<h3 class="text-lg font-semibold text-blue-200 flex items-center">
-<div class="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center mr-3 shadow-md">3</div>
-                            고급 라이팅 효과
-                        </h3>
-<ul class="list-disc pl-12 text-gray-200 mt-2 space-y-1">
-<li><span class="highlight">V-Ray Light Mix</span> 활용한 다양한 세팅 시험</li>
-<li>렌더 설정에서 <span class="highlight">Global Illumination</span> 활성화</li>
-<li>각 요소 변경마다 결과물 <span class="highlight">비교 저장</span> 및 분석</li>
-</ul>
-</div>
-</div>
-<!-- Tip box -->
-<div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg border border-blue-500 mt-auto transform hover:scale-105 transition-transform duration-300 shadow-md">
-<h3 class="flex items-center text-lg font-semibold text-blue-200 mb-2">
-<i class="fas fa-lightbulb text-yellow-300 mr-2" style="filter: drop-shadow(0 0 5px rgba(252, 211, 77, 0.5));"></i>
-                        실습 TIP
-                    </h3>
-<p class="text-gray-200 text-sm">실습 중 각 설정값 변경 후 <span class="highlight">메모해두기</span>. 어떤 설정이 어떤 효과를 만들었는지 <span class="highlight">기록하고 비교</span>하면 이론과 실무 연결에 큰 도움이 됩니다.</p>
-</div>
-</div>
+                        <span class="tooltip-text">태양광 시뮬레이션. 위치와 강도 조절로 자연스러운 조명 구현</span>
+                    </div>
+                    <div class="tooltip">
+                        <div class="bg-blue-900 bg-opacity-40 p-3 rounded-lg text-center hover:bg-opacity-60 transition-all">
+                            <i class="fas fa-cloud-sun text-blue-300 text-2xl mb-2" style="filter: drop-shadow(0 0 5px rgba(147, 197, 253, 0.5));"></i>
+                            <div class="font-medium">V-Ray Sky</div>
+                        </div>
+                        <span class="tooltip-text">전체 하늘 조명. 광범위한 확산광 제공으로 실내 조명 보완</span>
+                    </div>
+                    <div class="tooltip">
+                        <div class="bg-blue-900 bg-opacity-40 p-3 rounded-lg text-center hover:bg-opacity-60 transition-all">
+                            <i class="fas fa-lightbulb text-yellow-200 text-2xl mb-2" style="filter: drop-shadow(0 0 5px rgba(254, 240, 138, 0.5));"></i>
+                            <div class="font-medium">V-Ray Light</div>
+                        </div>
+                        <span class="tooltip-text">다양한 인공 조명. 면적, 강도, 색상, 형태 등 세부 조절 가능</span>
+                    </div>
+                    <div class="tooltip">
+                        <div class="bg-blue-900 bg-opacity-40 p-3 rounded-lg text-center hover:bg-opacity-60 transition-all">
+                            <i class="fas fa-sliders-h text-green-300 text-2xl mb-2" style="filter: drop-shadow(0 0 5px rgba(134, 239, 172, 0.5));"></i>
+                            <div class="font-medium">Light Mix</div>
+                        </div>
+                        <span class="tooltip-text">렌더링 후 조명 세팅 변경 가능. 실시간으로 다양한 설정 시험</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Center column: Workflow -->
+    <div class="col-span-3 flex flex-col space-y-6">
+        <div class="workflow-container h-full">
+            <h3 class="text-lg font-semibold mb-3 text-blue-200">3 Point Lighting 워크플로우</h3>
+            <div class="mermaid-container" onclick="this.classList.toggle('scale-110'); this.classList.toggle('shadow-lg'); this.style.transition='all 0.3s';" style="background-color: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 10px; cursor: pointer;">
+                <div class="mermaid">
+                    graph TD
+                        A[V-Ray 환경 준비] --&gt; B[✨ Key Light 설정]
+                        B --&gt; C[IPR로 형태 확인]
+                        C --&gt; D[✨ Fill Light 추가]
+                        D --&gt; E[그림자 밸런스 조절]
+                        E --&gt; F[✨ Back Light 설정]
+                        F --&gt; G[외곽선 강조 확인]
+                        G --&gt; H[최종 렌더링]
+                        style A fill:#3b82f6,color:#fff
+                        style B fill:#eab308,color:#fff
+                        style C fill:#3b82f6,color:#fff
+                        style D fill:#9333ea,color:#fff
+                        style E fill:#3b82f6,color:#fff
+                        style F fill:#10b981,color:#fff
+                        style G fill:#3b82f6,color:#fff
+                        style H fill:#ef4444,color:#fff
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Right column: Steps and workflow -->
+    <div class="col-span-4 flex flex-col space-y-6">
+        <div class="section-title flex items-center mb-4">
+            <i class="fas fa-tasks text-blue-300 mr-3"></i>
+            V-Ray 실습 단계별 가이드
+        </div>
+        <!-- Step-by-step instructions -->
+        <div class="space-y-4">
+            <div class="step-card p-4 rounded-r">
+                <h3 class="text-lg font-semibold text-blue-200 flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center mr-3 shadow-md">1</div>
+                    렌더링 환경 준비
+                </h3>
+                <ul class="list-disc pl-12 text-gray-200 mt-2 space-y-1">
+                    <li>렌더 설정에서 <span class="highlight">V-Ray 렌더러</span> 선택</li>
+                    <li>컬러 매니지먼트: <span class="highlight">ACEScg</span> 렌더링 스페이스 설정</li>
+                    <li><span class="highlight">V-Ray VFB</span> 열고 IPR 모드로 실시간 확인</li>
+                </ul>
+            </div>
+            <div class="step-card p-4 rounded-r">
+                <h3 class="text-lg font-semibold text-blue-200 flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-yellow-600 flex items-center justify-center mr-3 shadow-md">2</div>
+                    Key Light 설정
+                </h3>
+                <ul class="list-disc pl-12 text-gray-200 mt-2 space-y-1">
+                    <li><span class="highlight">VRay Rect Light</span> 생성 후 45도 각도로 배치</li>
+                    <li>Intensity로 <span class="highlight">주된 형태와 질감</span> 표현</li>
+                    <li>U/V Size 조절로 <span class="highlight">그림자 선명도</span> 결정</li>
+                </ul>
+            </div>
+            <div class="step-card p-4 rounded-r">
+                <h3 class="text-lg font-semibold text-blue-200 flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center mr-3 shadow-md text-xs">3</div>
+                    Fill Light 설정
+                </h3>
+                <ul class="list-disc pl-12 text-gray-200 mt-2 space-y-1">
+                    <li>Key Light 반대편에 배치하여 <span class="highlight">어두운 부분 채움</span></li>
+                    <li>세기는 Key Light의 <span class="highlight">1/2 ~ 1/3</span> 수준</li>
+                    <li>큰 크기로 만들어 <span class="highlight">부드러운 빛</span> 연출</li>
+                </ul>
+            </div>
+            <div class="step-card p-4 rounded-r">
+                <h3 class="text-lg font-semibold text-blue-200 flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center mr-3 shadow-md">4</div>
+                    Back Light 설정
+                </h3>
+                <ul class="list-disc pl-12 text-gray-200 mt-2 space-y-1">
+                    <li>피사체 뒤쪽에서 <span class="highlight">외곽선 강조</span></li>
+                    <li>배경과 분리시켜 <span class="highlight">입체감</span> 연출</li>
+                    <li>Invisible 옵션으로 <span class="highlight">라이트 형태 숨김</span></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Tip box -->
+        <div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg border border-blue-500 mt-auto transform hover:scale-105 transition-transform duration-300 shadow-md">
+            <h3 class="flex items-center text-lg font-semibold text-blue-200 mb-2">
+                <i class="fas fa-lightbulb text-yellow-300 mr-2" style="filter: drop-shadow(0 0 5px rgba(252, 211, 77, 0.5));"></i>
+                핵심 체크포인트
+            </h3>
+            <p class="text-gray-200 text-sm">
+                <span class="highlight">빛의 세기</span>(Intensity), <span class="highlight">크기</span>(Size), <span class="highlight">방향</span>(Direction), <span class="highlight">색온도</span>(Temperature)를 
+                IPR로 실시간 확인하며 조절하세요. 각 라이트의 <span class="highlight">역할을 명확히</span> 구분하는 것이 핵심입니다.
+            </p>
+        </div>
+    </div>
 </div>
 </div>
 <script>
@@ -466,65 +527,84 @@
         // Allow the diagram to render fully
         setTimeout(() => {
             // Add image slider functionality
-            const slider = document.querySelector('.image-slider');
-            const before = document.querySelector('.image-before');
-            const after = document.querySelector('.image-after');
+            const comparisonSlider = document.querySelector('.image-comparison');
+            const beforeImage = document.querySelector('.image-before');
+            const sliderHandle = document.querySelector('.image-slider');
+            const sliderButton = document.querySelector('.slider-button');
             
-            if (slider && before && after) {
-                const container = slider.parentElement;
+            if (!comparisonSlider || !beforeImage || !sliderHandle || !sliderButton) {
+                return;
+            }
+            
+            let isDragging = false;
+            let currentX = 50; // 초기 위치 50%
+            
+            function updateSlider(percentage) {
+                // 0%에서 100% 사이로 제한
+                percentage = Math.max(0, Math.min(100, percentage));
                 
-                function slide(e) {
-                    let pos;
-                    if (e.touches) {
-                        pos = (e.touches[0].pageX - container.getBoundingClientRect().left) / container.offsetWidth * 100;
-                    } else {
-                        pos = (e.pageX - container.getBoundingClientRect().left) / container.offsetWidth * 100;
-                    }
-                    pos = Math.max(0, Math.min(100, pos));
-                    after.style.width = `${pos}%`;
-                    slider.style.left = `${pos}%`;
+                // Before 이미지의 clip-path 업데이트
+                beforeImage.style.clipPath = `polygon(0 0, ${percentage}% 0, ${percentage}% 100%, 0 100%)`;
+                
+                // 슬라이더 핸들 위치 업데이트
+                sliderHandle.style.left = `${percentage}%`;
+                
+                currentX = percentage;
+            }
+            
+            function getPercentageFromEvent(event) {
+                const rect = comparisonSlider.getBoundingClientRect();
+                const x = (event.clientX || event.touches[0].clientX) - rect.left;
+                return (x / rect.width) * 100;
+            }
+            
+            // 마우스 이벤트
+            sliderButton.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                e.preventDefault();
+            });
+            
+            comparisonSlider.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                
+                const percentage = getPercentageFromEvent(e);
+                updateSlider(percentage);
+            });
+            
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+            
+            // 터치 이벤트 (모바일 지원)
+            sliderButton.addEventListener('touchstart', function(e) {
+                isDragging = true;
+                e.preventDefault();
+            });
+            
+            comparisonSlider.addEventListener('touchmove', function(e) {
+                if (!isDragging) return;
+                
+                const percentage = getPercentageFromEvent(e);
+                updateSlider(percentage);
+                e.preventDefault();
+            });
+            
+            document.addEventListener('touchend', function() {
+                isDragging = false;
+            });
+            
+            // 클릭으로 슬라이더 이동
+            comparisonSlider.addEventListener('click', function(e) {
+                if (e.target === sliderButton || e.target.closest('.slider-button')) {
+                    return;
                 }
                 
-                container.addEventListener('mousemove', (e) => {
-                    if (container.classList.contains('active')) {
-                        slide(e);
-                    }
-                });
-                
-                container.addEventListener('touchmove', (e) => {
-                    if (container.classList.contains('active')) {
-                        slide(e);
-                    }
-                });
-                
-                container.addEventListener('mousedown', () => {
-                    container.classList.add('active');
-                    slider.querySelector('.slider-hint').style.opacity = '0';
-                    setTimeout(() => {
-                        if (slider.querySelector('.slider-hint')) {
-                            slider.querySelector('.slider-hint').style.display = 'none';
-                        }
-                    }, 300);
-                });
-                
-                container.addEventListener('touchstart', () => {
-                    container.classList.add('active');
-                    slider.querySelector('.slider-hint').style.opacity = '0';
-                    setTimeout(() => {
-                        if (slider.querySelector('.slider-hint')) {
-                            slider.querySelector('.slider-hint').style.display = 'none';
-                        }
-                    }, 300);
-                });
-                
-                window.addEventListener('mouseup', () => {
-                    container.classList.remove('active');
-                });
-                
-                window.addEventListener('touchend', () => {
-                    container.classList.remove('active');
-                });
-            }
+                const percentage = getPercentageFromEvent(e);
+                updateSlider(percentage);
+            });
+            
+            // 초기 상태 설정
+            updateSlider(currentX);
         }, 500);
     </script>
 </body>
