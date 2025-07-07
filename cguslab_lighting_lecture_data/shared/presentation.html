@@ -430,7 +430,7 @@
                 offsetY: 0
             };
 
-            const ZOOM_FACTOR = 2.0;
+            const ZOOM_FACTOR = 3.0;
             let isPanning = false;
             let panStart = { x: 0, y: 0 };
 
@@ -1050,6 +1050,12 @@
 
             document.getElementById('toggle-draw-mode').addEventListener('click', () => {
                 if (window.drawingUtils) {
+                    handleToggleDrawMode();
+                }
+            });
+
+            document.getElementById('close-drawing-toolbar').addEventListener('click', () => {
+                if (window.drawingUtils && window.drawingUtils.isDrawingModeActive()) {
                     handleToggleDrawMode();
                 }
             });
