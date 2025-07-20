@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+        }
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            padding: 0 50px;
+        }
+        .title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            line-height: 1.2;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .subtitle {
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        .environments {
+            display: flex;
+            justify-content: center;
+            margin-top: 3.5rem;
+        }
+        .env-item {
+            margin: 0 30px;
+            text-align: center;
+            position: relative;
+        }
+        .env-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto;
+            border: 3px solid white;
+        }
+        .env-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .env-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Hero Background Image -->
+        <img src="https://chrisbrejon.com/wp-content/uploads/2020/04/050_masterLighting_0530_layering_deep_FHD.jpg" class="hero-image" alt="Advanced Lighting">
+        
+        <div class="overlay"></div>
+        
+        <!-- Content -->
+        <div class="content text-white">
+            <h1 class="title">ADVANCED LIGHTING:<br>NEW PRACTICE</h1>
+            <p class="subtitle">3가지 새로운 세계를 마스터하세요.</p>
+            
+            <div class="environments">
+                <div class="env-item">
+                    <div class="env-circle">
+                        <img src="https://d1a9v60rjx2a4v.cloudfront.net/2016/12/15/08_20_43_854_cam2_ed.jpg" class="env-image" alt="Outdoor Lighting">
+                    </div>
+                    <div class="env-label">야외</div>
+                </div>
+                <div class="env-item">
+                    <div class="env-circle">
+                        <img src="https://images.squarespace-cdn.com/content/v1/5e48258770139842dc1eee00/dfc6960b-ae34-4ac1-9044-dcb9a1403b81/6b746fc5ce203e688fda678ea0413f57.jpg" class="env-image" alt="Indoor Lighting">
+                    </div>
+                    <div class="env-label">실내</div>
+                </div>
+                <div class="env-item">
+                    <div class="env-circle">
+                        <img src="https://www.fxguide.com/wp-content/uploads/2019/01/rev-1-AMN-VFX-ILM-JPEG.jpeg" class="env-image" alt="Underwater Lighting">
+                    </div>
+                    <div class="env-label">물속</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+        }
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.6);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            padding: 50px;
+        }
+        .title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            line-height: 1.2;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            max-width: 80%;
+        }
+        .skills-box {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-left: 5px solid #ff6b00;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+        .skills-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ff6b00;
+        }
+        .skill-item {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 15px;
+        }
+        .skill-bullet {
+            color: #ff6b00;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+        .skill-text {
+            font-size: 1.4rem;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+        .skill-highlight {
+            color: #ff6b00;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Hero Background Image -->
+        <img src="https://dimmerlightstudios.com/wp-content/uploads/2022/12/real-time-blade-runner-2049-wallace-office-staircase-caustics-mirena-rhee.jpg" class="hero-image" alt="Dramatic Interior Lighting">
+        
+        <div class="overlay"></div>
+        
+        <!-- Content -->
+        <div class="content text-white">
+            <h1 class="title">PRACTICE 2:<br>빛으로 그리는 실내 공간</h1>
+            
+            <div class="skills-box">
+                <h2 class="skills-title">핵심 기술</h2>
+                
+                <div class="skill-item">
+                    <div class="skill-bullet">•</div>
+                    <div class="skill-text"><span class="skill-highlight">Dramatic Lighting:</span> 순광과 역광을 이용한 극적인 대비 연출</div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-bullet">•</div>
+                    <div class="skill-text"><span class="skill-highlight">Motivated Source:</span> 설득력 있는 광원 설정</div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-bullet">•</div>
+                    <div class="skill-text"><span class="skill-highlight">Focal Point Control:</span> 빛으로 시선을 유도하는 기술</div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="skill-bullet">•</div>
+                    <div class="skill-text"><span class="skill-highlight">Volumetric "God Rays":</span> 공간을 채우는 빛줄기 표현</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
