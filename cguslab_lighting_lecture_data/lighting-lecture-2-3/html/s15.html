@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>References: 에셋 불러오기</title>
+    <title>Specializes: 약하게 상속받기</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
@@ -32,7 +32,7 @@
             padding: 1.25em;
             border-radius: 0.5rem;
             border: 1px solid rgba(59, 130, 246, 0.3);
-            height: 220px;
+            height: 230px;
             overflow-y: auto;
         }
         code[class*="language-"] {
@@ -66,49 +66,42 @@
         <div class="mb-5">
             <div class="flex items-center mb-3">
                 <div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">
-                    4.3.2
+                    4.3.6
                 </div>
-                <h1 class="text-4xl font-black">2. References: <span class="title-accent">에셋 불러오기</span></h1>
+                <h1 class="text-4xl font-black">6. Specializes: <span class="title-accent">약하게 상속받기</span></h1>
             </div>
-            <p class="text-gray-400 text-lg ml-14">외부 USD 파일의 특정 Prim을 현재 씬으로 '참조'하여 가져옵니다. 에셋을 재사용하는 가장 일반적인 방법입니다.</p>
+            <p class="text-gray-400 text-lg ml-14">Inherits와 유사하지만, `specializes`로 상속받은 값은 항상 가장 약한 의견(weakest opinion)으로 처리되어 쉽게 덮어쓸 수 있습니다.</p>
         </div>
         
         <!-- Main Content Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-                <p class="code-title">① chair_asset.usda</p>
+                <p class="code-title">① template_light.usda</p>
                 <pre><code class="language-usd">#usda 1.0
-def "Chair"
+def "TemplateLight"
 {
-    def Cube "Seat" { ... }
-    def Cube "Leg1" { ... }
-    def Cube "Leg2" { ... }
-    def Cube "Leg3" { ... }
-    def Cube "Leg4" { ... }
+    float intensity = 1.0
 }</code></pre>
             </div>
             <div>
-                <p class="code-title">② room.usda</p>
+                <p class="code-title">② lighting.usda</p>
                 <pre><code class="language-usd">#usda 1.0
-def "Room"
+def "KeyLight" (
+    specializes = @./template_light.usda@</TemplateLight>
+)
 {
-    def "Chair_1" (
-        references = @./chair_asset.usda@
-    ) {
-        # 위치 이동
-        double3 xformOp:translate = (10, 0, 0)
-    }
-    def "Chair_2" (
-        references = @./chair_asset.usda@
-    ) {
-        # 위치 이동
-        double3 xformOp:translate = (-10, 0, 0)
-    }
-}</code></pre>
+    # 이 값은 template의 1.0보다 강함
+    float intensity = 10.0 
+}
+
+# 만약 KeyLight에 다른 override가 들어오면
+# 10.0은 쉽게 덮어써지지만, specializes로
+# 가져온 1.0은 항상 그 밑에 깔려있음.
+</code></pre>
             </div>
         </div>
         <div class="mt-4 bg-slate-800 p-4 rounded-lg border border-blue-900">
-            <p class="text-gray-300"><i class="fas fa-check-circle text-green-400 mr-2"></i><strong>결과:</strong> 하나의 의자 에셋(<code class="inline-code">chair_asset.usda</code>)을 두 번 참조하여 방 안에 배치합니다. 각 의자의 위치는 원본 에셋을 건드리지 않고 비파괴적으로 수정할 수 있습니다.</p>
+            <p class="text-gray-300"><i class="fas fa-check-circle text-green-400 mr-2"></i><strong>결과:</strong> <code class="inline-code">KeyLight</code>는 `TemplateLight`의 속성을 기본값으로 가지지만, 직접 정의한 `intensity = 10.0`이 더 강하므로 최종 밝기는 10이 됩니다. `specializes`는 강력한 오버라이드 체계에서 안전한 기본값을 제공하는 역할을 합니다.</p>
         </div>
     </div>
     <!-- Footer -->
@@ -118,7 +111,7 @@ def "Room"
             <span class="text-sm">Computer Graphics & Data Management Course</span>
         </div>
         <div class="flex items-center space-x-4">
-            <span class="text-sm">Slide 6 of 12</span>
+            <span class="text-sm">Slide 10 of 12</span>
         </div>
     </div>
 </div>
@@ -126,4 +119,4 @@ def "Room"
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-core.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
 </body>
-</html>
+</html> 

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>영화 VFX 파이프라인: 컨셉부터 스크린까지</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
-<style>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>SubLayers: 레이어 겹쳐 쌓기</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet">
+    <style>
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #0f172a;
@@ -24,235 +24,101 @@
         .title-accent {
             color: #60a5fa;
         }
-        .card {
-            background-color: rgba(30, 41, 59, 0.7);
+        .number-badge {
+            background-color: #a855f7;
+        }
+        pre[class*="language-"] {
+            background: #1e293b;
+            padding: 1.25em;
+            border-radius: 0.5rem;
             border: 1px solid rgba(59, 130, 246, 0.3);
         }
-        .card-highlight {
-            border-left: 4px solid #60a5fa;
+        code[class*="language-"] {
+            font-family: 'D2Coding', 'Courier New', monospace;
+            font-size: 0.9rem;
         }
-        .card-success {
-            border-left: 4px solid #10b981;
+        .code-title {
+            background-color: #374151;
+            color: #d1d5db;
+            padding: 0.5rem 1rem;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+            font-weight: bold;
+            font-size: 0.875rem;
         }
-        .diagram-border {
-            border: 2px solid rgba(59, 130, 246, 0.4);
-        }
-        .number-badge {
-            background-color: #4f46e5;
-        }
-        .tech-badge {
-            background-color: rgba(30, 41, 59, 0.9);
-            border: 1px solid rgba(59, 130, 246, 0.4);
-        }
-        .progress-dots {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: rgba(156, 163, 175, 0.3);
-        }
-        .dot.active {
-            background-color: #3b82f6;
+        .inline-code {
+            background-color: #374151;
+            color: #fBBF24;
+            padding: 0.1rem 0.3rem;
+            border-radius: 0.25rem;
+            font-family: monospace;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
 <div class="slide-container relative bg-slate-900">
-<!-- Main Content -->
-<div class="relative z-10 px-12 py-10">
-<!-- Header Section -->
-<div class="mb-6">
-<div class="flex items-center mb-3">
-<div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">
-                        4.0
-                    </div>
-<h1 class="text-4xl font-black">영화 VFX 파이프라인: <span class="title-accent">컨셉부터 스크린까지</span></h1>
+    <!-- Main Content -->
+    <div class="relative z-10 px-12 py-10">
+        <!-- Header Section -->
+        <div class="mb-5">
+            <div class="flex items-center mb-3">
+                <div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">
+                    4.3.1
+                </div>
+                <h1 class="text-4xl font-black">1. SubLayers: <span class="title-accent">레이어 겹쳐 쌓기</span></h1>
+            </div>
+            <p class="text-gray-400 text-lg ml-14">가장 기본적인 조합 방식으로, 포토샵 레이어처럼 작동합니다. 리스트의 아래에 있는 레이어가 먼저 깔리고, 위에 있는 레이어가 그 위를 덮어씁니다.</p>
+        </div>
+        
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <p class="code-title">① model.usda (원본)</p>
+                <pre><code class="language-usd">#usda 1.0
+def Sphere "MySphere"
+{
+    double radius = 2.0
+}</code></pre>
+            </div>
+            <div>
+                <p class="code-title">② color.usda (덮어쓸 내용)</p>
+                <pre><code class="language-usd">#usda 1.0
+over "MySphere"
+{
+    color3f[] primvars:displayColor = [(1, 0, 0)]
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <p class="code-title">③ main.usda (최종 조합)</p>
+            <pre><code class="language-usd">#usda 1.0
+(
+    # 파일 전체에 대한 설정으로 SubLayer를 사용합니다.
+    subLayers = [
+        @./color.usda@,
+        @./model.usda@
+    ]
+)</code></pre>
+            <div class="mt-3 bg-slate-800 p-4 rounded-lg border border-blue-900">
+                <p class="text-gray-300"><i class="fas fa-check-circle text-green-400 mr-2"></i><strong>결과:</strong> <code class="inline-code">model.usda</code>의 구(Sphere) 위에 <code class="inline-code">color.usda</code>의 색상 정보가 덮어씌워져 '빨간색 구'가 나타납니다.</p>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
+        <div class="flex items-center">
+            <i class="fas fa-university mr-2"></i>
+            <span class="text-sm">Computer Graphics & Data Management Course</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span class="text-sm">Slide 5 of 12</span>
+        </div>
+    </div>
 </div>
-<p class="text-gray-400 text-lg ml-14">업계 표준 워크플로우와 핵심 단계별 기술 분석</p>
-</div>
-<!-- Main Content Grid -->
-<div class="grid grid-cols-2 gap-6">
-<!-- Left Column - Pre-production & Asset Development -->
-<div>
-<!-- Pre-production Card -->
-<div class="card rounded-xl p-5 mb-5">
-<div class="flex items-center justify-between mb-3">
-<div class="flex items-center">
-<i class="fas fa-palette text-yellow-400 text-xl mr-3"></i>
-<h3 class="text-xl font-bold text-white">기획 및 프리-프로덕션</h3>
-</div>
-<span class="tech-badge rounded-md px-2 py-1 text-xs text-yellow-300">Pre-Production</span>
-</div>
-<!-- Concept Art Image -->
-<div class="mb-3">
-<img alt="VFX Concept Art" class="w-full h-28 object-cover diagram-border rounded-lg" src="https://i.pinimg.com/originals/9b/73/74/9b7374f1d3c03563495473950b115663.jpg"/>
-</div>
-<div class="space-y-2">
-<div class="flex items-start">
-<i class="fas fa-lightbulb text-yellow-400 mt-1 mr-2"></i>
-<p class="text-gray-300 text-sm"><span class="font-medium text-white">컨셉 디자인</span> - 영화의 시각적 톤앤매너와 방향성 설정</p>
-</div>
-<div class="flex items-start">
-<i class="fas fa-film text-yellow-400 mt-1 mr-2"></i>
-<p class="text-gray-300 text-sm"><span class="font-medium text-white">프리비즈(Pre-viz)</span> - 주요 시퀀스 연출 및 카메라 워크 구체화</p>
-</div>
-</div>
-</div>
-<!-- 3D Asset Production Card -->
-<div class="card card-highlight rounded-xl p-5">
-<div class="flex items-center justify-between mb-3">
-<div class="flex items-center">
-<i class="fas fa-cubes text-purple-400 text-xl mr-3"></i>
-<h3 class="text-xl font-bold text-white">3D 에셋 제작</h3>
-</div>
-<span class="tech-badge rounded-md px-2 py-1 text-xs text-purple-300">Asset Production</span>
-</div>
-<!-- Asset Creation Diagram -->
-<div class="mb-3 bg-slate-800 p-3 rounded-lg">
-<div class="grid grid-cols-3 gap-2">
-<div class="text-center p-2 border border-gray-700 rounded bg-slate-900">
-<p class="text-xs font-medium text-white">모델링</p>
-<p class="text-xs text-gray-400">Modeling</p>
-</div>
-<div class="text-center p-2 border border-gray-700 rounded bg-slate-900">
-<p class="text-xs font-medium text-white">텍스처링</p>
-<p class="text-xs text-gray-400">Texturing</p>
-</div>
-<div class="text-center p-2 border border-gray-700 rounded bg-slate-900">
-<p class="text-xs font-medium text-white">리깅</p>
-<p class="text-xs text-gray-400">Rigging</p>
-</div>
-</div>
-</div>
-<div class="space-y-2">
-<div class="flex items-start">
-<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
-<p class="text-gray-300 text-sm"><span class="font-medium text-white">디지털 에셋화</span> - 캐릭터, 배경, 프랍(prop) 등 CG 요소 제작</p>
-</div>
-<div class="flex items-start">
-<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
-<p class="text-gray-300 text-sm"><span class="font-medium text-white">움직임 준비</span> - 모델에 뼈대(Rig)를 심어 애니메이션 준비</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Right Column - Shot Production & Final Image -->
-<div>
-<!-- Shot Production Card -->
-<div class="card rounded-xl p-5 mb-5">
-<div class="flex items-center justify-between mb-3">
-<div class="flex items-center">
-<i class="fas fa-camera-retro text-blue-400 text-xl mr-3"></i>
-<h3 class="text-xl font-bold text-white">샷(Shot) 제작</h3>
-</div>
-<span class="tech-badge rounded-md px-2 py-1 text-xs text-blue-300">Shot Production</span>
-</div>
-<!-- FX Simulation Image -->
-<div class="mb-3">
-<img alt="FX Simulation" class="w-full h-28 object-cover diagram-border rounded-lg" src="https://i.ytimg.com/vi/Z9gmgcSFm_A/maxresdefault.jpg"/>
-</div>
-<div class="grid grid-cols-2 gap-3">
-<div class="bg-slate-800 rounded-lg p-2">
-<h4 class="text-white text-sm font-medium mb-1">애니메이션</h4>
-<p class="text-gray-300 text-xs">캐릭터와 사물에 생명력 부여</p>
-</div>
-<div class="bg-slate-800 rounded-lg p-2">
-<h4 class="text-white text-sm font-medium mb-1">FX 시뮬레이션</h4>
-<p class="text-gray-300 text-xs">물, 불, 연기, 파괴 등 특수효과</p>
-</div>
-</div>
-</div>
-<!-- Final Image Card -->
-<div class="card card-success rounded-xl p-5">
-<div class="flex items-center justify-between mb-3">
-<div class="flex items-center">
-<i class="fas fa-magic text-green-400 text-xl mr-3"></i>
-<h3 class="text-xl font-bold text-white">최종 이미지 생성</h3>
-</div>
-<span class="tech-badge rounded-md px-2 py-1 text-xs text-green-300">Final Image</span>
-</div>
-<div class="space-y-3">
-<div class="flex items-start bg-slate-800 rounded-lg p-2">
-<i class="fas fa-lightbulb text-blue-400 mt-1 mr-2"></i>
-<div>
-<h4 class="text-white text-sm font-medium">라이팅 & 렌더링</h4>
-<p class="text-gray-300 text-xs">빛을 이용해 사실감과 분위기 연출, 2D 이미지로 변환</p>
-</div>
-</div>
-<div class="flex items-start bg-slate-800 rounded-lg p-2">
-<i class="fas fa-layer-group text-purple-400 mt-1 mr-2"></i>
-<div>
-<h4 class="text-white text-sm font-medium">컴포지팅 (합성)</h4>
-<p class="text-gray-300 text-xs">실사 영상과 CG를 결합하여 최종 화면 완성</p>
-</div>
-</div>
-<div class="flex items-start bg-slate-800 rounded-lg p-2">
-<i class="fas fa-palette text-green-400 mt-1 mr-2"></i>
-<div>
-<h4 class="text-white text-sm font-medium">컬러 그레이딩</h4>
-<p class="text-gray-300 text-xs">전체적인 색감과 톤을 보정하여 영상미 극대화</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Bottom Section - Core Technologies -->
-<div class="card rounded-xl p-4 mt-6">
-<div class="flex items-center mb-3">
-<i class="fas fa-cogs text-yellow-400 text-xl mr-3"></i>
-<h3 class="text-xl font-bold text-white">파이프라인 핵심 기술 및 관리</h3>
-</div>
-<div class="grid grid-cols-3 gap-4">
-<div class="bg-slate-800 rounded-lg p-3">
-<h4 class="text-white text-sm font-medium mb-2 flex items-center">
-<i class="fas fa-database text-blue-400 mr-2"></i>
-                            데이터 관리 & 협업
-                        </h4>
-<p class="text-gray-300 text-xs">ShotGrid, ftrack 등 프로덕션 관리 툴 / USD, Alembic 등 표준 데이터 포맷을 활용한 효율적인 협업</p>
-</div>
-<div class="bg-slate-800 rounded-lg p-3">
-<h4 class="text-white text-sm font-medium mb-2 flex items-center">
-<i class="fas fa-server text-purple-400 mr-2"></i>
-                            렌더링 기술
-                        </h4>
-<p class="text-gray-300 text-xs">Arnold, V-Ray, RenderMan 등 산업 표준 렌더러 / 렌더팜을 이용한 대규모 병렬 처리로 시간 단축</p>
-</div>
-<div class="bg-slate-800 rounded-lg p-3">
-<h4 class="text-white text-sm font-medium mb-2 flex items-center">
-<i class="fas fa-code-branch text-green-400 mr-2"></i>
-                            파이프라인 자동화
-                        </h4>
-<p class="text-gray-300 text-xs">Python 기반의 TD(Technical Director) 역할 / 반복 작업을 자동화하여 생산성 및 효율성 극대화</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Footer -->
-<div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
-<div class="flex items-center">
-<i class="fas fa-film mr-2"></i>
-<span class="text-sm">Film VFX Production Pipeline Overview</span>
-</div>
-<div class="flex items-center space-x-4">
-<div class="progress-dots">
-<div class="dot"></div>
-<div class="dot"></div>
-<div class="dot"></div>
-<div class="dot"></div>
-<div class="dot"></div>
-<div class="dot"></div>
-<div class="dot"></div>
-<div class="dot active"></div>
-<div class="dot"></div>
-</div>
-<span class="text-sm">Industry Standard Workflow</span>
-</div>
-</div>
-</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
 </body>
 </html>

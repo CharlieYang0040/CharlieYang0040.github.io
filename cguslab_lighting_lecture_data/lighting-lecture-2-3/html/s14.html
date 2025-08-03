@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>References: 에셋 불러오기</title>
+    <title>Inherits: 속성 상속받기</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
@@ -66,49 +66,39 @@
         <div class="mb-5">
             <div class="flex items-center mb-3">
                 <div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">
-                    4.3.2
+                    4.3.5
                 </div>
-                <h1 class="text-4xl font-black">2. References: <span class="title-accent">에셋 불러오기</span></h1>
+                <h1 class="text-4xl font-black">5. Inherits: <span class="title-accent">속성 상속받기</span></h1>
             </div>
-            <p class="text-gray-400 text-lg ml-14">외부 USD 파일의 특정 Prim을 현재 씬으로 '참조'하여 가져옵니다. 에셋을 재사용하는 가장 일반적인 방법입니다.</p>
+            <p class="text-gray-400 text-lg ml-14">미리 정의된 '클래스' Prim으로부터 속성을 상속받습니다. 여러 Prim에 공통된 속성을 일괄적으로 적용하고 수정할 때 유용합니다.</p>
         </div>
         
         <!-- Main Content Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-                <p class="code-title">① chair_asset.usda</p>
+                <p class="code-title">① material_class.usda</p>
                 <pre><code class="language-usd">#usda 1.0
-def "Chair"
+# 이름 앞에 _class_ 를 붙여 클래스임을 명시
+class "_class_WoodMaterial"
 {
-    def Cube "Seat" { ... }
-    def Cube "Leg1" { ... }
-    def Cube "Leg2" { ... }
-    def Cube "Leg3" { ... }
-    def Cube "Leg4" { ... }
+    token materialType = "Wood"
+    color3f woodColor = (0.8, 0.5, 0.2)
 }</code></pre>
             </div>
             <div>
-                <p class="code-title">② room.usda</p>
+                <p class="code-title">② furniture.usda</p>
                 <pre><code class="language-usd">#usda 1.0
-def "Room"
-{
-    def "Chair_1" (
-        references = @./chair_asset.usda@
-    ) {
-        # 위치 이동
-        double3 xformOp:translate = (10, 0, 0)
-    }
-    def "Chair_2" (
-        references = @./chair_asset.usda@
-    ) {
-        # 위치 이동
-        double3 xformOp:translate = (-10, 0, 0)
-    }
-}</code></pre>
+def "WoodDesk" (
+    inherits = @./material_class.usda@</_class_WoodMaterial>
+) {}
+
+def "WoodChair" (
+    inherits = @./material_class.usda@</_class_WoodMaterial>
+) {}</code></pre>
             </div>
         </div>
         <div class="mt-4 bg-slate-800 p-4 rounded-lg border border-blue-900">
-            <p class="text-gray-300"><i class="fas fa-check-circle text-green-400 mr-2"></i><strong>결과:</strong> 하나의 의자 에셋(<code class="inline-code">chair_asset.usda</code>)을 두 번 참조하여 방 안에 배치합니다. 각 의자의 위치는 원본 에셋을 건드리지 않고 비파괴적으로 수정할 수 있습니다.</p>
+            <p class="text-gray-300"><i class="fas fa-check-circle text-green-400 mr-2"></i><strong>결과:</strong> <code class="inline-code">WoodDesk</code>와 <code class="inline-code">WoodChair</code>는 모두 <code class="inline-code">_class_WoodMaterial</code>로부터 재질 속성을 상속받습니다. 나중에 나무 색상을 바꾸고 싶으면 <code class="inline-code">material_class.usda</code> 파일 하나만 수정하면 됩니다.</p>
         </div>
     </div>
     <!-- Footer -->
@@ -118,7 +108,7 @@ def "Room"
             <span class="text-sm">Computer Graphics & Data Management Course</span>
         </div>
         <div class="flex items-center space-x-4">
-            <span class="text-sm">Slide 6 of 12</span>
+            <span class="text-sm">Slide 9 of 12</span>
         </div>
     </div>
 </div>
@@ -126,4 +116,4 @@ def "Room"
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-core.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
 </body>
-</html>
+</html> 

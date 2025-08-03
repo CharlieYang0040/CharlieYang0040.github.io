@@ -4,14 +4,15 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>USD 파일 익스포트 및 구조 분석</title>
+<title>노말맵이 왜 파란색인가? - Tangent Space Normal Mapping</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <style>
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            background-color: #0f172a;
+            color: #f8fafc;
             overflow-x: hidden;
         }
         .slide-container {
@@ -20,90 +21,28 @@
             margin: 0 auto;
             position: relative;
         }
-        .animated-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 40%, rgba(34, 197, 94, 0.05) 0%, transparent 50%);
-            animation: pulse 4s ease-in-out infinite alternate;
+        .title-accent {
+            color: #60a5fa;
         }
-        @keyframes pulse {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-        .title-gradient {
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .geometric-shape {
-            position: absolute;
-            border: 2px solid rgba(59, 130, 246, 0.3);
-            border-radius: 8px;
-            animation: float 6s ease-in-out infinite;
-        }
-        .shape-1 {
-            width: 45px;
-            height: 45px;
-            top: 15%;
-            right: 12%;
-            animation-delay: 0s;
-        }
-        .shape-2 {
-            width: 30px;
-            height: 30px;
-            top: 70%;
-            right: 20%;
-            animation-delay: -2s;
-            border-color: rgba(168, 85, 247, 0.3);
-        }
-        .shape-3 {
-            width: 35px;
-            height: 35px;
-            top: 25%;
-            left: 10%;
-            animation-delay: -4s;
-            border-color: rgba(34, 197, 94, 0.3);
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(180deg); }
-        }
-        .usd-card {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+        .card {
+            background-color: rgba(30, 41, 59, 0.7);
             border: 1px solid rgba(59, 130, 246, 0.3);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
         }
-        .usd-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(59, 130, 246, 0.5);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+        .card-highlight {
+            border-left: 4px solid #60a5fa;
         }
-        .pixar-highlight {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 165, 0, 0.1) 100%);
-            border: 1px solid rgba(255, 215, 0, 0.3);
+        .card-example {
+            border-left: 4px solid #a855f7;
         }
-        .workflow-step {
-            background: rgba(30, 41, 59, 0.7);
-            border-left: 4px solid #3b82f6;
-            transition: all 0.3s ease;
-        }
-        .workflow-step:hover {
-            border-left-color: #8b5cf6;
-            transform: translateX(3px);
-        }
-        .icon-glow {
-            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+        .diagram-border {
+            border: 2px solid rgba(59, 130, 246, 0.4);
         }
         .number-badge {
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            background-color: #4f46e5;
+        }
+        .tech-badge {
+            background-color: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(59, 130, 246, 0.4);
         }
         .progress-dots {
             display: flex;
@@ -114,175 +53,219 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: rgba(156, 163, 175, 0.3);
+            background-color: rgba(156, 163, 175, 0.3);
         }
         .dot.active {
-            background: #3b82f6;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+            background-color: #3b82f6;
         }
-        .screenshot-frame {
-            border: 2px solid rgba(59, 130, 246, 0.4);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        .rgb-arrow {
+            position: relative;
+            height: 30px;
+        }
+        .rgb-arrow:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid #3b82f6;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            transform: translateY(-50%);
         }
     </style>
 </head>
 <body>
-<div class="slide-container relative">
-<div class="animated-bg"></div>
-<!-- Geometric Shapes -->
-<div class="geometric-shape shape-1"></div>
-<div class="geometric-shape shape-2"></div>
-<div class="geometric-shape shape-3"></div>
+<div class="slide-container relative bg-slate-900">
 <!-- Main Content -->
-<div class="relative z-10 px-12 py-8">
+<div class="relative z-10 px-12 py-10">
 <!-- Header Section -->
 <div class="mb-6">
 <div class="flex items-center mb-3">
 <div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">
-                        3.2
+                        3.1.1
                     </div>
-<h1 class="title-gradient text-4xl font-black">USD 파일 익스포트 및 구조 분석</h1>
+<h1 class="text-4xl font-black">노말맵이 왜 <span class="title-accent">파란색</span>인가?</h1>
 </div>
-<p class="text-gray-400 text-lg ml-14">Universal Scene Description - Pixar's Industry Standard Pipeline</p>
+<p class="text-gray-400 text-lg ml-14">Tangent Space Normal Mapping과 RGB 데이터의 3D 벡터 변환</p>
 </div>
-<!-- USD Introduction -->
-<div class="pixar-highlight rounded-xl p-4 mb-6">
-<div class="flex items-center justify-between">
+<!-- Main Content Grid -->
+<div class="grid grid-cols-2 gap-6">
+<!-- Left Column - Normal Map Explanation -->
+<div>
+<!-- RGB to XYZ Mapping -->
+<div class="card rounded-xl p-5 mb-5">
+<div class="flex items-center justify-between mb-3">
 <div class="flex items-center">
-<img alt="Pixar USD Pipeline" class="w-20 h-12 object-cover rounded-lg mr-4" src="../resources/7310e0b12f7122b2387811e692c7023a.jpg"/>
+<i class="fas fa-cube text-blue-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">RGB와 법선 벡터의 관계</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-blue-300">데이터 매핑</span>
+</div>
+<div class="mb-4 grid grid-cols-3 gap-2">
+<div class="bg-slate-800 p-2 rounded-lg text-center">
+<div class="w-8 h-8 mx-auto mb-2 rounded-full bg-red-500"></div>
+<p class="text-sm font-medium text-white">R 채널 = X축</p>
+<p class="text-xs text-gray-300">0~255 → -1~1</p>
+</div>
+<div class="bg-slate-800 p-2 rounded-lg text-center">
+<div class="w-8 h-8 mx-auto mb-2 rounded-full bg-green-500"></div>
+<p class="text-sm font-medium text-white">G 채널 = Y축</p>
+<p class="text-xs text-gray-300">0~255 → -1~1</p>
+</div>
+<div class="bg-slate-800 p-2 rounded-lg text-center">
+<div class="w-8 h-8 mx-auto mb-2 rounded-full bg-blue-500"></div>
+<p class="text-sm font-medium text-white">B 채널 = Z축</p>
+<p class="text-xs text-gray-300">0~255 → -1~1</p>
+</div>
+</div>
+<div class="bg-slate-800 bg-opacity-50 p-3 rounded-lg mb-3">
+<div class="flex items-center">
+<div class="w-12 text-center">
+<div class="bg-blue-500 bg-opacity-80 rounded-lg py-1 px-2 text-xs font-semibold">RGB</div>
+</div>
+<div class="flex-grow text-center">
+<p class="text-sm text-white font-medium">128, 128, 255</p>
+</div>
+<div class="w-16 text-center rgb-arrow"></div>
+<div class="w-12 text-center">
+<div class="bg-purple-500 bg-opacity-80 rounded-lg py-1 px-2 text-xs font-semibold">XYZ</div>
+</div>
+<div class="flex-grow text-center">
+<p class="text-sm text-white font-medium">0, 0, 1</p>
+</div>
+</div>
+</div>
+<p class="text-gray-300 text-sm">
+    텍스처에 법선 벡터를 저장하기 위해 각 축의 값(-1~1)을 색상 채널(0~1)로 변환합니다. 변환 공식은 <code class="text-green-300 bg-slate-900 px-1 rounded">color = (vector + 1) / 2</code> 입니다.<br/>
+    이에 따라 <span class="text-white font-medium">평면의 기본 법선 벡터 (0, 0, 1)</span>은 
+    RGB 값 <span class="text-purple-300 font-medium">(0.5, 0.5, 1.0)</span>으로 변환되고, 
+    이는 8비트 색상으로 <span class="text-blue-300 font-medium">(128, 128, 255)</span>에 해당합니다.
+    이것이 대부분의 노말맵이 파란색을 띠는 이유입니다.
+</p>
+</div>
+<!-- Tangent Space vs Object Space -->
+<div class="card card-highlight rounded-xl p-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-vector-square text-purple-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">Tangent Space vs Object Space</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-purple-300">좌표계 변환</span>
+</div>
+<div class="grid grid-cols-2 gap-3 mb-3">
+<div class="bg-slate-800 p-3 rounded-lg">
+<h4 class="text-white font-medium mb-2">Tangent Space</h4>
+<p class="text-xs text-gray-300">메시의 로컬 좌표계 기준으로, 서피스 표면에 상대적인 법선 정보를 저장합니다. 이 방식이 <span class="text-white font-medium">파란색 기반</span> 노말맵을 사용합니다.</p>
+<div class="mt-2 text-center">
+<img alt="Tangent Space Vectors" class="h-16 inline-block diagram-border rounded" src="../resources/5b4ac24ffff14222b8ffce5e00658936.png"/>
+</div>
+</div>
+<div class="bg-slate-800 p-3 rounded-lg">
+<h4 class="text-white font-medium mb-2">Object Space</h4>
+<p class="text-xs text-gray-300">3D 오브젝트의 글로벌 좌표계 기준으로 법선 정보를 저장합니다. 다양한 색상이 나타나며 메시와 독립적으로 사용할 수 없습니다.</p>
+<div class="mt-2 text-center">
+<img alt="Object vs Tangent Space" class="h-16 inline-block diagram-border rounded" src="../resources/cf61b5e13dc41eadad7edc5f0ec02773.jpg"/>
+</div>
+</div>
+</div>
+<p class="text-sm text-gray-300">
+<span class="text-white font-medium">Tangent Space</span>가 업계 표준이며, 메시 변형에 대응하고 
+                            다양한 오브젝트에 재사용 가능한 장점이 있습니다.
+                        </p>
+</div>
+</div>
+<!-- Right Column - Practical Examples -->
 <div>
-<h3 class="text-xl font-bold text-white">USD (Universal Scene Description)</h3>
-<p class="text-gray-300 text-sm">Pixar 개발 • 복잡한 씬과 대용량 데이터의 효율적 관리 • 영화 제작 표준</p>
+<!-- Normal Map Examples -->
+<div class="card rounded-xl p-5 mb-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-images text-green-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">노말맵 시각적 예시</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-green-300">시각적 이해</span>
+</div>
+<div class="grid grid-cols-2 gap-3 mb-3">
+<div class="text-center">
+<img alt="Normal Map Example" class="w-full h-28 object-cover diagram-border rounded-lg" src="../resources/2fd880f0a0d9621ce579e7136ee30bc0.png"/>
+<p class="text-xs text-gray-300 mt-1">벽돌 텍스처와 노말맵</p>
+</div>
+<div class="text-center">
+<img alt="Normal Map Applied" class="w-full h-28 object-cover diagram-border rounded-lg" src="../resources/d8c4af47a1521ac71c27efee20cb10da.jpg"/>
+<p class="text-xs text-gray-300 mt-1">평면에 적용된 노말맵 효과</p>
 </div>
 </div>
-<div class="text-yellow-400">
-<i class="fas fa-award text-2xl"></i>
+<div class="space-y-2">
+<div class="flex items-start">
+<i class="fas fa-arrow-right text-blue-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm">
+<span class="text-white font-medium">RGB 값 매핑:</span> 
+                                    R=128, G=128, B=255는 법선 벡터 (0,0,1)로, 평면에 수직인 방향을 의미합니다.
+                                </p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-arrow-right text-blue-400 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm">
+<span class="text-white font-medium">변환 공식:</span> 
+                                    RGB 값 0~255를 -1~1 범위로 변환: (RGB / 255) * 2 - 1
+                                </p>
 </div>
 </div>
 </div>
-<!-- Three Column Layout -->
-<div class="grid grid-cols-3 gap-6">
-<!-- Left Column - Export Workflow -->
-<div>
-<div class="flex items-center mb-4">
-<i class="fas fa-file-export icon-glow text-xl text-blue-400 mr-3"></i>
-<h2 class="text-xl font-bold text-white">익스포트 워크플로우</h2>
+<!-- Practical Application -->
+<div class="card card-example rounded-xl p-5">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center">
+<i class="fas fa-cogs text-yellow-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">3D 툴에서의 실제 적용</h3>
+</div>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-yellow-300">실무 활용</span>
 </div>
 <div class="space-y-3">
-<div class="workflow-step rounded-lg p-3">
+<div class="bg-slate-800 p-3 rounded-lg">
+<h4 class="text-white font-medium mb-2">Maya/Houdini 노말맵 설정</h4>
 <div class="flex items-center">
-<div class="bg-blue-500 rounded-full w-6 h-6 flex items-center justify-center text-white font-bold text-xs mr-3">1</div>
-<div>
-<h4 class="text-white font-semibold text-sm">Maya USD 설정</h4>
-<p class="text-gray-400 text-xs">File &gt; Export Selection</p>
+<div class="w-3/5">
+<p class="text-xs text-gray-300">3D 소프트웨어에서 노말맵 텍스처를 불러올 때 <span class="text-white font-medium">반드시 Raw/Non-Color Data로 설정</span>해야 RGB 값이 정확히 법선 벡터로 변환됩니다.</p>
+</div>
+<div class="w-2/5 pl-2">
+<img alt="Normal Map in 3D Tool" class="h-16 diagram-border rounded inline-block" src="../resources/f7474917a5d9e04ec471df0ac2abf4bd.jpg"/>
 </div>
 </div>
 </div>
-<div class="workflow-step rounded-lg p-3">
+<div class="bg-slate-800 p-3 rounded-lg">
+<h4 class="text-white font-medium mb-2">렌더링 효과</h4>
 <div class="flex items-center">
-<div class="bg-purple-500 rounded-full w-6 h-6 flex items-center justify-center text-white font-bold text-xs mr-3">2</div>
-<div>
-<h4 class="text-white font-semibold text-sm">옵션 설정</h4>
-<p class="text-gray-400 text-xs">Geometry, Materials, Animation</p>
-</div>
-</div>
-</div>
-<div class="workflow-step rounded-lg p-3">
-<div class="flex items-center">
-<div class="bg-green-500 rounded-full w-6 h-6 flex items-center justify-center text-white font-bold text-xs mr-3">3</div>
-<div>
-<h4 class="text-white font-semibold text-sm">USD 파일 생성</h4>
-<p class="text-gray-400 text-xs">.usd, .usda, .usdz 형식</p>
+<p class="text-xs text-gray-300 w-3/5">
+                                        셰이더에서 노말맵은 <span class="text-white font-medium">라이팅 계산 단계</span>에서 
+                                        지오메트리 법선 벡터 대신 사용되어 빛의 반사 방향을 변경하고 미세한 표면 디테일을 
+                                        시뮬레이션합니다.
+                                    </p>
+<div class="w-2/5 pl-2">
+<img alt="Normal Vector Visualization" class="h-16 diagram-border rounded inline-block" src="../resources/253daf5e4482a2d03ee61fb5ffe6e305.png"/>
 </div>
 </div>
 </div>
 </div>
-<!-- Maya Export Screenshot -->
-<div class="mt-4">
-<img alt="Maya USD Export Options" class="w-full h-32 object-cover rounded-lg screenshot-frame" src="../resources/3be9fb4a3e40a7f5da42c03593559c01.jpg"/>
-<p class="text-gray-400 text-xs text-center mt-1">Maya USD Export Dialog</p>
 </div>
 </div>
-<!-- Middle Column - USD Structure -->
-<div>
-<div class="flex items-center mb-4">
-<i class="fas fa-sitemap icon-glow text-xl text-purple-400 mr-3"></i>
-<h2 class="text-xl font-bold text-white">USD 구조 분석</h2>
 </div>
-<!-- USD Layers Diagram -->
-<div class="usd-card rounded-xl p-3 mb-4">
-<h3 class="text-white font-semibold text-sm mb-2">레이어 구조</h3>
-<img alt="USD Layers Structure" class="w-full h-20 object-cover rounded-lg" src="../resources/e6a5f6e7595c94291cbf2480fa88a6f7.jpg"/>
-<p class="text-gray-300 text-xs mt-2">계층적 레이어 시스템으로 비파괴적 편집 지원</p>
-</div>
-<!-- USDView Interface -->
-<div class="usd-card rounded-xl p-3">
-<h3 class="text-white font-semibold text-sm mb-2">USDView 분석 도구</h3>
-<img alt="USDView Interface" class="w-full h-20 object-cover rounded-lg" src="../resources/96c2ee99dd5476374dd1402d9b3ec2cd.png"/>
-<p class="text-gray-300 text-xs mt-2">계층 구조, 속성, 메타데이터 실시간 분석</p>
-</div>
-</div>
-<!-- Right Column - Industry Applications -->
-<div>
-<div class="flex items-center mb-4">
-<i class="fas fa-film icon-glow text-xl text-green-400 mr-3"></i>
-<h2 class="text-xl font-bold text-white">실무 활용 사례</h2>
-</div>
-<!-- Pixar Case Study -->
-<div class="usd-card rounded-xl p-4 mb-3">
+<!-- Bottom Section - Code Example -->
+<div class="card rounded-xl p-4 mt-5">
 <div class="flex items-center mb-2">
-<img alt="Incredibles 2 Pipeline" class="w-12 h-8 object-cover rounded mr-3" src="../resources/f62c817fa81150f16277a5789ba18e34.jpg"/>
-<div>
-<h3 class="text-white font-semibold text-sm">픽사 애니메이션</h3>
-<p class="text-gray-400 text-xs">인크레더블 2, 토이 스토리 4</p>
+<i class="fas fa-code text-purple-400 mr-2"></i>
+<h3 class="text-lg font-bold text-white">셰이더에서의 노말맵 변환 코드</h3>
 </div>
-</div>
-<p class="text-gray-300 text-xs">대규모 씬 관리 및 팀 협업 최적화</p>
-</div>
-<!-- Benefits List -->
-<div class="space-y-2">
-<div class="bg-gray-800 bg-opacity-60 rounded-lg p-3">
-<div class="flex items-center">
-<i class="fas fa-users text-blue-400 mr-2"></i>
-<span class="text-white text-sm font-medium">협업 효율성</span>
-</div>
-<p class="text-gray-400 text-xs mt-1">여러 아티스트 동시 작업 가능</p>
-</div>
-<div class="bg-gray-800 bg-opacity-60 rounded-lg p-3">
-<div class="flex items-center">
-<i class="fas fa-database text-purple-400 mr-2"></i>
-<span class="text-white text-sm font-medium">대용량 데이터</span>
-</div>
-<p class="text-gray-400 text-xs mt-1">메모리 효율적 스트리밍</p>
-</div>
-<div class="bg-gray-800 bg-opacity-60 rounded-lg p-3">
-<div class="flex items-center">
-<i class="fas fa-exchange-alt text-green-400 mr-2"></i>
-<span class="text-white text-sm font-medium">툴 호환성</span>
-</div>
-<p class="text-gray-400 text-xs mt-1">Maya, Houdini, Blender 지원</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Bottom Action Bar -->
-<div class="mt-6 bg-gray-800 bg-opacity-60 rounded-xl p-4 border border-gray-600">
-<div class="flex items-center justify-between">
-<div class="flex items-center space-x-6">
-<div class="flex items-center">
-<i class="fas fa-play text-green-400 mr-2"></i>
-<span class="text-white font-medium">실습: Maya → USD → USDView</span>
-</div>
-<div class="flex items-center">
-<i class="fas fa-tools text-blue-400 mr-2"></i>
-<span class="text-gray-300">필요 도구: Maya 2024+, USDView</span>
-</div>
-</div>
-<div class="flex items-center text-gray-400">
-<i class="far fa-clock mr-2"></i>
-<span class="text-sm">실습 시간: 30분</span>
-</div>
-</div>
+<div class="bg-slate-800 rounded-lg p-3 font-mono text-xs text-green-300">
+<span class="text-gray-400">// GLSL에서 노말맵 RGB 값을 -1~1 범위의 노말 벡터로 변환</span><br/>
+                    vec3 normalFromMap = texture(normalMap, texCoords).rgb;<br/>
+<span class="text-gray-400">// RGB(0-1) 값을 -1~1 범위로 변환</span><br/>
+                    vec3 normal = normalize(normalFromMap * 2.0 - 1.0);<br/>
+<span class="text-gray-400">// Tangent Space에서 World Space로 변환</span><br/>
+                    normal = normalize(TBN * normal);
+                </div>
 </div>
 </div>
 <!-- Footer -->
@@ -296,11 +279,18 @@
 <div class="dot"></div>
 <div class="dot"></div>
 <div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
 <div class="dot active"></div>
 <div class="dot"></div>
 <div class="dot"></div>
 </div>
-<span class="text-sm">Slide 4 of 6</span>
+<span class="text-sm">Slide 11 of 13</span>
 </div>
 </div>
 </div>

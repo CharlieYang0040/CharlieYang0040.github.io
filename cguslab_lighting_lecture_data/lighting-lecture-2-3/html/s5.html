@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>USD Layer Composition을 활용한 라이팅 레이어 관리</title>
+<title>BaseColor는 sRGB, Normal Map은 Raw로</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
@@ -31,8 +31,8 @@
         .card-highlight {
             border-left: 4px solid #60a5fa;
         }
-        .feature-card {
-            border-left: 4px solid #8b5cf6;
+        .card-warning {
+            border-left: 4px solid #f59e0b;
         }
         .diagram-border {
             border: 2px solid rgba(59, 130, 246, 0.4);
@@ -65,171 +65,152 @@
 <!-- Main Content -->
 <div class="relative z-10 px-12 py-10">
 <!-- Header Section -->
-<div class="mb-6">
-<div class="flex items-center mb-3">
+<div class="mb-5">
+<div class="flex items-center mb-2">
 <div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">
-                        3.4
+                        3.6
                     </div>
-<h1 class="text-4xl font-black">USD Layer Composition <span class="title-accent">라이팅 레이어 관리</span></h1>
+<h1 class="text-4xl font-black">BaseColor는 sRGB, Normal Map은 <span class="title-accent">Raw로</span></h1>
 </div>
-<p class="text-gray-400 text-lg ml-14">Sublayer, Reference, Variant를 활용한 라이팅 비파괴 워크플로우</p>
+<p class="text-gray-400 text-lg ml-14">컬러스페이스와 텍스처 타입별 활용법의 이해</p>
 </div>
 <!-- Main Content Grid -->
 <div class="grid grid-cols-2 gap-6">
-<!-- Left Column - Layer Composition Concepts -->
+<!-- Left Column - Color Space Fundamentals -->
 <div>
-<!-- USD Layer Structure -->
+<!-- Color Space Comparison -->
 <div class="card rounded-xl p-5 mb-5">
 <div class="flex items-center justify-between mb-3">
 <div class="flex items-center">
-<i class="fas fa-layer-group text-purple-400 text-xl mr-3"></i>
-<h3 class="text-xl font-bold text-white">USD 레이어링 구조</h3>
+<i class="fas fa-adjust text-blue-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">sRGB vs Linear (Raw) 이해</h3>
 </div>
-<span class="tech-badge rounded-md px-2 py-1 text-xs text-purple-300">핵심 개념</span>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-blue-300">컬러 파이프라인</span>
 </div>
-<!-- Layer Structure Diagram -->
+<!-- Gamma Curve Diagram -->
 <div class="mb-3">
-<img alt="USD Layer Structure" class="w-full h-32 object-contain diagram-border rounded-lg" src="../resources/e6a5f6e7595c94291cbf2480fa88a6f7.jpg"/>
+<img alt="Linear vs sRGB Gamma Curve" class="w-full h-32 object-cover diagram-border rounded-lg" src="../resources/d9d01ad0ea7eb55b9fbe19e856ad6c3c.jpg"/>
 </div>
 <div class="space-y-2">
 <div class="flex items-start">
-<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
-<p class="text-gray-300 text-sm"><span class="font-medium text-white">Sublayer</span> - 여러 USD 파일을 논리적으로 결합하는 기법</p>
+<i class="fas fa-square text-yellow-500 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">sRGB (감마 2.2)</span> - 인간의 시각 인지에 최적화된 비선형 컬러스페이스</p>
 </div>
 <div class="flex items-start">
-<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
-<p class="text-gray-300 text-sm"><span class="font-medium text-white">Reference</span> - 에셋 재사용 및 인스턴스화 기법</p>
-</div>
-<div class="flex items-start">
-<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
-<p class="text-gray-300 text-sm"><span class="font-medium text-white">Variant/Payload</span> - 변형 관리 및 지연 로딩 기술</p>
+<i class="fas fa-square text-blue-500 mt-1 mr-2"></i>
+<p class="text-gray-300 text-sm"><span class="font-medium text-white">Linear (Raw)</span> - 빛의 물리적 속성에 맞는 선형 컬러스페이스</p>
 </div>
 </div>
 </div>
-<!-- Layer Composition Benefits -->
-<div class="card feature-card rounded-xl p-5">
+<!-- Color vs Data Textures -->
+<div class="card card-highlight rounded-xl p-5">
 <div class="flex items-center justify-between mb-3">
 <div class="flex items-center">
-<i class="fas fa-lightbulb text-yellow-400 text-xl mr-3"></i>
-<h3 class="text-xl font-bold text-white">라이팅 아티스트 이점</h3>
+<i class="fas fa-image text-green-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">텍스처 유형 분류</h3>
 </div>
-<span class="tech-badge rounded-md px-2 py-1 text-xs text-yellow-300">실무 적용</span>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-green-300">텍스처 파이프라인</span>
 </div>
-<div class="space-y-3">
-<div class="bg-slate-800 bg-opacity-50 rounded-lg p-3">
-<h4 class="text-white font-medium mb-1">비파괴적 작업 방식</h4>
-<p class="text-gray-300 text-sm">원본 에셋을 수정하지 않고 라이팅 오버라이드 적용 가능</p>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-slate-800 rounded-lg p-3">
+<h4 class="text-white font-medium mb-2">색상 텍스처 (sRGB)</h4>
+<ul class="space-y-1 text-sm text-gray-300">
+<li>• BaseColor / Albedo</li>
+<li>• Diffuse</li>
+<li>• Specular Color</li>
+<li>• Emission</li>
+</ul>
 </div>
-<div class="bg-slate-800 bg-opacity-50 rounded-lg p-3">
-<h4 class="text-white font-medium mb-1">병렬 작업 워크플로우</h4>
-<p class="text-gray-300 text-sm">여러 라이팅 아티스트가 동시에 씬의 다른 부분 작업 가능</p>
-</div>
-<div class="bg-slate-800 bg-opacity-50 rounded-lg p-3">
-<h4 class="text-white font-medium mb-1">버전 및 룩 관리</h4>
-<p class="text-gray-300 text-sm">Variant Sets으로 다양한 라이팅 버전을 쉽게 전환</p>
+<div class="bg-slate-800 rounded-lg p-3">
+<h4 class="text-white font-medium mb-2">데이터 텍스처 (Raw)</h4>
+<ul class="space-y-1 text-sm text-gray-300">
+<li>• Normal Map</li>
+<li>• Roughness</li>
+<li>• Metallic</li>
+<li>• Displacement</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 <!-- Right Column - Practical Examples -->
 <div>
-<!-- Production Example -->
+<!-- Why Different Color Spaces -->
 <div class="card rounded-xl p-5 mb-5">
 <div class="flex items-center justify-between mb-3">
 <div class="flex items-center">
-<i class="fas fa-film text-blue-400 text-xl mr-3"></i>
-<h3 class="text-xl font-bold text-white">실제 제작 파이프라인</h3>
+<i class="fas fa-question-circle text-purple-400 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">왜 다른 컬러스페이스가 필요한가?</h3>
 </div>
-<span class="tech-badge rounded-md px-2 py-1 text-xs text-blue-300">사례 연구</span>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-purple-300">실무 핵심</span>
 </div>
-<!-- Production Pipeline Image -->
-<div class="mb-3">
-<img alt="USD Production Pipeline" class="w-full h-32 object-contain diagram-border rounded-lg" src="../resources/60b5cf7642015eafd675b864c84154ef.png"/>
+<div class="space-y-3">
+<div class="bg-slate-800 rounded-lg p-3">
+<h4 class="text-white font-medium mb-1">BaseColor = sRGB</h4>
+<p class="text-gray-300 text-sm">아티스트가 보는 그대로 저장하기 위함. 감마 커브가 적용된 이미지는 모니터에서 자연스럽게 보임.</p>
 </div>
-<div class="space-y-2">
-<div class="flex items-start">
-<i class="fas fa-star text-yellow-400 mt-1 mr-2"></i>
-<p class="text-gray-300 text-sm"><span class="font-medium text-white">모델링/룩개발 레이어</span> - 기본 에셋 구조와 머티리얼 정의</p>
-</div>
-<div class="flex items-start">
-<i class="fas fa-star text-yellow-400 mt-1 mr-2"></i>
-<p class="text-gray-300 text-sm"><span class="font-medium text-white">레이아웃/애니메이션 레이어</span> - 캐릭터 및 카메라 모션</p>
-</div>
-<div class="flex items-start">
-<i class="fas fa-star text-yellow-400 mt-1 mr-2"></i>
-<p class="text-gray-300 text-sm"><span class="font-medium text-white">라이팅 레이어</span> - 조명, 렌더 설정 및 룩 마무리</p>
+<div class="bg-slate-800 rounded-lg p-3">
+<h4 class="text-white font-medium mb-1">Normal Map = Raw (Linear)</h4>
+<p class="text-gray-300 text-sm">벡터 데이터 (X,Y,Z 방향값)를 정확히 저장하기 위함. 감마 변환시 수치가 왜곡되어 라이팅 계산이 부정확해짐.</p>
 </div>
 </div>
+<!-- Normal Map Visualization -->
+<div class="mt-3">
+<img alt="Normal Map in Tangent Space" class="w-full h-24 object-contain diagram-border rounded-lg" src="../resources/2fd880f0a0d9621ce579e7136ee30bc0.png"/>
 </div>
-<!-- Practical Workflow -->
-<div class="card card-highlight rounded-xl p-5">
+</div>
+<!-- Common Mistakes -->
+<div class="card card-warning rounded-xl p-5">
 <div class="flex items-center justify-between mb-3">
 <div class="flex items-center">
-<i class="fas fa-code-branch text-green-400 text-xl mr-3"></i>
-<h3 class="text-xl font-bold text-white">라이팅 레이어 관리 기법</h3>
+<i class="fas fa-exclamation-triangle text-yellow-500 text-xl mr-3"></i>
+<h3 class="text-xl font-bold text-white">실수 사례와 대응법</h3>
 </div>
-<span class="tech-badge rounded-md px-2 py-1 text-xs text-green-300">실습 워크플로우</span>
+<span class="tech-badge rounded-md px-2 py-1 text-xs text-yellow-300">문제 해결</span>
 </div>
 <div class="grid grid-cols-2 gap-3">
 <div class="bg-slate-800 rounded-lg p-3">
-<h4 class="text-white font-medium text-sm mb-2">키 라이트 레이어</h4>
-<p class="text-gray-300 text-xs">주요 조명 설정을 독립적인 레이어로 분리하여 관리</p>
-<div class="text-xs text-gray-400 mt-1 bg-slate-900 bg-opacity-50 p-2 rounded">
-                                    ~/lighting/key_lights.usd
-                                </div>
+<h4 class="text-white font-medium text-sm mb-1">잘못된 사례</h4>
+<p class="text-gray-300 text-xs mb-2">Normal Map을 sRGB로 로드시 벡터 방향 왜곡으로 부정확한 라이팅 발생</p>
+<div class="bg-red-900 bg-opacity-20 p-2 rounded-lg border border-red-800">
+<p class="text-red-300 text-xs">• 비정상적인 하이라이트</p>
+<p class="text-red-300 text-xs">• 이상한 그림자 형성</p>
+<p class="text-red-300 text-xs">• 표면 디테일 소실</p>
+</div>
 </div>
 <div class="bg-slate-800 rounded-lg p-3">
-<h4 class="text-white font-medium text-sm mb-2">필/림 라이트 레이어</h4>
-<p class="text-gray-300 text-xs">보조 조명 및 림 라이트를 별도 레이어로 관리</p>
-<div class="text-xs text-gray-400 mt-1 bg-slate-900 bg-opacity-50 p-2 rounded">
-                                    ~/lighting/fill_lights.usd
-                                </div>
-</div>
-<div class="bg-slate-800 rounded-lg p-3">
-<h4 class="text-white font-medium text-sm mb-2">환경광 레이어</h4>
-<p class="text-gray-300 text-xs">HDRI 및 환경 라이팅 설정을 별도 관리</p>
-<div class="text-xs text-gray-400 mt-1 bg-slate-900 bg-opacity-50 p-2 rounded">
-                                    ~/lighting/env_lights.usd
-                                </div>
-</div>
-<div class="bg-slate-800 rounded-lg p-3">
-<h4 class="text-white font-medium text-sm mb-2">마스터 컴포지션</h4>
-<p class="text-gray-300 text-xs">모든 라이팅 레이어를 통합하는 최종 USD</p>
-<div class="text-xs text-gray-400 mt-1 bg-slate-900 bg-opacity-50 p-2 rounded">
-                                    ~/lighting/master.usd
-                                </div>
+<h4 class="text-white font-medium text-sm mb-1">해결 방법</h4>
+<p class="text-gray-300 text-xs mb-2">텍스처 임포트 시 적절한 컬러스페이스 설정 확인</p>
+<div class="bg-green-900 bg-opacity-20 p-2 rounded-lg border border-green-800">
+<p class="text-green-300 text-xs">• DCC 도구 컬러스페이스 설정 확인</p>
+<p class="text-green-300 text-xs">• 렌더러의 텍스처 컬러스페이스 확인</p>
+<p class="text-green-300 text-xs">• 텍스처 메타데이터 설정</p>
 </div>
 </div>
 </div>
 </div>
 </div>
-<!-- Bottom Section - Implementation Example -->
+</div>
+<!-- Bottom Section - Workflow Tips -->
 <div class="card rounded-xl p-4 mt-5">
 <div class="flex items-center mb-2">
-<i class="fas fa-code text-purple-400 mr-2"></i>
-<h3 class="text-lg font-bold text-white">레이어 컴포지션 예제 코드</h3>
+<i class="fas fa-lightbulb text-yellow-400 mr-2"></i>
+<h3 class="text-lg font-bold text-white">실무 워크플로우 팁</h3>
 </div>
-<div class="bg-slate-800 rounded-lg p-3 font-mono text-xs text-green-300">
-<span class="text-gray-400"># 마스터 USD 생성 및 서브레이어 추가</span><br/>
-                    stage = Usd.Stage.CreateNew('lighting/master.usd')<br/>
-                    rootLayer = stage.GetRootLayer()<br/>
-<br/>
-<span class="text-gray-400"># 서브레이어 설정 (상향식 구성)</span><br/>
-                    rootLayer.subLayerPaths = [<br/>
-                        'assets/set.usd',         <span class="text-gray-400"># 기본 세트/에셋</span><br/>
-                        'anim/layout.usd',        <span class="text-gray-400"># 레이아웃/애니메이션</span><br/>
-                        'lighting/key_lights.usd', <span class="text-gray-400"># 키 라이트</span><br/>
-                        'lighting/fill_lights.usd', <span class="text-gray-400"># 필/림 라이트</span><br/>
-                        'lighting/env_lights.usd'   <span class="text-gray-400"># 환경광</span><br/>
-                    ]<br/>
-<br/>
-<span class="text-gray-400"># 라이팅 변형 세트 생성</span><br/>
-                    prim = stage.GetPrimAtPath('/World/LightRig')<br/>
-                    vset = prim.GetVariantSets().AddVariantSet('LightingVariants')<br/>
-                    vset.AddVariant('day')<br/>
-                    vset.AddVariant('night')<br/>
-                    vset.SetVariantSelection('day')
-                </div>
+<div class="grid grid-cols-3 gap-4">
+<div class="bg-slate-800 rounded-lg p-3">
+<h4 class="text-white text-sm font-medium mb-1">USD 파이프라인에서</h4>
+<p class="text-gray-300 text-xs">UsdUVTexture의 sourceColorSpace 속성으로 텍스처별 컬러스페이스 명시적 설정 가능</p>
+</div>
+<div class="bg-slate-800 rounded-lg p-3">
+<h4 class="text-white text-sm font-medium mb-1">네이밍 컨벤션</h4>
+<p class="text-gray-300 text-xs">파일명에 _color, _normal 등의 접미사 사용으로 자동화 파이프라인 구축 가능</p>
+</div>
+<div class="bg-slate-800 rounded-lg p-3">
+<h4 class="text-white text-sm font-medium mb-1">OCIO 설정</h4>
+<p class="text-gray-300 text-xs">OpenColorIO 설정으로 전체 파이프라인에서 일관된 컬러스페이스 관리 구현</p>
+</div>
+</div>
 </div>
 </div>
 <!-- Footer -->
@@ -247,10 +228,14 @@
 <div class="dot"></div>
 <div class="dot"></div>
 <div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
 <div class="dot active"></div>
 <div class="dot"></div>
 </div>
-<span class="text-sm">Slide 8 of 9</span>
+<span class="text-sm">Slide 12 of 13</span>
 </div>
 </div>
 </div>
