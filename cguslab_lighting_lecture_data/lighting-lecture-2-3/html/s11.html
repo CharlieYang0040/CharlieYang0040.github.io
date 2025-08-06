@@ -90,20 +90,29 @@ def "Chair"
             <div>
                 <p class="code-title">② room.usda</p>
                 <pre><code class="language-usd">#usda 1.0
-def "Room"
-{
-    def "Chair_1" (
-        references = @./chair_asset.usda@
-    ) {
-        # 위치 이동
-        double3 xformOp:translate = (10, 0, 0)
-    }
-    def "Chair_2" (
-        references = @./chair_asset.usda@
-    ) {
-        # 위치 이동
-        double3 xformOp:translate = (-10, 0, 0)
-    }
+                    #usda 1.0
+
+                    def "Room"
+                    {
+                        def "Chair_1" (
+                            references = @./chair_asset.usda@
+                        )
+                        {
+                            # 위치 이동
+                            # 애셋 자체가 (0,0,0)에 있으므로, 간단하게 transform을 적용할 수 있습니다.
+                            double3 xformOp:translate = (10, 0, 0)
+                            # 스케일, 회전 등 필요한 다른 transform도 여기에 추가합니다.
+                            uniform token[] xformOpOrder = ["xformOp:translate"]
+                        }
+                    
+                        def "Chair_2" (
+                            references = @./chair_asset.usda@
+                        )
+                        {
+                            double3 xformOp:translate = (-10, 0, 0)
+                            uniform token[] xformOpOrder = ["xformOp:translate"]
+                        }
+                    }
 }</code></pre>
             </div>
         </div>
