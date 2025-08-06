@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maya Python 1단계: 파이썬 핵심 기초</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+        }
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            border-bottom: 1px solid #333;
+            box-sizing: border-box;
+        }
+        .slide-content {
+            max-width: 900px;
+            width: 100%;
+        }
+        h1, h2, h3 {
+            font-weight: 700;
+        }
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.25rem; margin-bottom: 1.5rem; border-left: 4px solid #34d399; padding-left: 1rem; }
+        h3 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; color: #a7f3d0; }
+        p { font-size: 1.125rem; line-height: 1.75; color: #d1d5db; }
+        pre {
+            background-color: #2a2a2a;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            font-size: 0.95rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        code {
+            font-family: 'monospace';
+        }
+        .badge {
+            display: inline-block;
+            background-color: #34d399;
+            color: #1a1a1a;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .problem-box {
+            background-color: #252a37;
+            border: 1px solid #4a5568;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .answer-box {
+            background-color: #1c2726;
+            border: 1px solid #2f6555;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Title -->
+    <div class="slide">
+        <div class="slide-content text-center">
+            <span class="badge">1단계</span>
+            <h1 class="text-6xl font-bold text-white">파이썬 핵심 기초 다지기</h1>
+            <p class="mt-4 text-2xl text-gray-300">Maya 스크립팅을 위한 첫걸음</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Variables and Data Types -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>1. 변수와 자료형</h2>
+            <h3>[개념 설명]</h3>
+            <p><strong>변수</strong>는 데이터를 저장하는 '이름표가 붙은 상자'입니다. <strong>자료형</strong>은 변수에 담을 수 있는 데이터의 종류를 말합니다. (정수, 실수, 문자열, 불리언 등)</p>
+            <h3>[기본 예제]</h3>
+            <pre><code>import maya.cmds as cmds
+# 다양한 자료형의 데이터를 변수에 저장하기
+level = 10         # 정수
+exp = 85.5         # 실수
+job = "마법사"      # 문자열
+is_alive = True    # 불리언
+
+# 변수에 저장된 값들을 화면에 출력하기
+print("레벨:", level)
+print("경험치:", exp)
+print("직업:", job)
+print("생존 여부:", is_alive)</code></pre>
+            <div class="problem-box">
+                <h3 class="mt-0">[실전 문제 1-1] 자기소개 변수 만들기</h3>
+                <p>자신의 이름, 나이, 사는 도시를 각각 `name`, `age`, `city` 라는 변수에 알맞은 자료형으로 저장해 보세요.</p>
+            </div>
+            <div class="answer-box">
+                <h3>[해답]</h3>
+                <pre><code>name = "홍길동"  # 문자열(String)
+age = 25         # 정수(Integer)
+city = "서울"    # 문자열(String)
+
+# print 함수로 변수가 잘 저장되었는지 확인해볼 수 있습니다.
+print(name)
+print(age)
+print(city)</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Input/Output -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>2. 기본 입출력</h2>
+            <h3>[개념 설명]</h3>
+            <p><strong>print()</strong>는 데이터를 화면에 출력하고, <strong>input()</strong>은 사용자로부터 키보드 입력을 받습니다. `input()`으로 받은 데이터는 항상 문자열입니다.</p>
+            <h3>[기본 예제]</h3>
+            <pre><code># 사용자에게 이름을 물어보고 입력받기
+user_name = input("당신의 이름은 무엇인가요? ")
+
+# 인사 메시지 출력하기
+print("반갑습니다,", user_name, "님!")</code></pre>
+            <div class="problem-box">
+                <h3 class="mt-0">[실전 문제 1-2] 자기소개 프로그램 완성하기</h3>
+                <p>위에서 만든 `name`, `age`, `city` 변수를 `print()` 함수를 사용해 "저는 [도시]에 사는 [나이]살 [이름]입니다." 형식의 한 문장으로 만들어 출력해 보세요.</p>
+            </div>
+            <div class="answer-box">
+                <h3>[해답]</h3>
+                <pre><code>name = "홍길동"
+age = 25
+city = "서울"
+
+# f-string 문법을 사용하면 변수와 문자열을 깔끔하게 조합할 수 있습니다.
+print(f"저는 {city}에 사는 {age}살 {name}입니다.")</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Conditionals -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>3. 조건문 (if, elif, else)</h2>
+            <h3>[개념 설명]</h3>
+            <p>'만약 ~라면 ~하고, 그렇지 않다면 ~해라'처럼 특정 조건에 따라 코드의 실행 흐름을 나누는 기능입니다.</p>
+            <h3>[기본 예제]</h3>
+            <pre><code>age = int(input("당신의 나이는 몇 살인가요? "))
+
+if age >= 20:
+    print("성인입니다.")
+elif age >= 17:
+    print("고등학생입니다.")
+else:
+    print("어린이 또는 청소년입니다.")</code></pre>
+            <div class="problem-box">
+                <h3 class="mt-0">[실전 문제 2-1] 짝수/홀수 판별기 만들기</h3>
+                <p>`input()`으로 숫자를 하나 입력받아, 그 숫자가 짝수인지 홀수인지 판별하여 출력하는 프로그램을 만들어보세요. (힌트: `숫자 % 2 == 0` 이면 짝수)</p>
+            </div>
+            <div class="answer-box">
+                <h3>[해답]</h3>
+                <pre><code>num = int(input("숫자를 입력하세요: "))
+
+if num % 2 == 0:
+    print(f"{num}은(는) 짝수입니다.")
+else:
+    print(f"{num}은(는) 홀수입니다.")</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: For Loops -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>4. for 반복문</h2>
+            <h3>[개념 설명]</h3>
+            <p>정해진 횟수만큼 또는 데이터 묶음의 모든 항목에 대해 코드를 반복 실행합니다. `range()` 함수와 함께 자주 사용됩니다.</p>
+            <h3>[기본 예제]</h3>
+            <pre><code># 1. range()로 5번 반복하기
+for i in range(5):
+    print(f"{i}번째 반복입니다.")
+
+# 2. 리스트의 모든 항목에 대해 반복하기
+fruits = ["사과", "바나나", "딸기"]
+for fruit in fruits:
+    print(f"{fruit} 맛있겠다!")</code></pre>
+            <div class="problem-box">
+                <h3 class="mt-0">[실전 문제 2-2 & 2-3] 별 찍기</h3>
+                <p>중첩 `for`문을 사용하여 직각삼각형, 피라미드, 다이아몬드 모양의 별을 찍는 코드를 작성해보세요.</p>
+            </div>
+            <div class="answer-box">
+                <h3>[해답]</h3>
+                <pre><code># 직각삼각형
+print("--- 직각삼각형 ---")
+for i in range(1, 6):
+    print('*' * i)
+
+# 피라미드
+print("\\n--- 피라미드 ---")
+n = 5
+for i in range(n):
+    print(' ' * (n - 1 - i) + '*' * (2 * i + 1))
+
+# 다이아몬드
+print("\\n--- 다이아몬드 ---")
+n = 5
+# 윗부분
+for i in range(n):
+    print(' ' * (n - 1 - i) + '*' * (2 * i + 1))
+# 아랫부분
+for i in range(n - 2, -1, -1):
+    print(' ' * (n - 1 - i) + '*' * (2 * i + 1))</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: While Loops -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>5. while 반복문</h2>
+            <h3>[개념 설명]</h3>
+            <p>특정 조건이 `True`인 동안 코드를 계속해서 반복합니다. 주로 언제 끝날지 모르는 반복에 사용됩니다.</p>
+            <h3>[기본 예제]</h3>
+            <pre><code>n = 5
+while n > 0:
+    print(n)
+    n = n - 1
+print("발사!")</code></pre>
+            <div class="problem-box">
+                <h3 class="mt-0">[실전 문제 2-4] 메아리 프로그램 만들기</h3>
+                <p>`while`문과 `if`문을 사용하여, 사용자가 "종료"라고 입력할 때까지 사용자가 입력한 말을 그대로 따라 출력하는 프로그램을 만들어보세요.</p>
+            </div>
+            <div class="answer-box">
+                <h3>[해답]</h3>
+                <pre><code>while True:
+    user_input = input("하고 싶은 말을 입력하세요 ('종료' 입력 시 중단): ")
+    if user_input == "종료":
+        print("프로그램을 종료합니다.")
+        break
+    else:
+        print(user_input)</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Functions -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>6. 함수 (Function)</h2>
+            <h3>[개념 설명]</h3>
+            <p>특정 작업을 수행하는 코드 덩어리에 이름을 붙인 것입니다. 코드를 재사용하고 프로그램을 체계적으로 만드는 데 필수적입니다.</p>
+            <h3>[기본 예제]</h3>
+            <pre><code>def add(a, b):
+    result = a + b
+    return result
+
+sum_value = add(5, 10)
+print(sum_value)</code></pre>
+            <div class="problem-box">
+                <h3 class="mt-0">[실전 문제 3-1] 뺄셈 함수 만들기</h3>
+                <p>숫자 두 개(a, b)를 매개변수로 받아서 `a - b`의 결과를 반환(`return`)하는 `subtract` 라는 이름의 함수를 만들어보세요.</p>
+            </div>
+            <div class="answer-box">
+                <h3>[해답]</h3>
+                <pre><code>def subtract(a, b):
+    return a - b
+
+result = subtract(100, 50)
+print(result)</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Data Structures -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>7. 자료구조 (List, Dictionary)</h2>
+            <h3>[개념 설명]</h3>
+            <p>여러 데이터를 하나의 변수에 묶어서 관리합니다. <strong>리스트(List)</strong>는 순서가 있는 모음, <strong>딕셔너리(Dictionary)</strong>는 '키-값' 쌍의 모음입니다.</p>
+            <h3>[기본 예제]</h3>
+            <pre><code># 리스트
+inventory = ["빨간 물약", "검", "방패"]
+inventory.append("지도")
+print(inventory[0])
+
+# 딕셔너리
+character = {"name": "전사", "level": 20}
+character["hp"] = 500
+print(character["name"])</code></pre>
+            <div class="problem-box">
+                <h3 class="mt-0">[실전 문제 3-2] 내 정보 딕셔너리 만들기</h3>
+                <p>자신의 이름, mbti, 혈액형을 각각 'name', 'mbti', 'blood_type'이라는 키로 하고 실제 정보를 값으로 하는 딕셔너리를 만들어 보세요.</p>
+            </div>
+            <div class="answer-box">
+                <h3>[해답]</h3>
+                <pre><code>my_info = {
+    "name": "김마야",
+    "mbti": "ISTP",
+    "blood_type": "A"
+}
+print("이름:", my_info["name"])
+print("MBTI:", my_info["mbti"])
+print("혈액형:", my_info["blood_type"])</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: End -->
+    <div class="slide">
+        <div class="slide-content text-center">
+            <h1 class="text-5xl font-bold text-white">1단계 학습 완료!</h1>
+            <p class="mt-4 text-2xl text-gray-300">이제 Maya에서 직접 코드를 실행해볼 시간입니다.</p>
+        </div>
+    </div>
+
+</body>
+</html>
