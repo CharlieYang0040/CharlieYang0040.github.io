@@ -320,6 +320,49 @@
             z-index: 998;
             display: none;
         }
+
+        /* Answer Modal */
+        #answer-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(2px);
+        }
+        #answer-modal {
+            background: #0b1220;
+            color: #fff;
+            width: min(1000px, 92vw);
+            max-height: 82vh;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        #answer-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        #answer-modal-title { font-size: 0.95rem; opacity: 0.85; }
+        #answer-modal-close {
+            background: none; border: none; color: #fff; opacity: 0.8; cursor: pointer;
+            padding: 6px 8px; border-radius: 6px; transition: all 0.15s;
+        }
+        #answer-modal-close:hover { opacity: 1; background: rgba(255,255,255,0.08); }
+        #answer-modal-body {
+            padding: 12px 16px; overflow: auto; height: 100%;
+        }
+        #answer-modal-body pre { overflow: auto; }
     </style>
 </head>
 <body>
@@ -334,6 +377,17 @@
             <canvas id="drawing-canvas"></canvas>
         </div>
         <div id="zoom-overlay"></div>
+    </div>
+
+    <!-- Answer Modal Root -->
+    <div id="answer-modal-backdrop" role="dialog" aria-modal="true">
+        <div id="answer-modal">
+            <div id="answer-modal-header">
+                <div id="answer-modal-title">해답 보기</div>
+                <button id="answer-modal-close" title="닫기 (Esc)"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="answer-modal-body"></div>
+        </div>
     </div>
     
     <!-- Drawing Toolbar -->
@@ -445,8 +499,11 @@
                 '2-1': '2-1: 라이팅 심화 기술',
                 '2-2': '2-2: 컬러스페이스 및 렌더 요소 이해',
                 '2-3': '2-3: 3D 데이터 구조와 USD 파이프라인의 핵심',
-                '2-4': '2-4: Python 스크립팅 기초와 Maya 자동화',
-                '2-5': '2-5: 프로젝트 실습 및 종합 리뷰'
+                '2-4': '2-4: 0단계 - 코딩의 세계로 들어가기 전',
+                '2-5': '2-5: 1단계 - 파이썬 핵심 기초 다지기',
+                '2-6': '2-6: 2단계 - Maya 스크립팅과의 첫 만남',
+                '2-7': '2-7: 3단계 - 중급 스크립팅과 코드 효율화',
+                '2-8': '2-8: 4단계 - 고급 스크립팅과 환경의 이해'
             };
 
             function getLectureInfo() {
@@ -560,6 +617,24 @@
                     iframe.onload = () => {
                         try {
                             const slideDoc = iframe.contentWindow.document;
+                            // 공통 Answer/Code 스크롤 스타일 주입
+                            try {
+                                const injectedStyle = slideDoc.createElement('style');
+                                injectedStyle.setAttribute('data-injected-by', 'presentation');
+                                injectedStyle.textContent = `
+                                    /* 해답은 슬라이드 내부에서는 항상 숨김: 모달로만 표시 */
+                                    [id^="answer-"] { display: none !important; max-height: 55vh !important; overflow-y: auto !important; overflow-x: hidden; }
+                                    [id^="answer-"] pre { max-height: none !important; }
+                                    /* 코드 블록 가로/세로 스크롤 */
+                                    pre[class*="language-"] { overflow: auto !important; white-space: pre !important; }
+                                    code[class*="language-"] { word-break: normal; white-space: pre !important; }
+                                    /* 해답 버튼을 모달로 동작시키기 위해 클릭 영역 표시(선택) */
+                                    button[id^="btn-"] { cursor: pointer; }
+                                `;
+                                slideDoc.head && slideDoc.head.appendChild(injectedStyle);
+                            } catch (cssErr) {
+                                console.warn('슬라이드 스타일 주입 실패:', cssErr);
+                            }
                             // documentElement를 사용하여 전체 레이아웃 크기를 보다 안정적으로 측정
                             const width = slideDoc.documentElement.scrollWidth;
                             const height = slideDoc.documentElement.scrollHeight;
@@ -588,6 +663,14 @@
                             console.error("슬라이드 크기 감지 중 오류 발생, 기본값 1280x720으로 대체합니다.", e);
                             slideContentDimensions = { width: 1280, height: 720 };
                             resizeAndPositionSlide();
+                        }
+
+                        // 슬라이드 내 해답 버튼을 모달로 동작시키도록 이벤트 바인딩
+                        try {
+                            bindAnswerButtonsToModal(slideDoc);
+                            interceptAnswerClicksCapture(slideDoc);
+                        } catch (bindErr) {
+                            console.warn('해답 버튼 모달 바인딩 실패:', bindErr);
                         }
 
                         updateControls();
@@ -936,6 +1019,88 @@
                 } else {
                     deactivateZoomMode();
                 }
+            }
+
+            // Answer Modal 제어 및 바인딩
+            const answerModalBackdrop = document.getElementById('answer-modal-backdrop');
+            const answerModalBody = document.getElementById('answer-modal-body');
+            const answerModalTitle = document.getElementById('answer-modal-title');
+            const answerModalClose = document.getElementById('answer-modal-close');
+
+            function openAnswerModal(title, contentNode) {
+                answerModalTitle.textContent = title || '해답 보기';
+                answerModalBody.innerHTML = '';
+                if (contentNode) {
+                    // 외부 노드를 복제하여 삽입 (원본 슬라이드를 변경하지 않기 위함)
+                    const clone = contentNode.cloneNode(true);
+                    clone.style.display = 'block';
+                    answerModalBody.appendChild(clone);
+                }
+                answerModalBackdrop.style.display = 'flex';
+            }
+
+            function closeAnswerModal() {
+                answerModalBackdrop.style.display = 'none';
+                answerModalBody.innerHTML = '';
+            }
+
+            answerModalClose.addEventListener('click', closeAnswerModal);
+            answerModalBackdrop.addEventListener('click', (e) => {
+                if (e.target === answerModalBackdrop) closeAnswerModal();
+            });
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeAnswerModal();
+            });
+
+            function bindAnswerButtonsToModal(slideDoc) {
+                // 1) 표준 규칙(btn-*/answer-*) + 2) 기존 onclick에 toggleAnswer(...)가 있는 모든 요소를 지원
+                const fromIdPattern = Array.from(slideDoc.querySelectorAll('button[id^="btn-"]'));
+                const fromOnclick = Array.from(slideDoc.querySelectorAll('[onclick*="toggleAnswer("]'));
+
+                const candidates = Array.from(new Set([...fromIdPattern, ...fromOnclick]));
+
+                candidates.forEach((el) => {
+                    let answerId = null;
+                    if (el.id && el.id.startsWith('btn-')) {
+                        const idSuffix = el.id.replace(/^btn-/, '');
+                        answerId = `answer-${idSuffix}`;
+                    }
+
+                    // onclick="toggleAnswer('answer-1-1', 'btn-1-1')" 형태 파싱
+                    if (!answerId && el.getAttribute('onclick')) {
+                        const onclick = el.getAttribute('onclick');
+                        const match = onclick && onclick.match(/toggleAnswer\(\s*['"]([^'"]+)['"]/);
+                        if (match && match[1]) answerId = match[1];
+                    }
+
+                    if (!answerId) return;
+                    const answerEl = slideDoc.getElementById(answerId);
+                    if (!answerEl) return;
+
+                    // 기본 onclick 제거 및 우리 모달 핸들러로 대체
+                    try { el.removeAttribute('onclick'); } catch (_) {}
+                    el.onclick = null;
+                    el.addEventListener('click', (ev) => {
+                        ev.preventDefault();
+                        ev.stopPropagation();
+                        const titleText = (el.textContent || el.getAttribute('title') || '해답 보기').trim();
+                        openAnswerModal(titleText, answerEl);
+                    });
+                });
+            }
+
+            // 슬라이드 내부의 기존 toggleAnswer 함수 호출을 캡처 단계에서 차단
+            function interceptAnswerClicksCapture(slideDoc) {
+                slideDoc.addEventListener('click', (ev) => {
+                    const target = ev.target;
+                    if (!(target instanceof Element)) return;
+                    // inline onclick으로 toggleAnswer 호출되는 경우 대비
+                    const isAnswerButton = target.closest('button[id^="btn-"]');
+                    if (isAnswerButton) {
+                        ev.preventDefault();
+                        ev.stopPropagation();
+                    }
+                }, true);
             }
 
             function checkInitialSlide() {

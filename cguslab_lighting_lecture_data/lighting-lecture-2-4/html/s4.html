@@ -1,52 +1,39 @@
+<!-- =================================================================
+     SLIDE 0-4: API와 모듈
+     파일 이름: stage0_04_api_module.html
+================================================================== -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>2.1 조건문</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet"><style>body{font-family:'Noto Sans KR',sans-serif;background-color:#0f172a;color:#f8fafc;overflow-x:hidden}.slide-container{width:1280px;min-height:720px;margin:0 auto;position:relative}.title-accent{color:#60a5fa}.number-badge{background-color:#a855f7}pre[class*="language-"]{background:#1e293b;padding:1.25em;border-radius:0.5rem;border:1px solid rgba(59,130,246,0.3)}code[class*="language-"]{font-family:'D2Coding','Courier New',monospace;font-size:0.9rem}.code-title{background-color:#374151;color:#d1d5db;padding:0.5rem 1rem;border-top-left-radius:0.5rem;border-top-right-radius:0.5rem;font-weight:bold;font-size:0.875rem}.inline-code{background-color:#374151;color:#fBBF24;padding:0.1rem 0.3rem;border-radius:0.25rem;font-family:monospace;font-size:0.9em}</style>
+    <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>3. 마법의 연결고리: API와 모듈</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet"><style>body{font-family:'Noto Sans KR',sans-serif;background-color:#0f172a;color:#f8fafc;overflow-x:hidden}.slide-container{width:1280px;min-height:720px;margin:0 auto;position:relative}.title-accent{color:#60a5fa}.number-badge{background-color:#a855f7}pre[class*="language-"]{background:#1e293b;padding:1.25em;border-radius:0.5rem;border:1px solid rgba(59,130,246,0.3)}code[class*="language-"]{font-family:'D2Coding','Courier New',monospace;font-size:0.9rem}.code-title{background-color:#374151;color:#d1d5db;padding:0.5rem 1rem;border-top-left-radius:0.5rem;border-top-right-radius:0.5rem;font-weight:bold;font-size:0.875rem}.inline-code{background-color:#374151;color:#fBBF24;padding:0.1rem 0.3rem;border-radius:0.25rem;font-family:monospace;font-size:0.9em}</style>
 </head>
 <body>
 <div class="slide-container relative bg-slate-900">
     <div class="relative z-10 px-12 py-10 w-full">
-        <div class="mb-5"><div class="flex items-center mb-3"><div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">2.1</div><h1 class="text-4xl font-black">조건문 (if, elif, else)</h1></div><p class="text-gray-400 text-lg ml-14">'만약 ~라면 ~하고, 그렇지 않다면 ~해라'처럼 특정 조건에 따라 코드의 실행 흐름을 나누는 기능입니다.</p></div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div><p class="code-title">[기본 예제]</p><pre><code class="language-python">age = int(input("당신의 나이는 몇 살인가요? "))
-
-if age >= 20:
-    print("성인입니다.")
-elif age >= 17:
-    print("고등학생입니다.")
-else:
-    print("어린이 또는 청소년입니다.")</code></pre></div>
-            <div>
-                <p class="code-title">[실전 문제]</p>
-                <p class="bg-slate-800 p-4 rounded-b-lg">`input()`으로 숫자를 하나 입력받아, 그 숫자가 짝수인지 홀수인지 판별하여 출력하는 프로그램을 만들어보세요. (힌트: `숫자 % 2 == 0` 이면 짝수)</p>
-                <button id="btn-2-1" onclick="toggleAnswer('answer-2-1', 'btn-2-1')" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out"><i class="fas fa-eye mr-2"></i>해답 보기</button>
-                <div id="answer-2-1" class="mt-3 bg-slate-800 p-4 rounded-lg border border-blue-900" style="display: none;">
-                    <p class="text-gray-300"><i class="fas fa-check-circle text-green-400 mr-2"></i><strong>해답:</strong></p>
-                    <pre><code class="language-python">num = int(input("숫자를 입력하세요: "))
-
-if num % 2 == 0:
-    print(f"{num}은(는) 짝수입니다.")
-else:
-    print(f"{num}은(는) 홀수입니다.")</code></pre>
-                </div>
+        <div class="mb-8"><div class="flex items-center mb-3"><div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">3</div><h1 class="text-4xl font-black">마법의 연결고리: <span class="title-accent">API</span>와 <span class="title-accent">모듈</span></h1></div></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-slate-800 p-6 rounded-lg border border-gray-700">
+                <h3 class="text-2xl font-bold text-green-400 mb-3"><i class="fas fa-book-open mr-2"></i>API (Application Programming Interface)</h3>
+                <p class="text-lg text-gray-300">프로그램이 제공하는 기능 목록과 사용 설명서입니다. 레스토랑의 <span class="font-bold text-white">'메뉴판'</span>과 같습니다. 우리는 메뉴판(API)을 보고 요리(기능)를 주문(코드 실행)합니다.</p>
+            </div>
+            <div class="bg-slate-800 p-6 rounded-lg border border-gray-700">
+                <h3 class="text-2xl font-bold text-yellow-400 mb-3"><i class="fas fa-puzzle-piece mr-2"></i>모듈 (Module)</h3>
+                <p class="text-lg text-gray-300">API를 담고 있는 파이썬 파일(<code class="inline-code">.py</code>) 또는 파일 묶음입니다. Maya에서는 <code class="inline-code">maya.cmds</code>가 가장 대표적인 모듈(메뉴판)입니다.</p>
+            </div>
+        </div>
+        <div class="mt-8">
+            <p class="code-title">[코드 분석]</p>
+            <pre><code class="language-python">import maya.cmds as cmds</code></pre>
+            <div class="bg-slate-800 p-4 rounded-b-lg">
+                <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
+                    <li><code class="inline-code">import maya.cmds</code>: "Maya의 cmds 라는 모듈(메뉴판)을 사용하겠습니다."</li>
+                    <li><code class="inline-code">as cmds</code>: "앞으로는 <code class="inline-code">maya.cmds</code> 라는 긴 이름 대신 <code class="inline-code">cmds</code> 라는 별명으로 부르겠습니다."</li>
+                </ul>
             </div>
         </div>
     </div>
-    <div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400"><div class="flex items-center"><i class="fas fa-book mr-2"></i><span class="text-sm">Maya Python 스크립팅 과정</span></div><div class="flex items-center space-x-4"><span class="text-sm">Slide 4 of 10</span></div></div>
+    <div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400"><div class="flex items-center"><i class="fas fa-book mr-2"></i><span class="text-sm">Maya Python 스크립팅 과정</span></div><div class="flex items-center space-x-4"><span class="text-sm">Slide 4 of 6</span></div></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
-<script>
-    function toggleAnswer(answerId, buttonId) {
-        const answerEl = document.getElementById(answerId);
-        const buttonEl = document.getElementById(buttonId);
-        if (answerEl.style.display === 'none' || answerEl.style.display === '') {
-            answerEl.style.display = 'block';
-            buttonEl.innerHTML = '<i class="fas fa-eye-slash mr-2"></i>해답 숨기기';
-        } else {
-            answerEl.style.display = 'none';
-            buttonEl.innerHTML = '<i class="fas fa-eye mr-2"></i>해답 보기';
-        }
-    }
-</script>
 </body>
 </html>

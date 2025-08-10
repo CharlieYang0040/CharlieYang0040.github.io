@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>씬 라이팅 스타일링 프로젝트 발표 및 피드백</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            margin: 0 auto;
+            background-color: #121826;
+            position: relative;
+            overflow: hidden;
+        }
+        .content-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .content-card:hover {
+            transform: translateY(-3px);
+            border-left-color: #4b5563;
+        }
+        .step-badge {
+            background-color: #4b5563;
+        }
+        .backdrop-pattern {
+            background-image: 
+                radial-gradient(circle at 15% 25%, rgba(30, 41, 59, 0.6) 0%, transparent 50%),
+                radial-gradient(circle at 85% 75%, rgba(30, 41, 59, 0.4) 0%, transparent 50%);
+        }
+        .project-image {
+            background-color: rgba(30, 41, 59, 0.8);
+            background-image: url('https://slidemodel.com/wp-content/uploads/00_project-presentation-cover_alt.png');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+        .feedback-form {
+            background-color: rgba(30, 41, 59, 0.8);
+            background-image: url('https://templatelab.com/wp-content/uploads/2020/03/peer-evaluation-form-06.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container backdrop-pattern">
+        <!-- Header Section -->
+        <div class="pt-12 pb-6 text-center">
+            <div class="inline-flex items-center bg-gray-800 bg-opacity-80 backdrop-blur-sm rounded-full px-6 py-2 mb-4">
+                <i class="fas fa-presentation mr-3 text-gray-300 text-lg"></i>
+                <span class="text-gray-300 font-medium">Final Project Presentation</span>
+            </div>
+            <h1 class="text-white text-4xl font-bold mb-2">
+                씬 라이팅 스타일링 프로젝트
+            </h1>
+            <h2 class="text-white text-3xl font-semibold mb-4">
+                <span class="text-gray-300">발표 및 피드백 세션</span>
+            </h2>
+            <p class="text-gray-300 text-lg opacity-90">
+                창의적 연출과 기술적 완성도를 공유하는 시간
+            </p>
+        </div>
+        
+        <!-- Main Content Grid -->
+        <div class="px-8 pb-8">
+            <div class="grid grid-cols-3 gap-6 max-w-7xl mx-auto">
+                
+                <!-- Project Goals Section -->
+                <div class="content-card bg-gray-800 bg-opacity-80 backdrop-blur-sm rounded-xl p-5">
+                    <div class="text-center mb-4">
+                        <div class="step-badge w-12 h-12 rounded-full flex items-center justify-center text-gray-200 font-bold text-lg mx-auto mb-3">
+                            <i class="fas fa-target"></i>
+                        </div>
+                        <h3 class="text-white text-lg font-bold">프로젝트 목표</h3>
+                    </div>
+                    <div class="project-image rounded-lg h-24 mb-4 flex items-center justify-center">
+                        <i class="fas fa-eye text-white text-3xl opacity-80"></i>
+                    </div>
+                    <ul class="text-white text-sm space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-gray-400 mr-2 mt-1 text-xs"></i>
+                            <span>씬 분석 및 라이팅 목표 수립</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-gray-400 mr-2 mt-1 text-xs"></i>
+                            <span>Volumetric Light, GI, HDRI 적용</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-gray-400 mr-2 mt-1 text-xs"></i>
+                            <span>Python 자동화 요소 구현</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-gray-400 mr-2 mt-1 text-xs"></i>
+                            <span>창의적 연출 완성도 달성</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Presentation Guide Section -->
+                <div class="content-card bg-gray-800 bg-opacity-80 backdrop-blur-sm rounded-xl p-5">
+                    <div class="text-center mb-4">
+                        <div class="step-badge w-12 h-12 rounded-full flex items-center justify-center text-gray-200 font-bold text-lg mx-auto mb-3">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <h3 class="text-white text-lg font-bold">발표 가이드</h3>
+                    </div>
+                    <div class="bg-gray-700 bg-opacity-80 rounded-lg h-24 mb-4 flex items-center justify-center">
+                        <i class="fas fa-chalkboard-teacher text-white text-3xl"></i>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-gray-700 bg-opacity-80 rounded-lg p-3">
+                            <h4 class="text-gray-300 font-semibold text-sm mb-1">진행 단계</h4>
+                            <ul class="text-white text-xs space-y-1">
+                                <li>• 프로젝트 개요 소개 (2분)</li>
+                                <li>• 기술적 구현 과정 (3분)</li>
+                                <li>• 최종 결과물 시연 (3분)</li>
+                                <li>• Q&A 및 피드백 (2분)</li>
+                            </ul>
+                        </div>
+                        <div class="text-center">
+                            <span class="bg-gray-600 text-white px-3 py-1 rounded-full text-xs font-medium">
+                                총 10분 발표
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Peer Feedback Section -->
+                <div class="content-card bg-gray-800 bg-opacity-80 backdrop-blur-sm rounded-xl p-5">
+                    <div class="text-center mb-4">
+                        <div class="step-badge w-12 h-12 rounded-full flex items-center justify-center text-gray-200 font-bold text-lg mx-auto mb-3">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="text-white text-lg font-bold">동료 피드백</h3>
+                    </div>
+                    <div class="feedback-form rounded-lg h-24 mb-4 flex items-center justify-center">
+                        <i class="fas fa-clipboard-list text-white text-3xl opacity-80"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="bg-gray-700 bg-opacity-80 rounded-lg p-2">
+                            <h4 class="text-gray-300 font-semibold text-sm mb-1">평가 항목</h4>
+                            <ul class="text-white text-xs space-y-1">
+                                <li>• 창의성 및 독창성</li>
+                                <li>• 기술적 완성도</li>
+                                <li>• 발표 및 소통 능력</li>
+                                <li>• 문제 해결 접근법</li>
+                            </ul>
+                        </div>
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-white opacity-80">평가 점수:</span>
+                            <div class="flex space-x-1">
+                                <span class="bg-gray-600 text-white px-2 py-1 rounded">1-5점</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Presentation Schedule Section -->
+            <div class="mt-6 max-w-7xl mx-auto">
+                <div class="bg-gray-800 bg-opacity-80 backdrop-blur-sm rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-white text-xl font-bold flex items-center">
+                            <i class="fas fa-calendar-alt mr-3 text-gray-400"></i>
+                            발표 세션 운영 계획
+                        </h3>
+                        <div class="bg-gray-600 text-white px-4 py-2 rounded-full font-medium text-sm">
+                            총 60분 세션
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 gap-4">
+                        <div class="text-center p-4 bg-gray-700 bg-opacity-90 rounded-lg">
+                            <div class="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center text-white font-bold text-sm mx-auto mb-2">1</div>
+                            <h4 class="text-white font-semibold text-sm mb-1">오리엔테이션</h4>
+                            <p class="text-white text-xs opacity-80">발표 순서 및<br>평가 기준 안내</p>
+                            <span class="text-gray-300 text-xs font-medium">10분</span>
+                        </div>
+                        
+                        <div class="text-center p-4 bg-gray-700 bg-opacity-90 rounded-lg">
+                            <div class="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center text-white font-bold text-sm mx-auto mb-2">2</div>
+                            <h4 class="text-white font-semibold text-sm mb-1">개별 발표</h4>
+                            <p class="text-white text-xs opacity-80">각 팀/개인별<br>프로젝트 발표</p>
+                            <span class="text-gray-300 text-xs font-medium">40분</span>
+                        </div>
+                        
+                        <div class="text-center p-4 bg-gray-700 bg-opacity-90 rounded-lg">
+                            <div class="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center text-white font-bold text-sm mx-auto mb-2">3</div>
+                            <h4 class="text-white font-semibold text-sm mb-1">피드백 정리</h4>
+                            <p class="text-white text-xs opacity-80">동료 평가 결과<br>공유 및 정리</p>
+                            <span class="text-gray-300 text-xs font-medium">10분</span>
+                        </div>
+                        
+                        <div class="text-center p-4 bg-gray-700 bg-opacity-90 rounded-lg">
+                            <div class="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center text-white font-bold text-sm mx-auto mb-2">
+                                <i class="fas fa-star text-xs"></i>
+                            </div>
+                            <h4 class="text-white font-semibold text-sm mb-1">우수작 선정</h4>
+                            <p class="text-white text-xs opacity-80">베스트 프로젝트<br>시상 및 축하</p>
+                            <span class="text-gray-300 text-xs font-medium">잠깐</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Encouragement Message -->
+                    <div class="mt-4 bg-gray-900 bg-opacity-90 border border-gray-600 rounded-lg p-4 text-center">
+                        <p class="text-gray-300 font-medium text-lg">
+                            <i class="fas fa-star text-gray-400 mr-2"></i>
+                            모든 프로젝트의 기술적 구현과 창의적 접근 방식을 공유해 주십시오
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Decorative Bar -->
+        <div class="absolute bottom-0 left-0 right-0 h-2 bg-gray-600"></div>
+    </div>
+</body>
+</html>
