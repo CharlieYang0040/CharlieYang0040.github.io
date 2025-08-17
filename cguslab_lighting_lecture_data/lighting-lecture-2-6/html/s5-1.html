@@ -5,26 +5,27 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-	<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>파일 조작 (shutil) - 심화</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet"><style>body{font-family:'Noto Sans KR',sans-serif;background-color:#0f172a;color:#f8fafc;overflow-x:hidden}.slide-container{width:1280px;min-height:720px;margin:0 auto;position:relative}.title-accent{color:#60a5fa}.number-badge{background-color:#a855f7}pre[class*="language-"]{background:#1e293b;padding:1.25em;border-radius:0.5rem;border:1px solid rgba(59,130,246,0.3)}code[class*="language-"]{font-family:'D2Coding','Courier New',monospace;font-size:0.9rem}.code-title{background-color:#374151;color:#d1d5db;padding:0.5rem 1rem;border-top-left-radius:0.5rem;border-top-right-radius:0.5rem;font-weight:bold;font-size:0.875rem}.inline-code{background-color:#374151;color:#fBBF24;padding:0.1rem 0.3rem;border-radius:0.25rem;font-family:monospace;font-size:0.9em}.callout{background-color:#0b1220;border:1px solid rgba(96,165,250,0.3);border-left:4px solid #60a5fa;padding:0.75rem 1rem;border-radius:0.375rem}</style>
+	<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>파일 조작 (shutil) - 심화</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet"><style>body{font-family:'Noto Sans KR',sans-serif;background-color:#0f172a;color:#f8fafc;overflow:hidden}.slide-container{width:1280px;height:720px;margin:0 auto;position:relative;overflow:hidden}.title-accent{color:#60a5fa}.number-badge{background-color:#a855f7}pre[class*="language-"]{background:#1e293b;padding:1.25em;border-radius:0.5rem;border:1px solid rgba(59,130,246,0.3)}code[class*="language-"]{font-family:'D2Coding','Courier New',monospace;font-size:0.9rem}.code-title{background-color:#374151;color:#d1d5db;padding:0.5rem 1rem;border-top-left-radius:0.5rem;border-top-right-radius:0.5rem;font-weight:bold;font-size:0.875rem}.inline-code{background-color:#374151;color:#fBBF24;padding:0.1rem 0.3rem;border-radius:0.25rem;font-family:monospace;font-size:0.9em}.callout{background-color:#0b1220;border:1px solid rgba(96,165,250,0.3);border-left:4px solid #60a5fa;padding:0.75rem 1rem;border-radius:0.375rem}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.05)}
+::-webkit-scrollbar-thumb{background-color:#4a5568;border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background-color:#718096}
+</style>
 </head>
 <body>
-	<div class="slide-container relative bg-slate-900">
-		<div class="relative z-10 px-12 py-10 w-full">
-			<div class="mb-5">
-				<div class="flex items-center mb-3"><div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">SH</div><h1 class="text-4xl font-black">shutil 심화: <span class="title-accent">copytree ignore</span>, <span class="title-accent">아카이브</span>, <span class="title-accent">용량</span></h1></div>
-				<p class="text-gray-300 text-lg ml-14">대규모 자산 백업/배포를 가정하여, 제외 패턴 복사, 압축/해제, 디스크 용량을 다룹니다.</p>
+	<div class="slide-container">
+		<div class="absolute inset-0 bg-grid-slate-700/[0.04]"></div>
+		<div class="relative z-10 px-12 pt-10 w-full h-full flex flex-col">
+			<div class="mb-5 flex-shrink-0">
+				<div class="flex items-center mb-3">
+					<div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">SH</div>
+					<h1 class="text-4xl font-black">shutil 심화: <span class="title-accent">폴더/파일 관리</span>와 <span class="title-accent">예외 처리</span></h1>
+				</div>
+				<p class="text-gray-300 text-lg ml-14">파일 시스템 작업을 자동화합니다. 대용량 폴더 복사(<span class="inline-code">copytree</span>), 특정 조건 파일 이동, 작업 중 발생하는 권한 및 경로 오류 처리(<span class="inline-code">ignore_errors</span>)를 다룹니다.</p>
 			</div>
-
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto flex-grow pb-20">
 				<div>
-					<p class="code-title">[심화 기능]</p>
-					<div class="callout mb-3">
-						<ul class="list-disc ml-6 text-gray-200">
-							<li><span class="inline-code">copytree(..., ignore=shutil.ignore_patterns(...))</span>: 불필요 파일 제외</li>
-							<li><span class="inline-code">make_archive</span> / <span class="inline-code">unpack_archive</span>: 폴더 압축/해제</li>
-							<li><span class="inline-code">disk_usage</span>: 남은 용량 체크로 사전 실패 방지</li>
-						</ul>
-					</div>
+					<p class="code-title">[기본 예제]</p>
 					<pre><code class="language-python">import os, shutil
 from datetime import datetime
 
@@ -50,16 +51,7 @@ usage = shutil.disk_usage(os.getcwd())
 print("남은 용량(GB):", round(usage.free/1024**3, 2))</code></pre>
 				</div>
 				<div>
-					<p class="code-title">[자주 하는 실수 & 성능 팁]</p>
-					<div class="callout mb-3">
-						<p class="text-gray-200 mb-2"><i class="fas fa-triangle-exclamation text-yellow-400 mr-2"></i><span class="inline-code">copytree</span>는 기본적으로 대상이 비어있어야 합니다. 3.8+에서는 <span class="inline-code">dirs_exist_ok=True</span>로 덮어쓰기를 허용할 수 있습니다.</p>
-						<pre><code class="language-python">import shutil
-# 메타데이터까지 복사하려면 copy2 사용을 습관화
-# 대용량 스트리밍은 copyfileobj로 청크 단위 복사 가능</code></pre>
-						<p class="text-gray-200 mt-3"><i class="fas fa-undo text-blue-400 mr-2"></i>삭제 전에는 항상 아카이브 백업을 남겨둡니다.</p>
-					</div>
-
-					<p class="code-title">[심화 실습]</p>
+					<p class="code-title">[실습]</p>
 					<p class="bg-slate-800 p-4 rounded-b-lg">현재 폴더의 <code class="inline-code">assets</code>를 제외 패턴(<code class="inline-code">*.tmp</code>, <code class="inline-code">__pycache__</code>)로 복사 후, <code class="inline-code">backup/assets_YYYYMMDD.zip</code>으로 압축하고, 임시 폴더에 해제하여 파일 수가 원본과 동일한지 검증하세요.</p>
 					<button id="btn-sh-adv" onclick="toggleAnswer('answer-sh-adv', 'btn-sh-adv')" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out"><i class="fas fa-eye mr-2"></i>해답 보기</button>
 					<div id="answer-sh-adv" class="mt-3 bg-slate-800 p-4 rounded-lg border border-blue-900" style="display: none;">

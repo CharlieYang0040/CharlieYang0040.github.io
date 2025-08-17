@@ -7,6 +7,9 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/drawing.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-core.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         .visually-hidden {
@@ -320,6 +323,64 @@
             z-index: 998;
             display: none;
         }
+        /* Answer Modal (해답 보기 팝업) */
+        .answer-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .answer-modal {
+            background: #0b1220;
+            color: #e5e7eb;
+            width: min(1200px, 92vw);
+            max-height: 90vh;
+            border-radius: 8px;
+            border: 1px solid rgba(96,165,250,0.3);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .answer-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: rgba(59,130,246,0.15);
+            border-bottom: 1px solid rgba(96,165,250,0.3);
+        }
+        .answer-modal-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #bfdbfe;
+        }
+        .answer-modal-close {
+            background: none;
+            border: none;
+            color: #fff;
+            opacity: 0.75;
+            cursor: pointer;
+            padding: 6px 8px;
+        }
+        .answer-modal-close:hover { opacity: 1; }
+        .answer-modal-content {
+            padding: 14px;
+            overflow: auto;
+        }
+        .answer-modal-content pre[class*="language-"] {
+            overflow: auto !important;
+            white-space: pre !important;
+        }
+        .answer-modal-content code[class*="language-"] {
+            word-break: normal;
+            white-space: pre !important;
+            font-family: 'D2Coding','Courier New',monospace;
+            font-size: 0.95rem;
+        }
     </style>
 </head>
 <body>
@@ -392,6 +453,19 @@
     </div>
     <div id="slide-list-trigger"></div>
 
+    <!-- Answer Modal -->
+    <div id="answer-modal-overlay" class="answer-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="answer-modal-title" style="display:none;">
+        <div class="answer-modal" tabindex="-1">
+            <div class="answer-modal-header">
+                <span id="answer-modal-title" class="answer-modal-title">해답</span>
+                <button id="answer-modal-close" class="answer-modal-close" title="닫기">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="answer-modal-content" class="answer-modal-content"></div>
+        </div>
+    </div>
+
     <script src="js/drawing.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -421,6 +495,10 @@
             let presentationTitle = '';
             let lectureId = '';
             let slideContentDimensions = { width: 1280, height: 720 };
+            let isTightFit = false; // 심화/따라하기 슬라이드에서 여백 없이 채우기
+            // Answer Modal state
+            let isAnswerModalOpen = false;
+            let lastAnswerButtonEl = null;
             
             // 뷰 상태를 통합 관리하는 객체
             let view = {
@@ -563,6 +641,7 @@
                     iframe.onload = () => {
                         try {
                             const slideDoc = iframe.contentWindow.document;
+                            const slideWin = iframe.contentWindow;
                             // 공통 Answer/Code 스크롤 스타일 주입
                             try {
                                 const injectedStyle = slideDoc.createElement('style');
@@ -579,11 +658,18 @@
                             } catch (cssErr) {
                                 console.warn('슬라이드 스타일 주입 실패:', cssErr);
                             }
-                            // documentElement를 사용하여 전체 레이아웃 크기를 보다 안정적으로 측정
+                            // documentElement를 사용하여 전체 레이아웃 크기를 보다 안정적으로 측정 (기본 방식)
                             const width = slideDoc.documentElement.scrollWidth;
                             const height = slideDoc.documentElement.scrollHeight;
-                            
                             slideContentDimensions = { width, height };
+
+                            // 슬라이드 제목 기반으로 타이트 핏 여부 결정 (심화/따라하기 등)
+                            try {
+                                const titleText = (slideDoc.title || '').toString();
+                                isTightFit = /심화|따라하기/.test(titleText);
+                            } catch (_) {
+                                isTightFit = false;
+                            }
 
                             if(slideContentDimensions.width === 0 || slideContentDimensions.height === 0) {
                                 console.warn("감지된 슬라이드 크기가 0이므로 기본값 1280x720으로 대체합니다.");
@@ -601,6 +687,22 @@
                                 
                                 // Canvas 기본 위치 설정
                                 syncCanvasWithIframe();
+                            }
+
+                            // 해답 보기 토글 가로채기: 팝업 모달로 표시
+                            try {
+                                slideWin.toggleAnswer = (answerId, buttonId) => {
+                                    const answerEl = slideDoc.getElementById(answerId);
+                                    const buttonEl = slideDoc.getElementById(buttonId);
+                                    if (!answerEl) {
+                                        alert('해답 영역을 찾을 수 없습니다.');
+                                        return;
+                                    }
+                                    const contentHtml = answerEl.innerHTML;
+                                    openAnswerModal(contentHtml, slideDoc.title || '해답', buttonEl || null);
+                                };
+                            } catch (hookErr) {
+                                console.warn('해답 토글 가로채기 실패:', hookErr);
                             }
 
                         } catch (e) {
@@ -663,8 +765,8 @@
                     scaledHeight = slideHeight * scale;
                 }
                 
-                // 약간의 여백을 위해 스케일을 조금 줄임 (선택사항)
-                const MARGIN_FACTOR = 0.95;
+                // 심화/따라하기 슬라이드는 여백 없이, 일반 슬라이드는 소폭 여백 유지
+                const MARGIN_FACTOR = isTightFit ? 1.0 : 0.95;
                 scale *= MARGIN_FACTOR;
                 scaledWidth *= MARGIN_FACTOR;
                 scaledHeight *= MARGIN_FACTOR;
@@ -1102,6 +1204,41 @@
                 
                 log(`Canvas synced: positioned at center, size unchanged (${slideContentDimensions.width}x${slideContentDimensions.height})`);
             }
+
+            // Answer Modal helpers
+            const answerModalOverlay = document.getElementById('answer-modal-overlay');
+            const answerModalContent = document.getElementById('answer-modal-content');
+            const answerModalTitle = document.getElementById('answer-modal-title');
+            const answerModalCloseBtn = document.getElementById('answer-modal-close');
+
+            function openAnswerModal(innerHtml, slideTitle, buttonEl) {
+                isAnswerModalOpen = true;
+                lastAnswerButtonEl = buttonEl || null;
+                if (lastAnswerButtonEl) {
+                    try { lastAnswerButtonEl.innerHTML = '<i class="fas fa-eye-slash mr-2"></i>해답 숨기기'; } catch (_) {}
+                }
+                answerModalTitle.textContent = slideTitle ? `${slideTitle} - 해답` : '해답';
+                answerModalContent.innerHTML = innerHtml;
+                answerModalOverlay.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                try { if (window.Prism && typeof window.Prism.highlightAllUnder === 'function') { window.Prism.highlightAllUnder(answerModalContent); } } catch (_) {}
+            }
+
+            function closeAnswerModal() {
+                if (!isAnswerModalOpen) return;
+                isAnswerModalOpen = false;
+                answerModalOverlay.style.display = 'none';
+                answerModalContent.innerHTML = '';
+                document.body.style.overflow = '';
+                if (lastAnswerButtonEl) {
+                    try { lastAnswerButtonEl.innerHTML = '<i class="fas fa-eye mr-2"></i>해답 보기'; } catch (_) {}
+                    lastAnswerButtonEl = null;
+                }
+            }
+
+            answerModalCloseBtn.addEventListener('click', closeAnswerModal);
+            answerModalOverlay.addEventListener('click', (e) => { if (e.target === answerModalOverlay) closeAnswerModal(); });
+            window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isAnswerModalOpen) closeAnswerModal(); });
         });
     </script>
 </body>
