@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>4.1 문제 3: 긴 단어 골라내기</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet"><style>body{font-family:'Noto Sans KR',sans-serif;background-color:#0f172a;color:#f8fafc;overflow-x:hidden}.slide-container{width:1280px;min-height:720px;margin:0 auto;position:relative}.title-accent{color:#60a5fa}.number-badge{background-color:#a855f7}pre[class*="language-"]{background:#1e293b;padding:1.25em;border-radius:0.5rem;border:1px solid rgba(59,130,246,0.3)}code[class*="language-"]{font-family:'D2Coding','Courier New',monospace;font-size:0.9rem}.code-title{background-color:#374151;color:#d1d5db;padding:0.5rem 1rem;border-top-left-radius:0.5rem;border-top-right-radius:0.5rem;font-weight:bold;font-size:0.875rem}.inline-code{background-color:#374151;color:#fBBF24;padding:0.1rem 0.3rem;border-radius:0.25rem;font-family:monospace;font-size:0.9em}</style>
+</head>
+<body>
+<div class="slide-container relative bg-slate-900 p-10">
+    <div class="relative z-10 w-full">
+        <div class="mb-5"><div class="flex items-center mb-3"><div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">4.1.3</div><h1 class="text-4xl font-black">📝 리스트 문제: 긴 단어만 골라내기 <span class="text-yellow-400">★★★☆☆</span></h1></div><p class="text-gray-400 text-lg ml-14">반복문과 조건문을 사용하여 리스트에서 특정 조건에 맞는 요소만 골라내세요.</p></div>
+        
+        <div>
+            <div class="code-title">[요구 사항]</div>
+            <div class="bg-slate-800 p-4 rounded-b-lg">
+                <ul class="list-disc list-inside space-y-1">
+                    <li>`for` 반복문으로 리스트의 모든 단어를 확인하세요.</li>
+                    <li>`len()` 함수와 `if` 조건문으로 각 단어의 길이가 5 이상인지 판단하세요.</li>
+                    <li>조건에 맞는 단어만 `long_words` 리스트에 추가(`append`)하세요.</li>
+                </ul>
+            </div>
+
+            <div class="mt-4">
+                <p class="code-title">실행 코드</p>
+                <pre class="rounded-b-lg"><code class="language-python">words = ["apple", "banana", "kiwi", "strawberry", "pineapple", "grape"]
+long_words = []
+
+# 여기에 코드를 작성하세요
+# ???
+
+print(long_words)
+
+# 실행 결과: ['apple', 'banana', 'strawberry', 'pineapple']
+</code></pre>
+            </div>
+
+            <button id="btn-3" onclick="toggleAnswer('answer-3', 'btn-3')" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out"><i class="fas fa-eye mr-2"></i>해답 보기</button>
+            
+            <div id="answer-3" class="mt-4 bg-slate-800 p-4 rounded-lg border border-blue-900" style="display: none;">
+                <p class="text-gray-300 mb-2"><i class="fas fa-check-circle text-green-400 mr-2"></i><strong>모범 답안:</strong></p>
+                <pre><code class="language-python">words = ["apple", "banana", "kiwi", "strawberry", "pineapple", "grape"]
+long_words = []
+
+for word in words:
+    if len(word) >= 5:
+        long_words.append(word)
+
+print(long_words)
+</code></pre>
+            </div>
+        </div>
+
+    </div>
+    <div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400"><div class="flex items-center"><i class="fas fa-book mr-2"></i><span class="text-sm">Maya Python 스크립팅 과정</span></div><div class="flex items-center space-x-4"><span class="text-sm">Slide 9-3</span></div></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script>
+    function toggleAnswer(answerId, buttonId) {
+        const answerEl = document.getElementById(answerId);
+        const buttonEl = document.getElementById(buttonId);
+        if (answerEl.style.display === 'none' || answerEl.style.display === '') {
+            answerEl.style.display = 'block';
+            buttonEl.innerHTML = '<i class="fas fa-eye-slash mr-2"></i>해답 숨기기';
+        } else {
+            answerEl.style.display = 'none';
+            buttonEl.innerHTML = '<i class="fas fa-eye mr-2"></i>해답 보기';
+        }
+    }
+</script>
+</body>
+</html>
