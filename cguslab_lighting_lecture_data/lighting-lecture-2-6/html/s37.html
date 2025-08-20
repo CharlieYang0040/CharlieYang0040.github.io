@@ -1,0 +1,50 @@
+<!-- =================================================================
+     SLIDE 2-32: 2주차 2교시 - 매개변수 예제 1
+     파일 이름: s37.html
+================================================================== -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>2-2.2 예제 1: 매개변수 기초</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet"><style>body{font-family:'Noto Sans KR',sans-serif;background-color:#0f172a;color:#f8fafc;overflow-x:hidden}.slide-container{width:1280px;min-height:720px;margin:0 auto;position:relative}.title-accent{color:#60a5fa}.number-badge{background-color:#a855f7}pre[class*="language-"]{background:#1e293b;padding:1.25em;border-radius:0.5rem;border:1px solid rgba(59,130,246,0.3)}code[class*="language-"]{font-family:'D2Coding','Courier New',monospace;font-size:0.9rem}.code-title{background-color:#374151;color:#d1d5db;padding:0.5rem 1rem;border-top-left-radius:0.5rem;border-top-right-radius:0.5rem;font-weight:bold;font-size:0.875rem}.inline-code{background-color:#374151;color:#fBBF24;padding:0.1rem 0.3rem;border-radius:0.25rem;font-family:monospace;font-size:0.9em}</style>
+</head>
+<body>
+<div class="slide-container relative bg-slate-900 p-10">
+    <div class="relative z-10 w-full">
+        <div class="mb-5">
+            <div class="flex items-center mb-3">
+                <div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">2.2.1</div>
+                <h1 class="text-4xl font-black">예제 코드로 매개변수 익히기 1: <span class="title-accent">이름을 입력받아 인사하는 함수</span></h1>
+            </div>
+            <p class="text-gray-400 text-lg ml-14">매개변수의 가장 기본적인 활용법입니다.</p>
+        </div>
+        
+        <p class="text-gray-300 text-lg mb-4">
+            <code class="inline-code">greet</code> 함수는 <code class="inline-code">name</code>이라는 매개변수(재료를 담을 그릇)를 가지고 있습니다.
+            함수를 호출할 때 <code class="inline-code">greet("김철수")</code>와 같이 실제 값(인자)을 넣어주면, 함수 내부의 <code class="inline-code">name</code> 변수는 "김철수"라는 값을 가지게 되어 문장을 완성합니다.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <p class="code-title">[실행 코드]</p>
+                <pre class="rounded-b-lg"><code class="language-python">def greet(name):
+    print("안녕하세요, " + name + "님! 반갑습니다.")
+
+# 함수 호출 시 다른 '재료'를 넣어줍니다.
+greet("김철수")
+greet("박영희")</code></pre>
+            </div>
+            <div>
+                <p class="code-title">[실행 결과]</p>
+                <pre class="rounded-b-lg"><code class="language-bash">안녕하세요, 김철수님! 반갑습니다.
+안녕하세요, 박영희님! 반갑습니다.</code></pre>
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
+        <div class="flex items-center"><i class="fas fa-book mr-2"></i><span class="text-sm">Maya Python 스크립팅 과정</span></div>
+        <div class="flex items-center space-x-4"><span class="text-sm">Slide 37</span></div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html> 

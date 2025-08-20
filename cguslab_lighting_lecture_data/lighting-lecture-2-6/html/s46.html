@@ -1,0 +1,48 @@
+<!-- =================================================================
+     SLIDE 3-2: 3주차 1교시 - 재질 생성 개념
+     파일 이름: s46.html
+================================================================== -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>3-1.1 개념: mc.shadingNode()</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet"><style>body{font-family:'Noto Sans KR',sans-serif;background-color:#0f172a;color:#f8fafc;overflow-x:hidden}.slide-container{width:1280px;min-height:720px;margin:0 auto;position:relative}.title-accent{color:#60a5fa}.number-badge{background-color:#a855f7}pre[class*="language-"]{background:#1e293b;padding:1.25em;border-radius:0.5rem;border:1px solid rgba(59,130,246,0.3)}code[class*="language-"]{font-family:'D2Coding','Courier New',monospace;font-size:0.9rem}.code-title{background-color:#374151;color:#d1d5db;padding:0.5rem 1rem;border-top-left-radius:0.5rem;border-top-right-radius:0.5rem;font-weight:bold;font-size:0.875rem}.inline-code{background-color:#374151;color:#fBBF24;padding:0.1rem 0.3rem;border-radius:0.25rem;font-family:monospace;font-size:0.9em}</style>
+</head>
+<body>
+<div class="slide-container relative bg-slate-900 p-10">
+    <div class="relative z-10 w-full">
+        <div class="mb-5">
+            <div class="flex items-center mb-3">
+                <div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">3.1.0</div>
+                <h1 class="text-4xl font-black">1교시: 코드로 <span class="title-accent">재질(Material) 창조하기</span></h1>
+            </div>
+            <p class="text-gray-400 text-lg ml-14">Hypershade 창을 열지 않고 스크립트로 재질을 만드는 방법을 배웁니다.</p>
+        </div>
+
+        <div class="bg-slate-800 p-6 rounded-lg border border-purple-900/50">
+            <h3 class="text-2xl font-bold mb-4 text-purple-300">핵심 명령어: <code class="inline-code text-2xl">mc.shadingNode()</code></h3>
+            <p class="text-gray-300 text-lg">
+                Maya에서 재질, 텍스처, 유틸리티 등 Hypershade에서 보이는 모든 것들은 '쉐이딩 노드'라는 형태로 존재합니다.
+                <br>
+                <code class="inline-code">mc.shadingNode()</code> 명령어는 바로 이 쉐이딩 노드들을 코드로 생성해주는 강력한 도구입니다.
+            </p>
+        </div>
+        
+        <div class="mt-8">
+            <p class="code-title">[기본 재질(Blinn) 생성 예제]</p>
+            <pre class="rounded-b-lg"><code class="language-python">import maya.cmds as mc
+
+# 'blinn' 타입의 쉐이딩 노드를 생성합니다.
+# asShader=True 플래그는 "이것은 표면에 직접 칠할 수 있는 재질(Shader)이다"라고 명시해주는 중요한 옵션입니다.
+my_first_mat = mc.shadingNode('blinn', asShader=True, name='myFirstMaterial')
+
+print(f"'{my_first_mat}' 재질 노드가 생성되었습니다.")</code></pre>
+        </div>
+    </div>
+    <div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
+        <div class="flex items-center"><i class="fas fa-book mr-2"></i><span class="text-sm">Maya Python 스크립팅 과정</span></div>
+        <div class="flex items-center space-x-4"><span class="text-sm">Slide 46</span></div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html> 
