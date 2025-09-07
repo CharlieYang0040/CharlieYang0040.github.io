@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>RenderMan vs Arnold vs V-Ray</title>
+    <title>핵심 작업 공간: "It" 렌더 뷰어</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
     <style>
@@ -19,6 +19,9 @@
         .concept-title { font-weight: 800; font-size: 1.5rem; color: #fff; margin-bottom: 0.75rem; }
         .concept-box p, .concept-box li { font-size: 1.25rem; line-height: 1.6; }
         .concept-box li { margin-top: 0.6rem; }
+        .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #4a5568; }
+        .main-image { width: 100%; height: auto; object-fit: cover; background-color: #4a5568; }
+        .caption { text-align: center; font-size: 1rem; color: #a0aec0; padding: 0.75rem; background-color: #4a5568; }
         .footer { padding: 1rem 2rem; background-color: #1a202c; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #4a5568; }
         .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246,224,94,0.15); padding: 2px 6px; border-radius: 4px; }
     </style>
@@ -27,46 +30,24 @@
 <div class="slide-container">
     <div class="header">
         <div>
-            <h1>RenderMan vs Arnold vs V-Ray</h1>
-            <p>철학과 사용 분야 비교</p>
+            <h1>핵심 작업 공간: "It" 렌더 뷰어</h1>
+            <p>단순한 뷰어를 넘어선 강력한 분석 도구</p>
         </div>
     </div>
 
-    <div class="content">
+    <div class="content" style="grid-template-columns: 1fr; align-items: center;">
         <div class="content-column">
-            <div class="concept-box">
-                <div class="concept-title">RenderMan (Pixar)</div>
-                <ul>
-                    <li>목표: <span class="highlight">VFX/장편 애니메이션</span> 최고 품질</li>
-                    <li>강점: PxrSurface 유연성, 고정밀 Denoise, Deep 렌더</li>
-                    <li>특징: 대규모 파이프라인 적합</li>
-                </ul>
+            <div class="concept-box" style="text-align: center;">
+                <p>
+                    RenderMan의 <strong><span class="highlight">"It"(Image Tool)</span></strong>은 단순한 렌더 뷰어가 아닙니다.
+                </p>
+                <p style="margin-top: 1rem;">
+                    렌더링 결과물을 정밀하게 분석하고 문제를 진단하는 <strong><span class="highlight">강력한 분석 도구</span></strong>이며,<br/>라이팅 아티스트에게는 가장 중요한 작업창이 될 것입니다.
+                </p>
             </div>
-            <div class="concept-box">
-                <div class="concept-title">Arnold (Autodesk)</div>
-                <ul>
-                    <li>철학: 단순함과 예측 가능성</li>
-                    <li>강점: Standard Surface 표준화, CPU 안정성</li>
-                    <li>특징: GPU 렌더링 발전</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="content-column">
-            <div class="concept-box">
-                <div class="concept-title">V-Ray (Chaos Group)</div>
-                <ul>
-                    <li>강점: 속도와 범용성, 빠른 GI</li>
-                    <li>생태계: 건축/제품 시각화 에셋 풍부</li>
-                    <li>특징: 세밀한 최적화 옵션</li>
-                </ul>
-            </div>
-            <div class="concept-box">
-                <div class="concept-title">요약</div>
-                <ul>
-                    <li>프로덕션 요구에 따라 <span class="highlight">최적 도구</span>가 달라짐</li>
-                    <li>본 강의는 RenderMan의 <span class="highlight">품질·유연성</span>에 집중</li>
-                </ul>
+            <div class="image-container" style="margin-top: 2rem;">
+                <img class="main-image" alt="It Viewer Interface" src="https://placehold.co/1200x400/1A202C/FFFFFF?text=RenderMan+'It'+Viewer+Interface"/>
+                <p class="caption">"It" 뷰어는 렌더링 결과물을 분석하는 핵심 도구입니다.</p>
             </div>
         </div>
     </div>

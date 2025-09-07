@@ -90,46 +90,32 @@
 <div class="slide-container">
     <div class="header">
         <div>
-            <h1>RenderMan 개요 및 기본 렌더 세팅</h1>
-            <p>RenderMan 마스터클래스 1강</p>
+            <h1>1강: RenderMan 개요 및 기본 렌더 세팅</h1>
+            <p>RenderMan의 핵심 원리와 실무 워크플로우 첫걸음</p>
         </div>
     </div>
 
     <div class="content">
         <div class="content-column">
-            <div class="concept-box">
-                <div class="concept-title">강의 개요</div>
+            <div class="concept-box" style="height: 100%;">
+                <div class="concept-title">🎯 수업 목표</div>
                 <ul>
-                    <li>Pixar RenderMan의 목적과 활용 범위 정리</li>
-                    <li>기본 렌더 세팅 구조 이해: 샘플링, 노이즈, Denoise</li>
-                    <li>프로덕션 표준 컬러 관리: ACES와 "It" 뷰어 설정</li>
-                    <li>실습 과제 안내 및 비교 평가 기준 제시</li>
+                    <li>RenderMan의 핵심 렌더링 방식(<span class="highlight">Path Tracing, RIS</span>) 이해</li>
+                    <li>다른 렌더러(V-Ray, Arnold)와의 차별점 및 강점 파악</li>
+                    <li>핵심 인터페이스 <span class="highlight">"It" 뷰어</span>의 상세 기능 및 컬러 세팅(<span class="highlight">ACES</span>)</li>
+                    <li><span class="highlight">샘플링</span> 원리 및 <span class="highlight">노이즈</span> 제어를 위한 기본 렌더 세팅 실습</li>
                 </ul>
-            </div>
-
-            <div class="image-container">
-                <img class="main-image" alt="강의 개요 이미지" src="https://placehold.co/600x300/1A202C/FFFFFF?text=RenderMan+Overview"/>
-                <p class="caption">강의 진행 개요(예시 이미지 자리표시)</p>
             </div>
         </div>
 
         <div class="content-column">
-            <div class="concept-box">
-                <div class="concept-title">핵심 키워드</div>
+            <div class="concept-box" style="height: 100%;">
+                <div class="concept-title">🔑 핵심 키워드</div>
                 <ul>
-                    <li><span class="highlight">Path Tracing</span>: 물리 기반 경로 추적</li>
-                    <li><span class="highlight">Sampling</span>: Max Samples, Pixel Variance</li>
-                    <li><span class="highlight">Denoise</span>: 품질/시간 최적화</li>
-                    <li><span class="highlight">ACES | It</span>: 일관된 컬러 파이프라인</li>
-                </ul>
-            </div>
-
-            <div class="concept-box">
-                <div class="concept-title">진행 방식</div>
-                <ul>
-                    <li>핵심 개념 설명 후 즉시 적용 가능한 설정 지침 제시</li>
-                    <li>슬라이드별로 이미지/도식 자리표시 제공</li>
-                    <li>실습 단계에서 비교 기준과 검증 방법 명확화</li>
+                    <li><span class="highlight">Path Tracing</span>: 빛의 경로를 역추적하여 현실감을 구현하는 핵심 알고리즘</li>
+                    <li><span class="highlight">RIS Architecture</span>: Path Tracing을 더 빠르고 유연하게 만드는 RenderMan의 엔진</li>
+                    <li><span class="highlight">Sampling & Denoise</span>: 퀄리티와 렌더링 시간의 균형을 맞추는 핵심 제어 기술</li>
+                    <li><span class="highlight">"It" Viewer & ACES</span>: 정확한 결과 분석과 표준 컬러 워크플로우</li>
                 </ul>
             </div>
         </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 3강 | HDRI 및 조명 실습</title>
+    <title>분리 기법 제어 포인트</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -19,46 +19,46 @@
         .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem; }
         .concept-box p, .concept-box li { font-size: 1.25rem; line-height: 1.6; }
         .concept-box li { margin-top: 0.6rem; }
-        .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #334155; }
-        .main-image { width: 100%; height: auto; object-fit: cover; background-color: #334155; }
-        .caption { text-align: center; font-size: 1rem; color: #a0aec0; padding: 0.75rem; background-color: #334155; }
         .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
         .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246, 224, 94, 0.15); padding: 2px 6px; border-radius: 4px; }
+        kbd { background-color: #718096; color: #fff; border-radius: 4px; padding: 2px 6px; font-size: 0.95rem; font-weight: 700; border: 1px solid #a0aec0; }
     </style>
 </head>
 <body>
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>HDRI 및 RenderMan 조명 실습</h1>
-                <p>RenderMan 마스터클래스 3강</p>
+                <h1>Sky/Sun 분리 기법: 실습 단계</h1>
+                <p>두 개의 DomeLight 역할 분담하기</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
-                    <ul>
-                        <li>HDRI의 원리와 <span class="highlight">PxrDomeLight</span> 활용법</li>
-                        <li><span class="highlight">하늘/태양 분리</span>를 통한 전문 라이팅 기법</li>
-                        <li><span class="highlight">3점 조명</span> 설계와 <span class="highlight">Light Filter</span>를 이용한 빛의 제어</li>
+                <div class="concept-box" style="height: 100%;">
+                    <div class="concept-title">🌌 Dome 1: 하늘 (Sky/Ambient)</div>
+                    <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-image"></i></span><strong>Color Map:</strong> 원본 HDRI 연결</li>
+                        <li><span class="fa-li"><i class="fas fa-palette"></i></span><strong>역할:</strong> 장면의 전반적인 <span class="highlight">분위기, 색감, 부드러운 반사</span></li>
+                        <li><span class="fa-li"><i class="fas fa-sliders-h"></i></span><strong>제어:</strong> 우선 기본값으로 두고 Sun Light 추가 후 미세 조정</li>
                     </ul>
-                </div>
-                <div class="image-container">
-                    <img class="main-image" alt="RenderMan Lighting" src="https://placehold.co/600x300/1A202C/FFFFFF?text=RenderMan+Lighting"/>
-                    <p class="caption">HDRI, 3점 조명, Light Filter를 활용한 사실적인 조명</p>
+                     <div class="image-container mt-4">
+                        <img class="main-image" alt="Sky Dome" src="https://placehold.co/500x200/1A202C/FFFFFF?text=Sky+Dome+HDRI"/>
+                    </div>
                 </div>
             </div>
             <div class="content-column">
                 <div class="concept-box" style="height: 100%;">
-                    <div class="concept-title">핵심 키워드</div>
-                    <ul>
-                        <li>이미지 기반 라이팅 (<span class="highlight">IBL</span>)</li>
-                        <li>하늘/태양 분리 (<span class="highlight">Sky/Sun Separation</span>)</li>
-                        <li>3점 조명 (<span class="highlight">Key, Fill, Rim</span>)</li>
-                        <li>라이트 필터 (<span class="highlight">Barn, Gobo</span>)</li>
+                    <div class="concept-title">☀️ Dome 2: 태양 (Sun/Key Source)</div>
+                     <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-image"></i></span><strong>Color Map:</strong> <span class="highlight">태양만 남긴 HDRI</span> 연결</li>
+                        <li><span class="fa-li"><i class="fas fa-ruler-combined"></i></span><strong>역할:</strong> 강한 <span class="highlight">하이라이트</span>, 선명한 <span class="highlight">그림자</span> 생성</li>
+                        <li><span class="fa-li"><i class="fas fa-sliders-h"></i></span><strong>제어:</strong> <kbd>Intensity</kbd> / <kbd>Exposure</kbd>로 그림자 선명도 조절</li>
+                        <li><span class="fa-li"><i class="fas fa-compass"></i></span><strong>핵심:</strong> <kbd>Rotate Y</kbd>로 <span class="highlight">그림자 방향</span> 자유롭게 제어</li>
                     </ul>
+                    <div class="image-container mt-4">
+                        <img class="main-image" alt="Sun Dome" src="https://placehold.co/500x200/1A202C/FFFFFF?text=Sun-Only+HDRI"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -67,3 +67,4 @@
     </div>
 </body>
 </html>
+

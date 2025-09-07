@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 2강 | PxrSurface와 PBR 개념</title>
+    <title>Light Filters</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -19,9 +19,6 @@
         .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem; }
         .concept-box p, .concept-box li { font-size: 1.25rem; line-height: 1.6; }
         .concept-box li { margin-top: 0.6rem; }
-        .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #334155; }
-        .main-image { width: 100%; height: auto; object-fit: cover; background-color: #334155; }
-        .caption { text-align: center; font-size: 1rem; color: #a0aec0; padding: 0.75rem; background-color: #334155; }
         .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
         .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246, 224, 94, 0.15); padding: 2px 6px; border-radius: 4px; }
     </style>
@@ -30,47 +27,42 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>PxrSurface와 PBR 개념</h1>
-                <p>RenderMan 마스터클래스 2강</p>
+                <h1>4. 빛을 디자인하다: Light Filters</h1>
+                <p>조명에 창의적인 효과를 더하는 강력한 기능</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
-                    <ul>
-                        <li>만능 통합 셰이더 <span class="highlight">PxrSurface</span>의 구조와 핵심 <span class="highlight">Lobe</span></li>
-                        <li>RenderMan 관점의 <span class="highlight">PBR</span>: 과학적 데이터를 예술로</li>
-                        <li><span class="highlight">Artistic</span> 모드의 직관성과 <span class="highlight">Physical</span> 모드의 정확성 비교</li>
-                        <li>외부 PBR 텍스처(Roughness, Metallic 등)의 효과적인 활용법</li>
+                    <div class="concept-title">🚪 PxrBarnLightFilter (반 도어)</div>
+                    <p>스튜디오의 '반 도어'처럼, 빛이 퍼지는 영역을 <span class="highlight">네 개의 문(Edge)</span>으로 제어합니다.</p>
+                     <ul class="list-disc list-inside mt-4">
+                        <li><strong>용도:</strong> 특정 영역에만 빛을 비추거나 차단</li>
+                        <li><strong>예시:</strong> 사각형 창문으로 들어오는 듯한 빛 연출</li>
                     </ul>
                 </div>
-                <div class="image-container">
-                    <img class="main-image" alt="PxrSurface로 구현된 다양한 재질 예시" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PxrSurface+Materials"/>
-                    <p class="caption">PxrSurface로 구현된 다양한 재질 예시</p>
+                 <div class="image-container">
+                    <img class="main-image" alt="Barn Door Effect" src="https://placehold.co/600x250/1A202C/FFFFFF?text=Barn+Door+Effect"/>
                 </div>
             </div>
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">핵심 키워드</div>
-                    <ul>
-                        <li><span class="highlight">Uber Shader</span>, Lobe 기반 레이어링</li>
-                        <li><span class="highlight">IOR</span> & <span class="highlight">Extinction Coefficient</span>: 과학적 데이터 기반 재질 표현</li>
-                        <li><span class="highlight">Metallic 워크플로우</span>를 PxrSurface에서 구현하는 방법</li>
+                    <div class="concept-title">🖼️ PxrGoboLightFilter (고보)</div>
+                    <p>텍스처(파일)를 이용해 빛에 <span class="highlight">특정 무늬</span>를 입힙니다.</p>
+                     <ul class="list-disc list-inside mt-4">
+                        <li><strong>용도:</strong> 빛으로 극적인 패턴이나 그림자 생성</li>
+                        <li><strong>예시:</strong> 창문 틈, 나뭇잎 사이로 비치는 그림자 연출</li>
                     </ul>
                 </div>
-                <div class="concept-box">
-                    <div class="concept-title">진행 방식</div>
-                    <ul>
-                        <li>핵심 개념 요약 → 파라미터 안내 → 실습</li>
-                        <li>외부 PBR 텍스처 연결 실습 포함</li>
-                    </ul>
+                <div class="image-container">
+                    <img class="main-image" alt="Gobo Effect" src="https://placehold.co/600x250/1A202C/FFFFFF?text=Gobo+Effect"/>
                 </div>
             </div>
         </div>
 
-        <div class="footer">Pixar RenderMan 마스터클래스 | 2강</div>
+        <div class="footer">Pixar RenderMan 마스터클래스 | 3강</div>
     </div>
 </body>
 </html>
+

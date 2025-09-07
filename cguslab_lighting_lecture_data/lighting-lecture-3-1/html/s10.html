@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>실습 과제</title>
+    <title>오늘의 실습 과제</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
     <style>
@@ -31,37 +31,35 @@
 <div class="slide-container">
     <div class="header">
         <div>
-            <h1>실습 과제</h1>
-            <p>비교·분석 중심</p>
+            <h1>오늘의 실습 과제</h1>
+            <p>이론을 실전으로, 직접 확인하고 분석하기</p>
         </div>
     </div>
 
     <div class="content">
         <div class="content-column">
-            <div class="concept-box">
-                <div class="concept-title">과제</div>
-                <ol>
-                    <li>씬 구성 후 <span class="highlight">PxrDomeLight</span> 설치</li>
-                    <li>It 뷰어 컬러: <span class="highlight">ACES 1.2</span> 동기화</li>
-                    <li>Pixel Variance 고정(예: 0.05)</li>
-                    <li>Max Samples: 32 → 128 → 512 비교</li>
-                    <li>Max Samples 64 + <span class="highlight">Denoise</span> ON/OFF 비교</li>
+            <div class="concept-box" style="height: 100%;">
+                <div class="concept-title">🧪 실습 절차</div>
+                <ol style="list-style-type: decimal; padding-left: 1.5rem;">
+                    <li>간단한 씬(기본 도형들)을 준비하고 <strong><span class="highlight">PxrDomeLight</span></strong>를 하나 설치합니다.</li>
+                    <li style="margin-top: 0.75rem;"><strong>"It" 뷰어의 컬러 스페이스를 Maya의 <span class="highlight">ACES 1.2</span>로 설정</strong>합니다.</li>
+                    <li style="margin-top: 0.75rem;">`Pixel Variance`를 <strong>0.05</strong>로 고정하고, `Max Samples`를 <kbd>32</kbd>, <kbd>128</kbd>, <kbd>512</kbd>로 변경하며 렌더링합니다.</li>
+                    <li style="margin-top: 0.75rem;">`Max Samples`를 <strong>64</strong>로 낮게 설정하고, <strong><span class="highlight">Denoise 기능을 켰을 때와 껐을 때</span></strong>의 최종 결과물을 비교합니다.</li>
                 </ol>
             </div>
         </div>
 
         <div class="content-column">
-            <div class="concept-box">
-                <div class="concept-title">평가 기준</div>
-                <ul>
-                    <li>노이즈 감소와 렌더 시간의 상관관계</li>
-                    <li>A/B, 와이프 비교를 통한 품질 판단(<kbd>S</kbd>, <kbd>A</kbd>, <kbd>B</kbd>, <kbd>F</kbd>, <kbd>W</kbd>)</li>
-                    <li>영역 렌더로 문제 구간 집중 확인</li>
-                </ul>
+             <div class="image-container">
+                <img class="main-image" alt="실습 비교 예시" src="https://placehold.co/600x280/1A202C/FFFFFF?text=Practice+Comparison"/>
+                <p class="caption">Max Samples 값에 따른 노이즈 변화와 Denoise 효과를 비교 분석합니다.</p>
             </div>
-            <div class="image-container">
-                <img class="main-image" alt="실습 비교 예시" src="https://placehold.co/600x300/1A202C/FFFFFF?text=Practice+Comparison"/>
-                <p class="caption">실습 비교(자리표시)</p>
+            <div class="concept-box">
+                <div class="concept-title">📊 분석 포인트</div>
+                 <ul>
+                    <li>"It"의 <strong><span class="highlight">Snapshot(<kbd>S</kbd>)</span></strong>과 <strong><span class="highlight">A/B 비교(<kbd>F</kbd>, <kbd>W</kbd>)</span></strong> 기능을 사용하여 노이즈 차이와 렌더링 시간을 비교, 분석해 보세요.</li>
+                     <li style="margin-top: 0.75rem;">Denoise 전/후 이미지를 비교하며 그 효과를 직접 확인합니다.</li>
+                </ul>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>샘플링·노이즈·Denoise</title>
+    <title>핵심 렌더 세팅: 샘플링과 노이즈 제어</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
     <style>
@@ -31,39 +31,35 @@
 <div class="slide-container">
     <div class="header">
         <div>
-            <h1>샘플링·노이즈·Denoise</h1>
-            <p>품질–시간 균형 설계</p>
+            <h1>핵심 렌더 세팅: 샘플링과 노이즈 제어</h1>
+            <p>퀄리티와 렌더 시간의 균형 맞추기</p>
         </div>
     </div>
 
     <div class="content">
         <div class="content-column">
             <div class="concept-box">
-                <div class="concept-title">핵심 파라미터</div>
+                <div class="concept-title">⚙️ 핵심 파라미터</div>
                 <ul>
-                    <li>Max Samples: 품질 상한선</li>
-                    <li>Pixel Variance: 노이즈 임계값</li>
-                    <li>Denoise: 저샘플 보정</li>
+                    <li><strong>Max Samples</strong>: 픽셀 당 '탐험가'의 최대 수. <span class="highlight">높을수록 노이즈는 줄지만 렌더 시간은 길어집니다.</span></li>
+                    <li style="margin-top: 1rem;"><strong>Pixel Variance</strong>: 노이즈 허용 임계값. <span class="highlight">낮을수록 퀄리티에 민감해져 더 깨끗한 이미지를 만듭니다.</span></li>
+                    <li style="margin-top: 1rem;"><strong>Denoise</strong>: <span class="highlight">AI 기반 노이즈 제거 기능.</span> 낮은 샘플 값으로도 깨끗한 결과물을 얻어 작업 시간을 획기적으로 단축시킵니다.</li>
                 </ul>
             </div>
-            <div class="concept-box">
-                <div class="concept-title">전문가 팁</div>
-                <p><span class="highlight">Pixel Variance</span>를 목표에 맞게 설정 후 <span class="highlight">Max Samples</span>는 충분히 크게. 렌더러가 필요한 샘플만 사용하도록 한다.</p>
+             <div class="image-container">
+                <img class="main-image" alt="Noisy vs Denoised" src="https://placehold.co/600x250/1A202C/FFFFFF?text=Noisy+vs+Denoised"/>
+                <p class="caption">Denoise는 렌더링 시간을 단축시키는 강력한 무기입니다.</p>
             </div>
         </div>
 
         <div class="content-column">
-            <div class="image-container">
-                <img class="main-image" alt="Noisy vs Denoised" src="https://placehold.co/600x300/E53E3E/FFFFFF?text=Noisy+vs+Denoised"/>
-                <p class="caption">Denoise 적용 전/후(자리표시)</p>
-            </div>
-            <div class="concept-box">
-                <div class="concept-title">실무 체크리스트</div>
-                <ul>
-                    <li>노이즈 유형 식별: 간접광/그림자/반사</li>
-                    <li>부분 렌더로 문제 구간 집중 검증(<kbd>Shift</kbd>+드래그)</li>
-                    <li>A/B 비교를 통한 영향 평가(<kbd>S</kbd>, <kbd>A</kbd>, <kbd>B</kbd>, <kbd>F</kbd>)</li>
-                </ul>
+            <div class="concept-box" style="height: 100%; border-color: #f6e05e; background-color: #4a5568;">
+                <div class="concept-title">💡 전문가의 팁: 현대적인 워크플로우</div>
+                <p style="font-size: 1.5rem; line-height: 1.7;">
+                    <strong><span class="highlight">`Pixel Variance`</span></strong>를 먼저 목표 퀄리티에 맞게 설정 (예: 0.025)한 후,
+                    <br/><br/>
+                    <strong><span class="highlight">`Max Samples`</span></strong>를 충분히 높게 (예: 512) 주어 렌더러가 스스로 필요한 만큼 샘플을 사용하게 하는 것이 효율적입니다.
+                </p>
             </div>
         </div>
     </div>

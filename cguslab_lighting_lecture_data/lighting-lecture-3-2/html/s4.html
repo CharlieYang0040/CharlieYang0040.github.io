@@ -27,31 +27,28 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>Lobe 개념과 구성</h1>
-                <p>Diffuse / Specular / Glass / Subsurface</p>
+                <h1>RenderMan 관점의 PBR</h1>
+                <p>과학적 데이터를 예술로</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">개념</div>
-                    <ul>
-                        <li>재질 특성을 분리한 <span class="highlight">기능 단위</span></li>
-                        <li>Lobe 조합 → 복합 재질 표현</li>
-                        <li>레이어 순서/가중치가 결과에 영향</li>
-                    </ul>
+                    <div class="concept-title">PBR의 기본 개념</div>
+                    <p><span class="highlight">PBR(Physically-Based Rendering)</span>은 빛이 재질과 상호작용하는 방식을 물리 법칙에 근거하여 시뮬레이션하는 접근법입니다.</p>
+                    <p class="mt-4">대부분의 렌더러는 이를 'BaseColor', 'Metallic', 'Roughness' 같은 직관적인 파라미터로 단순화하여 사용합니다.</p>
+                </div>
+                <div class="image-container">
+                    <img class="main-image" alt="물리 기반 렌더링 개념도" src="https://placehold.co/600x400/1A202C/FFFFFF?text=PBR+Concept"/>
+                    <p class="caption">물리 법칙에 기반한 빛의 상호작용</p>
                 </div>
             </div>
             <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">대표 Lobe</div>
-                    <ul>
-                        <li>Diffuse: 확산 반사</li>
-                        <li>Specular: 정반사(Primary/Rough)</li>
-                        <li>Glass/Refraction: 투명 재질</li>
-                        <li>Subsurface: 반투명 산란</li>
-                    </ul>
+                <div class="concept-box" style="height: 100%;">
+                    <div class="concept-title">RenderMan의 철학 🧪</div>
+                    <p>RenderMan 역시 일반적인 PBR 방식을 지원하지만, 한 걸음 더 나아가 <span class="highlight">"과학적 데이터를 직접 사용하여 가장 정확한 재질을 구현한다"</span>는 철학을 가지고 있습니다.</p>
+                    <p class="mt-4">이는 픽사의 아티스트와 엔지니어들이 현실 세계를 가장 정확하게 재현하기 위해 고민한 결과물입니다.</p>
                 </div>
             </div>
         </div>

@@ -30,33 +30,39 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>RenderMan 관점의 PBR</h1>
-                <p>과학적 데이터 기반 정밀 표현</p>
+                <h1>Artistic vs. Physical</h1>
+                <p>직관과 정확성 사이의 선택</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">핵심</div>
+                    <div class="concept-title">🎨 Artistic Controls (예술적 제어)</div>
+                    <p>아티스트에게 익숙하고 직관적인 파라미터를 사용합니다.</p>
                     <ul>
-                        <li>물리 법칙 기반 상호작용 모델</li>
-                        <li>일반 PBR 파라미터의 단순화 유지</li>
-                        <li><span class="highlight">과학적 데이터</span> 사용 시 정확도 향상</li>
+                        <li><strong>예시</strong>: 반사 색상(<span class="highlight">Specular Edge Color</span>)이나 거칠기(<span class="highlight">Roughness</span>)를 직접 조절</li>
+                        <li><strong>장점</strong>: 빠르고 창의적인 표현에 유리</li>
                     </ul>
+                </div>
+                <div class="concept-box">
+                    <div class="concept-title">💡 전문가의 팁: 효율적인 워크플로우</div>
+                    <p>처음에는 <span class="highlight">Artistic</span> 모드로 빠르게 원하는 느낌을 잡고, 극사실적인 표현이 필요할 때 <span class="highlight">Physical</span> 모드로 전환하여 정밀도를 높이는 것이 효율적입니다.</p>
                 </div>
             </div>
             <div class="content-column">
-                <div class="image-container">
-                    <img class="main-image" alt="PBR 개념" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PBR+in+RenderMan"/>
-                    <p class="caption">PBR 개념(이미지 자리표시)</p>
-                </div>
                 <div class="concept-box">
-                    <div class="concept-title">데이터 예</div>
+                    <div class="concept-title">🧪 Physical Controls (물리적 제어)</div>
+                    <p>실제 물질의 과학적인 광학 특성 값을 사용합니다.</p>
                     <ul>
-                        <li>굴절률(IOR), 소광계수(Extinction)</li>
-                        <li>참고: 재질 데이터베이스 활용</li>
+                        <li><strong>예시</strong>: 굴절률(<span class="highlight">IOR</span>)과 소광 계수(<span class="highlight">Extinction Coefficient</span>)</li>
+                        <li><strong>장점</strong>: 물리 법칙에 따라 컴퓨터가 정확한 반사 색상과 흡수율을 계산하여 사실적인 결과 제공</li>
                     </ul>
+                </div>
+                 <div class="concept-box">
+                    <div class="concept-title">🪙 예시: 금(Gold) 재질</div>
+                    <p><strong>Artistic</strong>: 노란색 계열 반사 색상을 직접 지정</p>
+                    <p class="mt-2"><strong>Physical</strong>: 실제 금의 IOR(약 0.47)과 Extinction(약 2.81) 값을 입력하여 훨씬 더 정확하고 깊이 있는 금속 느낌 구현</p>
                 </div>
             </div>
         </div>

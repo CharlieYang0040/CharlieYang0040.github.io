@@ -30,32 +30,35 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>Diffuse 파라미터</h1>
-                <p>Base Color / Roughness</p>
+                <h1>PxrSurface 핵심 파라미터 2: Clear Coat & PBR 텍스처</h1>
+                <p>재질의 깊이를 더하고 외부 텍스처를 활용하는 방법</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">의미</div>
+                    <div class="concept-title">3) Clear Coat (투명 코팅)</div>
+                    <p>Specular 레이어 위에 얇은 투명 코팅 층을 추가하여 깊이감을 더합니다.</p>
                     <ul>
-                        <li>객체 고유색과 확산 반사 특성</li>
-                        <li>Roughness ↑ → 부드러운 확산, 벨벳 느낌</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">연결</div>
-                    <ul>
-                        <li>Base Color 텍스처 → Diffuse Color</li>
-                        <li>Roughness 텍스처 → Diffuse Roughness</li>
+                        <li><strong>활용 예시</strong>: 자동차 도색, 유광 처리된 목재, 카본 파이버 등</li>
+                        <li><strong>특징</strong>: Specular와 <span class="highlight">별개의 Roughness</span> 값을 가질 수 있어, 거친 표면 위에 매끄러운 코팅이 된 느낌을 쉽게 만들 수 있습니다.</li>
                     </ul>
                 </div>
                 <div class="image-container">
-                    <img class="main-image" alt="Diffuse 파라미터" src="https://placehold.co/600x300/1A202C/FFFFFF?text=Diffuse+Parameters"/>
-                    <p class="caption">Diffuse 예시(자리표시)</p>
+                    <img class="main-image" alt="Clear Coat 적용 전후 비교" src="https://placehold.co/600x400/1A202C/FFFFFF?text=Clear+Coat+Effect"/>
+                    <p class="caption">Clear Coat는 재질에 사실적인 깊이와 광택을 더합니다.</p>
+                </div>
+            </div>
+            <div class="content-column">
+                <div class="concept-box" style="height: 100%;">
+                    <div class="concept-title">4) 외부 PBR 텍스처 연결 (기본)</div>
+                    <p>Substance Painter 등 다른 툴에서 만든 PBR 텍스처를 아래 규칙에 따라 연결합니다.</p>
+                    <ul>
+                        <li><kbd>Base Color</kbd> 텍스처 → <span class="highlight">Diffuse Color</span>에 연결</li>
+                        <li class="mt-2"><kbd>Roughness</kbd> 텍스처 → <span class="highlight">Specular Roughness</span>에 연결</li>
+                        <li class="mt-2"><kbd>Normal Map</kbd> 텍스처 → <span class="highlight">PxrNormalMap</span> 노드를 통해 <span class="highlight">Bump Normal</span>에 연결</li>
+                    </ul>
                 </div>
             </div>
         </div>

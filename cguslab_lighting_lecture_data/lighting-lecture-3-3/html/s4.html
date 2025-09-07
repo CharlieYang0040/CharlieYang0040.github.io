@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Specular 파라미터</title>
+    <title>PxrDomeLight 사용 절차</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -21,42 +21,55 @@
         .concept-box li { margin-top: 0.6rem; }
         .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
         .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246, 224, 94, 0.15); padding: 2px 6px; border-radius: 4px; }
+        kbd { background-color: #718096; color: #fff; border-radius: 4px; padding: 2px 6px; font-size: 0.95rem; font-weight: 700; border: 1px solid #a0aec0; }
     </style>
 </head>
 <body>
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>PBR 텍스처 활용: Metallic 워크플로우</h1>
-                <p>RenderMan은 Metallic 맵을 어떻게 해석하는가?</p>
+                <h1>PxrDomeLight 기본 사용법</h1>
+                <p>간단한 3단계로 사실적인 환경광 만들기</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">Metallic 맵 연결 방법</div>
-                    <p>RenderMan은 Metallic 워크플로우를 직접 사용하지 않지만, 아래의 간단한 3단계로 완벽하게 변환할 수 있습니다.</p>
-                    <ol class="list-decimal list-inside space-y-3">
-                        <li><kbd>Base Color</kbd> 텍스처를 <span class="highlight">Diffuse Color</span>와 <span class="highlight">Specular Face Color</span> **두 곳에 모두 연결**합니다.</li>
-                        <li><kbd>Metallic</kbd> 텍스처를 <span class="highlight">Specular Edge Color</span>에 연결합니다.</li>
-                        <li>(선택) 더 정확한 비금속 반사를 위해 Specular Face Color에 연결된 Base Color의 채도를 약간 낮추기도 합니다.</li>
+                <div class="concept-box" style="height: 100%;">
+                    <div class="concept-title">⚙️ 기본 절차</div>
+                    <ol class="list-decimal list-inside" style="font-size: 1.25rem; line-height: 1.7;">
+                        <li class="mt-4">
+                            <strong>생성 및 연결:</strong>
+                            <ul class="list-disc list-inside ml-4 mt-1 text-xl">
+                                <li>RenderMan 셸프에서 <kbd>PxrDomeLight</kbd> 생성</li>
+                                <li>Attribute Editor의 <kbd>Color Map</kbd>에 HDRI 파일 연결</li>
+                            </ul>
+                        </li>
+                        <li class="mt-4">
+                            <strong>밝기 조절:</strong>
+                            <ul class="list-disc list-inside ml-4 mt-1 text-xl">
+                                <li><kbd>Intensity</kbd>: 전체적인 밝기 조절</li>
+                                <li><kbd>Exposure</kbd>: 스톱(Stop) 단위로 정밀 조절</li>
+                            </ul>
+                        </li>
+                        <li class="mt-4">
+                            <strong>방향 조절:</strong>
+                             <ul class="list-disc list-inside ml-4 mt-1 text-xl">
+                                <li>Transform 노드에서 <kbd>Rotate Y</kbd> 값으로 회전</li>
+                            </ul>
+                        </li>
                     </ol>
-                </div>
-                 <div class="concept-box">
-                    <div class="concept-title">작동 원리</div>
-                    <p><kbd>Metallic</kbd> 맵의 흰색 영역(금속)은 <span class="highlight">Edge Color</span>의 영향을 받아 금속처럼 보이고, 검은색 영역(비금속)은 <span class="highlight">Face Color</span>(즉, Base Color)의 영향만 남아 비금속처럼 보이게 됩니다.</p>
                 </div>
             </div>
             <div class="content-column">
                 <div class="image-container" style="height: 100%;">
-                    <img class="main-image" alt="Metallic 워크플로우 노드 그래프" src="https://placehold.co/600x600/1A202C/FFFFFF?text=Metallic+Workflow+Node+Graph"/>
-                    <p class="caption">Metallic 워크플로우를 위한 PxrSurface 노드 연결 예시</p>
+                    <img class="main-image" alt="PxrDomeLight Attributes" src="https://placehold.co/600x450/1A202C/FFFFFF?text=Attribute+Editor" style="height: 100%; object-fit: cover;"/>
+                    <p class="caption">Attribute Editor에서 Color Map, Intensity, Exposure 등을 설정합니다.</p>
                 </div>
             </div>
         </div>
 
-        <div class="footer">Pixar RenderMan 마스터클래스 | 2강</div>
+        <div class="footer">Pixar RenderMan 마스터클래스 | 3강</div>
     </div>
 </body>
 </html>

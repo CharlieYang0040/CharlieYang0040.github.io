@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOV의 장점과 활용</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { margin: 0; padding: 0; background: #000; font-family: 'Pretendard', sans-serif; }
+        .slide-container { width: 1280px; min-height: 720px; margin: 0 auto; background-color: #1a202c; color: #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.25); }
+        .header { display: flex; align-items: center; justify-content: space-between; padding: 1.75rem 2rem; background: #0f172a; border-bottom: 4px solid #2b6cb0; }
+        .header h1 { font-size: 2.25rem; font-weight: 800; margin: 0; }
+        .header p { font-size: 1.125rem; opacity: 0.85; margin: 0.25rem 0 0 0; }
+        .content { padding: 2rem; }
+        .image-showcase { 
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 1rem;
+            background-color: #2d3748;
+            padding: 1rem;
+            border-radius: 12px;
+        }
+        .main-beauty { grid-column: 1 / 2; grid-row: 1 / 3; }
+        .aov-pass:nth-child(2) { grid-column: 2 / 4; grid-row: 1 / 2; }
+        .aov-pass:nth-child(3) { grid-column: 2 / 3; grid-row: 2 / 3; }
+        .aov-pass:nth-child(4) { grid-column: 3 / 4; grid-row: 2 / 3; }
+        
+        .img-container { border-radius: 8px; overflow: hidden; position: relative; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; }
+        .img-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .concept-box { background-color: #334155; border: 1px solid #475569; border-radius: 10px; padding: 1.5rem; margin-top: 2rem; }
+        .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem; }
+        .concept-box li { font-size: 1.125rem; line-height: 1.6; margin-top: 0.6rem; display: flex; align-items: flex-start;}
+        .concept-box li i { margin-right: 0.75rem; color: #63b3ed; margin-top: 5px; }
+
+        .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
+        .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246, 224, 94, 0.15); padding: 2px 6px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div>
+                <h1>AOV의 장점과 활용</h1>
+                <p>후반 작업의 유연성과 효율성 극대화</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="image-showcase">
+                <div class="img-container main-beauty">
+                    <img src="https://placehold.co/600x600/1A202C/FFFFFF?text=Beauty" alt="Beauty Pass">
+                    <div class="img-caption">Beauty (최종 결과물)</div>
+                </div>
+                <div class="img-container aov-pass">
+                    <img src="https://placehold.co/600x300/1A202C/FFFFFF?text=Diffuse" alt="Diffuse Pass">
+                    <div class="img-caption">Diffuse Pass</div>
+                </div>
+                <div class="img-container aov-pass">
+                    <img src="https://placehold.co/300x300/1A202C/FFFFFF?text=Specular" alt="Specular Pass">
+                    <div class="img-caption">Specular Pass</div>
+                </div>
+                <div class="img-container aov-pass">
+                    <img src="https://placehold.co/300x300/1A202C/FFFFFF?text=Z-Depth" alt="Z-Depth Pass">
+                    <div class="img-caption">Z-Depth Pass</div>
+                </div>
+            </div>
+
+            <div class="concept-box">
+                <div class="concept-title">✅ AOV를 사용하는 이유</div>
+                <ul>
+                    <li><i class="fas fa-hourglass-half"></i><div><strong>시간 절약:</strong> 전체 씬을 다시 렌더링할 필요 없이 특정 부분만 빠르게 수정할 수 있습니다.</div></li>
+                    <li><i class="fas fa-gem"></i><div><strong>품질 향상:</strong> 각 요소를 정밀하게 제어하여 최종 이미지의 완성도를 높일 수 있습니다.</div></li>
+                    <li><i class="fas fa-users"></i><div><strong>팀워크 효율 증대:</strong> 라이팅 아티스트와 컴포지터 간의 협업을 원활하게 만듭니다.</div></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">Pixar RenderMan 마스터클래스 | 4강</div>
+    </div>
+</body>
+</html>
+

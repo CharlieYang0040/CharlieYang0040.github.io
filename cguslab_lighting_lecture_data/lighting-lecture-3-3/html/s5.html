@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 2강 | PxrSurface와 PBR 개념</title>
+    <title>하늘/태양 분리 기법</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -19,9 +19,6 @@
         .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem; }
         .concept-box p, .concept-box li { font-size: 1.25rem; line-height: 1.6; }
         .concept-box li { margin-top: 0.6rem; }
-        .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #334155; }
-        .main-image { width: 100%; height: auto; object-fit: cover; background-color: #334155; }
-        .caption { text-align: center; font-size: 1rem; color: #a0aec0; padding: 0.75rem; background-color: #334155; }
         .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
         .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246, 224, 94, 0.15); padding: 2px 6px; border-radius: 4px; }
     </style>
@@ -30,47 +27,40 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>PxrSurface와 PBR 개념</h1>
-                <p>RenderMan 마스터클래스 2강</p>
+                <h1>2. 전문가의 HDRI 활용법</h1>
+                <p>하나의 빛으로 만족할 수 없을 때: 하늘과 태양 분리하기</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
-                    <ul>
-                        <li>만능 통합 셰이더 <span class="highlight">PxrSurface</span>의 구조와 핵심 <span class="highlight">Lobe</span></li>
-                        <li>RenderMan 관점의 <span class="highlight">PBR</span>: 과학적 데이터를 예술로</li>
-                        <li><span class="highlight">Artistic</span> 모드의 직관성과 <span class="highlight">Physical</span> 모드의 정확성 비교</li>
-                        <li>외부 PBR 텍스처(Roughness, Metallic 등)의 효과적인 활용법</li>
+                    <div class="concept-title">🤔 한계점 (The Problem)</div>
+                    <p>하나의 DomeLight는 사용이 간편하지만, 세밀한 제어가 어렵습니다.</p>
+                    <ul class="list-disc list-inside mt-4 text-xl">
+                        <li>"하늘 밝기는 좋은데, <span class="highlight">태양 그림자가 너무 약해요.</span>"</li>
+                        <li class="mt-2">"<span class="highlight">그림자 방향만</span> 살짝 바꾸고 싶어요."</li>
                     </ul>
                 </div>
-                <div class="image-container">
-                    <img class="main-image" alt="PxrSurface로 구현된 다양한 재질 예시" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PxrSurface+Materials"/>
-                    <p class="caption">PxrSurface로 구현된 다양한 재질 예시</p>
+                 <div class="image-container">
+                    <img class="main-image" alt="Problem" src="https://placehold.co/600x250/1A202C/FFFFFF?text=Limitation+of+Single+HDRI"/>
                 </div>
             </div>
             <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">핵심 키워드</div>
-                    <ul>
-                        <li><span class="highlight">Uber Shader</span>, Lobe 기반 레이어링</li>
-                        <li><span class="highlight">IOR</span> & <span class="highlight">Extinction Coefficient</span>: 과학적 데이터 기반 재질 표현</li>
-                        <li><span class="highlight">Metallic 워크플로우</span>를 PxrSurface에서 구현하는 방법</li>
+                <div class="concept-box" style="height: 100%;">
+                    <div class="concept-title">💡 해결책 (The Solution)</div>
+                    <p>두 개의 DomeLight를 사용하여 <strong class="highlight">역할을 분리</strong>합니다.</p>
+                    <ul class="list-disc list-inside mt-4 text-xl">
+                        <li><strong>Dome 1 (Sky):</strong> 전반적인 <span class="highlight">분위기</span>, 색감, 부드러운 반사 담당</li>
+                        <li class="mt-2"><strong>Dome 2 (Sun):</strong> 선명한 <span class="highlight">그림자</span>와 강한 <span class="highlight">하이라이트</span> 담당</li>
                     </ul>
-                </div>
-                <div class="concept-box">
-                    <div class="concept-title">진행 방식</div>
-                    <ul>
-                        <li>핵심 개념 요약 → 파라미터 안내 → 실습</li>
-                        <li>외부 PBR 텍스처 연결 실습 포함</li>
-                    </ul>
+                    <p class="mt-4">이를 통해 <strong class="highlight">예술적이고 의도적인</strong> 라이팅이 가능해집니다.</p>
                 </div>
             </div>
         </div>
 
-        <div class="footer">Pixar RenderMan 마스터클래스 | 2강</div>
+        <div class="footer">Pixar RenderMan 마스터클래스 | 3강</div>
     </div>
 </body>
 </html>
+

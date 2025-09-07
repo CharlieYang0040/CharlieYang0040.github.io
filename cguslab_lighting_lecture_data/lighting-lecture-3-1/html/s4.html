@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Path Tracing 원리</title>
+    <title>RIS 아키텍처: 최고의 탐험가를 위한 최첨단 장비</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
     <style>
@@ -30,41 +30,39 @@
 <div class="slide-container">
     <div class="header">
         <div>
-            <h1>Path Tracing 원리</h1>
-            <p>경로 추적과 노이즈의 관계</p>
+            <h1>RIS 아키텍처: 최고의 탐험가를 위한 최첨단 장비</h1>
+            <p>더 빠르고, 더 똑똑하고, 더 유연하게</p>
         </div>
     </div>
 
     <div class="content">
         <div class="content-column">
             <div class="concept-box">
-                <div class="concept-title">개요</div>
-                <ul>
-                    <li>픽셀에서 <span class="highlight">가상의 광선</span>을 발사하여 표면, 조명까지의 경로를 누적</li>
-                    <li>다중 경로의 통계적 샘플로 간접광·반사·굴절을 계산</li>
-                    <li><span class="highlight">노이즈 = 샘플 부족</span>에 따른 불확실성</li>
-                </ul>
+                <div class="concept-title">⚙️ RIS (Rix Integration Subsystem)란?</div>
+                <p>
+                    <strong>RIS</strong>는 RenderMan의 <strong><span class="highlight">핵심 엔진 아키텍처</span></strong>입니다. 정확하지만 때로는 비효율적일 수 있는 Path Tracing 탐험을 위한 <strong><span class="highlight">최첨단 장비 세트</span></strong>와 같습니다.
+                </p>
+                <p style="margin-top: 1rem;">
+                    Path Tracing을 <span class="highlight">더 빠르고</span>, <span class="highlight">더 똑똑하고</span>, <span class="highlight">더 유연하게</span> 만들어줍니다.
+                </p>
             </div>
-            <div class="concept-box">
-                <div class="concept-title">실무 시사점</div>
-                <ul>
-                    <li>샘플 수 증가 → 노이즈 감소(시간 증가)</li>
-                    <li>효율적 샘플 배분이 핵심: 중요도 샘플링·어댑티브</li>
-                </ul>
+
+            <div class="image-container">
+                <img class="main-image" alt="RIS Architecture Diagram" src="https://placehold.co/600x250/1A202C/FFFFFF?text=RIS+Modular+Engine"/>
+                <p class="caption">RIS는 Path Tracing을 위한 강력하고 유연한 기반을 제공합니다.</p>
             </div>
         </div>
 
         <div class="content-column">
-            <div class="image-container">
-                <img class="main-image" alt="Path Tracing 다이어그램" src="https://placehold.co/600x300/1A202C/FFFFFF?text=Path+Tracing+Diagram"/>
-                <p class="caption">경로 누적과 노이즈의 관계(자리표시)</p>
-            </div>
-            <div class="concept-box">
-                <div class="concept-title">용어</div>
+            <div class="concept-box" style="height: 100%;">
+                <div class="concept-title">🧩 핵심 특징: 유연성</div>
                 <ul>
-                    <li>Sample: 픽셀당 경로 수</li>
-                    <li>Integrator: 경로 계산 방식</li>
-                    <li>Variance: 픽셀 노이즈 지표</li>
+                    <li>
+                        순수 Path Tracing 외에, 특정 상황에 더 효율적인 다른 계산 방식(<strong>Integrator</strong>)을 <strong><span class="highlight">플러그인처럼 쉽게 교체하거나 조합</span></strong>할 수 있습니다.
+                    </li>
+                    <li style="margin-top: 1rem;">
+                        이러한 모듈형 설계 덕분에 복잡한 VFX 장면에서도 <strong><span class="highlight">압도적인 퀄리티와 안정성</span></strong>을 유지할 수 있습니다.
+                    </li>
                 </ul>
             </div>
         </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>RenderMan이란?</title>
+    <title>Path Tracing: 빛의 경로를 역추적하는 탐험가</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
     <style>
@@ -30,39 +30,34 @@
 <div class="slide-container">
     <div class="header">
         <div>
-            <h1>RenderMan이란?</h1>
-            <p>Pixar가 구축한 프로덕션급 렌더링 솔루션</p>
+            <h1>Path Tracing: 빛의 경로를 역추적하는 탐험가</h1>
+            <p>하나의 픽셀이 완성되기까지의 여정</p>
         </div>
     </div>
 
     <div class="content">
         <div class="content-column">
-            <div class="concept-box">
-                <div class="concept-title">정의</div>
-                <p>RenderMan은 <span class="highlight">Pixar Animation Studios</span>가 개발·운영하며 장편/ VFX 제작에 적용해 온 업계 표준 렌더러입니다.</p>
-                <p>엄밀한 물리 기반 계산과 유연한 아키텍처를 결합하여, 대규모 프로덕션에서도 검증된 <span class="highlight">퀄리티·안정성</span>을 제공합니다.</p>
-            </div>
-            <div class="concept-box">
-                <div class="concept-title">핵심 철학</div>
-                <ul>
-                    <li>물리적으로 타당한 결과와 예측 가능성</li>
-                    <li>고난도 씬을 위한 확장성·유연성</li>
-                    <li>프로덕션 파이프라인과의 적합성</li>
-                </ul>
+            <div class="concept-box" style="height: 100%;">
+                <div class="concept-title">🗺️ 원리: 가상의 탐험가</div>
+                <ol style="list-style-type: decimal; padding-left: 1.5rem;">
+                    <li>카메라(눈)의 한 픽셀에서 <strong><span class="highlight">가상의 탐험가(광선)</span></strong>를 장면으로 발사합니다.</li>
+                    <li style="margin-top: 0.75rem;">탐험가는 물체에 부딪히며 <strong><span class="highlight">색상, 재질 정보</span></strong>를 기록합니다.</li>
+                    <li style="margin-top: 0.75rem;">물리 법칙에 따라 튕겨나가기를 반복, <strong><span class="highlight">광원을 찾을 때까지</span></strong> 경로를 추적합니다.</li>
+                    <li style="margin-top: 0.75rem;">탐험가가 지나온 모든 <strong><span class="highlight">경로(Path)의 정보를 종합</span></strong>하여 최종 픽셀 색상을 계산합니다.</li>
+                </ol>
             </div>
         </div>
 
         <div class="content-column">
             <div class="image-container">
-                <img class="main-image" alt="RenderMan 프로덕션 적용" src="https://placehold.co/600x300/1A202C/FFFFFF?text=RenderMan+Production"/>
-                <p class="caption">프로덕션 사례(이미지 자리표시)</p>
+                <img class="main-image" alt="Path Tracing 다이어그램" src="https://placehold.co/600x300/1A202C/FFFFFF?text=Path+Tracing+Diagram"/>
+                <p class="caption">하나의 픽셀을 위해 수많은 '탐험가'가 각기 다른 경로를 탐험합니다.</p>
             </div>
             <div class="concept-box">
-                <div class="concept-title">특장점</div>
+                <div class="concept-title">✨ 결과와 노이즈</div>
                 <ul>
-                    <li><span class="highlight">PxrSurface</span> 기반 유연한 셰이딩</li>
-                    <li>고정밀 <span class="highlight">Denoise</span> 및 <span class="highlight">Deep</span> 렌더링</li>
-                    <li>대규모 씬 처리 안정성</li>
+                    <li>수백, 수천 개의 경로 정보가 모여 <span class="highlight">사실적인 간접광, 부드러운 그림자, 자연스러운 반사/굴절</span>을 생성합니다.</li>
+                    <li style="margin-top: 0.75rem;">이미지의 <strong>노이즈</strong>는 '탐험가'의 수가 부족하여 충분한 정보를 모으지 못했을 때 발생하는 <strong>'불확실성'의 결과</strong>입니다.</li>
                 </ul>
             </div>
         </div>

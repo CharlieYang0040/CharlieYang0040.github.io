@@ -27,34 +27,41 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>Artistic vs Physical</h1>
-                <p>직관과 정확성의 균형</p>
+                <h1>PxrSurface 핵심 파라미터 1: Diffuse & Specular</h1>
+                <p>재질의 기본 색상과 반사를 제어하는 핵심 Lobe</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">Artistic</div>
+                    <div class="concept-title">1) Diffuse (확산)</div>
+                    <p>물체의 고유한 표면 색상을 결정하고, 빛을 여러 방향으로 흩뿌리는 특성을 표현합니다.</p>
                     <ul>
-                        <li>Face/Edge Color, Roughness 등 직관적 제어</li>
-                        <li>빠른 결과, 크리에이티브 탐색에 유리</li>
+                        <li><span class="highlight">Color</span>: 재질의 기본 색상 (Base Color 텍스처 연결)</li>
+                        <li><span class="highlight">Roughness</span>: 표면의 미세한 거칠기를 시뮬레이션. 값이 높을수록 벨벳이나 분필처럼 부드럽게 퍼지는 느낌을 줍니다.</li>
                     </ul>
                 </div>
-                <div class="concept-box">
-                    <div class="concept-title">Physical</div>
-                    <ul>
-                        <li><span class="highlight">IOR / Extinction</span> 기반 물리적 정확성</li>
-                        <li>금속(Conductor) 반사 색상 자동 계산</li>
-                    </ul>
+                <div class="image-container">
+                    <img class="main-image" alt="Diffuse Roughness 값에 따른 재질 변화" src="https://placehold.co/600x300/1A202C/FFFFFF?text=Diffuse+Roughness"/>
+                    <p class="caption">Diffuse Roughness가 높을수록 빛이 부드럽게 퍼집니다.</p>
                 </div>
             </div>
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">워크플로우</div>
+                    <div class="concept-title">2) Specular (정반사)</div>
+                    <p>하이라이트, 즉 빛의 반사를 제어합니다. Primary/Rough 레이어로 나뉘어 정교한 표현이 가능합니다.</p>
+                    
+                    <p class="font-bold text-lg mt-4 text-yellow-300">🎨 Artistic 모드</p>
                     <ul>
-                        <li>초기: Artistic로 방향성 설정</li>
-                        <li>최종: Physical로 정밀도 상승</li>
+                        <li><span class="highlight">Face Color</span>: 정면 반사 색상</li>
+                        <li><span class="highlight">Edge Color</span>: 비스듬한 각도(Fresnel)의 반사 색상. 금속의 특징적인 색상을 결정합니다.</li>
+                        <li><span class="highlight">Roughness</span>: 하이라이트의 퍼짐 정도 (Roughness 텍스처 연결)</li>
+                    </ul>
+
+                    <p class="font-bold text-lg mt-4 text-blue-300">🧪 Physical 모드</p>
+                     <ul>
+                        <li><span class="highlight">IOR & Extinction</span>: 이 두 값을 입력하면 물리적으로 정확한 반사 색상을 자동으로 계산합니다. (주로 금속 재질에 사용)</li>
                     </ul>
                 </div>
             </div>
