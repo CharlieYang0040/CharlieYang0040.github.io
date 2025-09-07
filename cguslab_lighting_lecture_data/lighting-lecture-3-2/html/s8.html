@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 2강 | PxrSurface와 PBR 개념</title>
+    <title>Specular 파라미터</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -19,9 +19,6 @@
         .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem; }
         .concept-box p, .concept-box li { font-size: 1.25rem; line-height: 1.6; }
         .concept-box li { margin-top: 0.6rem; }
-        .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #334155; }
-        .main-image { width: 100%; height: auto; object-fit: cover; background-color: #334155; }
-        .caption { text-align: center; font-size: 1rem; color: #a0aec0; padding: 0.75rem; background-color: #334155; }
         .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
         .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246, 224, 94, 0.15); padding: 2px 6px; border-radius: 4px; }
     </style>
@@ -30,40 +27,34 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>PxrSurface와 PBR 개념</h1>
-                <p>RenderMan 마스터클래스 2강</p>
+                <h1>Specular 파라미터</h1>
+                <p>Primary / Rough Specular</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
+                    <div class="concept-title">Artistic</div>
                     <ul>
-                        <li>통합 셰이더 <span class="highlight">PxrSurface</span> 구조</li>
-                        <li>물리 기반 렌더링(PBR)의 핵심 원리</li>
-                        <li>Artistic / Physical 제어의 차이와 적용</li>
+                        <li>Face/Edge Color: Fresnel에 따른 색</li>
+                        <li>Roughness: 하이라이트 퍼짐</li>
                     </ul>
                 </div>
-                <div class="image-container">
-                    <img class="main-image" alt="PxrSurface 개요" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PxrSurface+Overview"/>
-                    <p class="caption">PxrSurface 개요(이미지 자리표시)</p>
+                <div class="concept-box">
+                    <div class="concept-title">Physical</div>
+                    <ul>
+                        <li>IOR, Extinction으로 금속 반사 자동 계산</li>
+                        <li>비금속: Extinction = 0</li>
+                    </ul>
                 </div>
             </div>
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">핵심 키워드</div>
+                    <div class="concept-title">레이어</div>
                     <ul>
-                        <li><span class="highlight">Uber Shader</span>, Lobe 기반 레이어링</li>
-                        <li><span class="highlight">IOR / Extinction</span>에 의한 물리적 반사</li>
-                        <li><span class="highlight">Roughness / Metallic</span> 맵의 해석</li>
-                    </ul>
-                </div>
-                <div class="concept-box">
-                    <div class="concept-title">진행 방식</div>
-                    <ul>
-                        <li>핵심 개념 요약 → 파라미터 안내 → 실습</li>
-                        <li>외부 PBR 텍스처 연결 실습 포함</li>
+                        <li>Primary: 선명한 하이라이트</li>
+                        <li>Rough: 거친 반사 성분</li>
                     </ul>
                 </div>
             </div>
@@ -73,3 +64,4 @@
     </div>
 </body>
 </html>
+

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 2강 | PxrSurface와 PBR 개념</title>
+    <title>RenderMan 관점의 PBR</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -30,40 +30,32 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>PxrSurface와 PBR 개념</h1>
-                <p>RenderMan 마스터클래스 2강</p>
+                <h1>RenderMan 관점의 PBR</h1>
+                <p>과학적 데이터 기반 정밀 표현</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
+                    <div class="concept-title">핵심</div>
                     <ul>
-                        <li>통합 셰이더 <span class="highlight">PxrSurface</span> 구조</li>
-                        <li>물리 기반 렌더링(PBR)의 핵심 원리</li>
-                        <li>Artistic / Physical 제어의 차이와 적용</li>
+                        <li>물리 법칙 기반 상호작용 모델</li>
+                        <li>일반 PBR 파라미터의 단순화 유지</li>
+                        <li><span class="highlight">과학적 데이터</span> 사용 시 정확도 향상</li>
                     </ul>
-                </div>
-                <div class="image-container">
-                    <img class="main-image" alt="PxrSurface 개요" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PxrSurface+Overview"/>
-                    <p class="caption">PxrSurface 개요(이미지 자리표시)</p>
                 </div>
             </div>
             <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">핵심 키워드</div>
-                    <ul>
-                        <li><span class="highlight">Uber Shader</span>, Lobe 기반 레이어링</li>
-                        <li><span class="highlight">IOR / Extinction</span>에 의한 물리적 반사</li>
-                        <li><span class="highlight">Roughness / Metallic</span> 맵의 해석</li>
-                    </ul>
+                <div class="image-container">
+                    <img class="main-image" alt="PBR 개념" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PBR+in+RenderMan"/>
+                    <p class="caption">PBR 개념(이미지 자리표시)</p>
                 </div>
                 <div class="concept-box">
-                    <div class="concept-title">진행 방식</div>
+                    <div class="concept-title">데이터 예</div>
                     <ul>
-                        <li>핵심 개념 요약 → 파라미터 안내 → 실습</li>
-                        <li>외부 PBR 텍스처 연결 실습 포함</li>
+                        <li>굴절률(IOR), 소광계수(Extinction)</li>
+                        <li>참고: 재질 데이터베이스 활용</li>
                     </ul>
                 </div>
             </div>
@@ -73,3 +65,4 @@
     </div>
 </body>
 </html>
+

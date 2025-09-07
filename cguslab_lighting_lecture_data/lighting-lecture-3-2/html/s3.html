@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 2강 | PxrSurface와 PBR 개념</title>
+    <title>PxrSurface: Uber Shader</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -30,40 +30,29 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>PxrSurface와 PBR 개념</h1>
-                <p>RenderMan 마스터클래스 2강</p>
+                <h1>PxrSurface: Uber Shader</h1>
+                <p>레이어링 기반 통합 셰이더</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
-                    <ul>
-                        <li>통합 셰이더 <span class="highlight">PxrSurface</span> 구조</li>
-                        <li>물리 기반 렌더링(PBR)의 핵심 원리</li>
-                        <li>Artistic / Physical 제어의 차이와 적용</li>
-                    </ul>
-                </div>
-                <div class="image-container">
-                    <img class="main-image" alt="PxrSurface 개요" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PxrSurface+Overview"/>
-                    <p class="caption">PxrSurface 개요(이미지 자리표시)</p>
+                    <div class="concept-title">개요</div>
+                    <p>플라스틱, 금속, 유리 등 다양한 재질을 하나의 셰이더로 구성하는 <span class="highlight">통합 셰이더</span>.</p>
+                    <p>현실의 층 구조처럼 Diffuse, Specular, Glass, Subsurface 등 <span class="highlight">Lobe</span>를 조합.</p>
                 </div>
             </div>
             <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">핵심 키워드</div>
-                    <ul>
-                        <li><span class="highlight">Uber Shader</span>, Lobe 기반 레이어링</li>
-                        <li><span class="highlight">IOR / Extinction</span>에 의한 물리적 반사</li>
-                        <li><span class="highlight">Roughness / Metallic</span> 맵의 해석</li>
-                    </ul>
+                <div class="image-container">
+                    <img class="main-image" alt="PxrSurface 레이어링" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PxrSurface+Layering"/>
+                    <p class="caption">레이어링 개념(이미지 자리표시)</p>
                 </div>
                 <div class="concept-box">
-                    <div class="concept-title">진행 방식</div>
+                    <div class="concept-title">장점</div>
                     <ul>
-                        <li>핵심 개념 요약 → 파라미터 안내 → 실습</li>
-                        <li>외부 PBR 텍스처 연결 실습 포함</li>
+                        <li>하나의 셰이더에서 대부분의 요구 충족</li>
+                        <li>재사용과 일관성, 파이프라인 효율</li>
                     </ul>
                 </div>
             </div>
@@ -73,3 +62,4 @@
     </div>
 </body>
 </html>
+

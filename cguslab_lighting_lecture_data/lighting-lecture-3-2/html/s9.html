@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 2강 | PxrSurface와 PBR 개념</title>
+    <title>Clear Coat · 외부 PBR 텍스처</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -24,47 +24,44 @@
         .caption { text-align: center; font-size: 1rem; color: #a0aec0; padding: 0.75rem; background-color: #334155; }
         .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
         .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246, 224, 94, 0.15); padding: 2px 6px; border-radius: 4px; }
+        kbd { background-color: #718096; color: #fff; border-radius: 4px; padding: 2px 6px; font-size: 0.95rem; font-weight: 700; border: 1px solid #a0aec0; }
     </style>
 </head>
 <body>
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>PxrSurface와 PBR 개념</h1>
-                <p>RenderMan 마스터클래스 2강</p>
+                <h1>Clear Coat · 외부 PBR 텍스처</h1>
+                <p>레이어 추가와 텍스처 연결</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
+                    <div class="concept-title">Clear Coat</div>
                     <ul>
-                        <li>통합 셰이더 <span class="highlight">PxrSurface</span> 구조</li>
-                        <li>물리 기반 렌더링(PBR)의 핵심 원리</li>
-                        <li>Artistic / Physical 제어의 차이와 적용</li>
+                        <li>얇은 투명 코팅 레이어 추가</li>
+                        <li>거친 표면 위 유광 코팅 표현</li>
                     </ul>
                 </div>
-                <div class="image-container">
-                    <img class="main-image" alt="PxrSurface 개요" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PxrSurface+Overview"/>
-                    <p class="caption">PxrSurface 개요(이미지 자리표시)</p>
+                <div class="concept-box">
+                    <div class="concept-title">텍스처 연결</div>
+                    <ul>
+                        <li>BaseColor → Diffuse Color</li>
+                        <li>Roughness → Specular Roughness</li>
+                        <li>Normal → <span class="highlight">PxrNormalMap</span> → Bump Normal</li>
+                    </ul>
                 </div>
             </div>
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">핵심 키워드</div>
-                    <ul>
-                        <li><span class="highlight">Uber Shader</span>, Lobe 기반 레이어링</li>
-                        <li><span class="highlight">IOR / Extinction</span>에 의한 물리적 반사</li>
-                        <li><span class="highlight">Roughness / Metallic</span> 맵의 해석</li>
-                    </ul>
-                </div>
-                <div class="concept-box">
-                    <div class="concept-title">진행 방식</div>
-                    <ul>
-                        <li>핵심 개념 요약 → 파라미터 안내 → 실습</li>
-                        <li>외부 PBR 텍스처 연결 실습 포함</li>
-                    </ul>
+                    <div class="concept-title">Metallic 맵 해석</div>
+                    <ol>
+                        <li>BaseColor를 Diffuse와 Specular Face에 모두 연결</li>
+                        <li>Metallic을 Specular Edge Color에 연결</li>
+                        <li>흰색(금속)/검정(비금속) 영역 구분 표현</li>
+                    </ol>
                 </div>
             </div>
         </div>
@@ -73,3 +70,4 @@
     </div>
 </body>
 </html>
+
