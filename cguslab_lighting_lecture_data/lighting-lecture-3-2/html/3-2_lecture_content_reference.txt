@@ -67,10 +67,15 @@ Substance Painter 등 다른 툴에서 만든 PBR 텍스처(BaseColor, Roughness
 - `Base Color` 텍스처 → `Diffuse Color`에 연결합니다.
 - `Roughness` 텍스처 → `Specular Roughness`에 연결합니다.
 - `Normal Map` 텍스처 → **PxrNormalMap** 노드를 생성하여 연결한 뒤, 그 결과를 `Globals` 탭의 `Bump Normal`에 연결합니다.
-- `Metallic` 텍스처: RenderMan은 Metallic 워크플로우를 직접 사용하지 않지만, 매우 쉽게 변환할 수 있습니다.
-    1. `Base Color` 텍스처를 `Diffuse Color`와 `Specular Face Color` **두 군데에 모두 연결**합니다.
-    2. `Metallic` 텍스처를 `Specular Edge Color`에 연결합니다.
-    3. 이렇게 하면 Metallic 맵의 흰색 영역(금속)은 `Edge Color`의 영향을 받아 금속처럼 보이고, 검은색 영역(비금속)은 `Face Color`의 영향만 남아 비금속처럼 보이게 됩니다.
+- `Metallic` 텍스처: `PxrMetallicWorkflow` 노드를 사용하면 Substance Painter와 같은 툴의 Metallic 워크플로우를 쉽게 적용할 수 있습니다. 이 노드는 PBR 맵을 `PxrSurface`가 사용하는 Specular 워크플로우로 변환해줍니다.
+    1. `PxrMetallicWorkflow` 노드를 생성하고 PBR 텍스처 맵을 연결합니다.
+        - `Base Color` 맵 -> `Base Color` 입력
+        - `Metallic` 맵 -> `Metallic` 입력
+        - `Specular` 맵 (선택 사항) -> `Specular` 입력 (기본값 0.5, IOR 1.5에 해당)
+    2. `PxrMetallicWorkflow` 노드의 결과 출력을 `PxrSurface`의 해당 입력에 연결합니다.
+        - `Result Diffuse Color` -> `Diffuse Color`
+        - `Result Specular Face Color` -> `Specular Face Color`
+        - `Result Specular Edge Color` -> `Specular Edge Color`
 
 [Image showing a node graph of PBR textures connected to PxrSurface in Maya]
 

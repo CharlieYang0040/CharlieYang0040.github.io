@@ -27,31 +27,41 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>PBR 텍스처 활용: Metallic 워크플로우</h1>
-                <p>RenderMan은 Metallic 맵을 어떻게 해석하는가?</p>
+                <h1>PBR 텍스처 활용: PxrMetallicWorkflow</h1>
+                <p>Substance Painter 텍스처를 손쉽게 연결하기</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">Metallic 맵 연결 방법</div>
-                    <p>RenderMan은 Metallic 워크플로우를 직접 사용하지 않지만, 아래의 간단한 3단계로 완벽하게 변환할 수 있습니다.</p>
-                    <ol class="list-decimal list-inside space-y-3">
-                        <li><kbd>Base Color</kbd> 텍스처를 <span class="highlight">Diffuse Color</span>와 <span class="highlight">Specular Face Color</span> **두 곳에 모두 연결**합니다.</li>
-                        <li><kbd>Metallic</kbd> 텍스처를 <span class="highlight">Specular Edge Color</span>에 연결합니다.</li>
-                        <li>(선택) 더 정확한 비금속 반사를 위해 Specular Face Color에 연결된 Base Color의 채도를 약간 낮추기도 합니다.</li>
+                    <div class="concept-title">PxrMetallicWorkflow 노드 사용법</div>
+                    <p>Substance Painter 등에서 사용하는 Metallic 워크플로우 텍스처를 PxrSurface에 손쉽게 연결해주는 전용 노드입니다.</p>
+                    <ol class="list-decimal list-inside space-y-3 mt-4">
+                        <li><strong>1단계:</strong> <kbd>PxrMetallicWorkflow</kbd> 노드를 생성하고 PBR 텍스처를 연결합니다.
+                            <ul class="list-disc list-inside ml-6 mt-2">
+                                <li>Base Color 맵 &rarr; <span class="highlight">Base Color</span></li>
+                                <li>Metallic 맵 &rarr; <span class="highlight">Metallic</span></li>
+                            </ul>
+                        </li>
+                        <li><strong>2단계:</strong> 노드의 결과값을 <kbd>PxrSurface</kbd>에 연결합니다.
+                             <ul class="list-disc list-inside ml-6 mt-2">
+                                <li>Result Diffuse Color &rarr; <span class="highlight">Diffuse Color</span></li>
+                                <li>Result Specular Face Color &rarr; <span class="highlight">Specular Face Color</span></li>
+                                <li>Result Specular Edge Color &rarr; <span class="highlight">Specular Edge Color</span></li>
+                            </ul>
+                        </li>
                     </ol>
                 </div>
                  <div class="concept-box">
                     <div class="concept-title">작동 원리</div>
-                    <p><kbd>Metallic</kbd> 맵의 흰색 영역(금속)은 <span class="highlight">Edge Color</span>의 영향을 받아 금속처럼 보이고, 검은색 영역(비금속)은 <span class="highlight">Face Color</span>(즉, Base Color)의 영향만 남아 비금속처럼 보이게 됩니다.</p>
+                    <p>이 노드는 PBR 맵(BaseColor, Metallic)을 입력받아, RenderMan의 Specular 워크플로우에 맞는 값(Diffuse Color, Specular Face/Edge Color)으로 자동 변환하여 출력해줍니다.</p>
                 </div>
             </div>
             <div class="content-column">
                 <div class="image-container" style="height: 100%;">
-                    <img class="main-image" alt="Metallic 워크플로우 노드 그래프" src="https://placehold.co/600x600/1A202C/FFFFFF?text=Metallic+Workflow+Node+Graph"/>
-                    <p class="caption">Metallic 워크플로우를 위한 PxrSurface 노드 연결 예시</p>
+                    <img class="main-image" alt="PxrMetallicWorkflow 노드 그래프" src="https://placehold.co/600x600/1A202C/FFFFFF?text=PxrMetallicWorkflow+Node+Graph"/>
+                    <p class="caption">PxrMetallicWorkflow 노드를 사용한 PxrSurface 연결 예시</p>
                 </div>
             </div>
         </div>
