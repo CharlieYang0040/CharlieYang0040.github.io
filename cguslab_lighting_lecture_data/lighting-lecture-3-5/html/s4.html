@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RenderMan 5강 | Light Linking 실습</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { margin: 0; padding: 0; background: #000; font-family: 'Pretendard', sans-serif; }
+        .slide-container { width: 1280px; min-height: 720px; margin: 0 auto; background-color: #1a202c; color: #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.25); display: flex; flex-direction: column; }
+        .header { padding: 1.75rem 2rem; background: #0f172a; border-bottom: 4px solid #2b6cb0; }
+        .header h1 { font-size: 2.25rem; font-weight: 800; margin: 0; }
+        .header p { font-size: 1.125rem; opacity: 0.85; margin: 0.25rem 0 0 0; }
+        .content { padding: 2rem; flex-grow: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .content-column { display: flex; flex-direction: column; gap: 1.5rem; }
+        .concept-box { background-color: #334155; border: 1px solid #475569; border-radius: 10px; padding: 1.5rem; }
+        .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; color: #90cdf4; }
+        .concept-box ol { padding-left: 1.5rem; }
+        .concept-box li { font-size: 1.1rem; line-height: 1.8; margin-bottom: 1rem; }
+        .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #334155; }
+        .main-image { width: 100%; height: auto; object-fit: cover; background-color: #334155; }
+        .caption { text-align: center; font-size: 0.875rem; color: #a0aec0; padding: 0.5rem; background-color: #2d3748; }
+        .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
+        .highlight { color: #f6e05e; font-weight: 700; }
+        kbd { background-color: #718096; color: #fff; border-radius: 4px; padding: 2px 6px; font-size: 0.95rem; font-weight: 700; border: 1px solid #a0aec0; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h1>Light Linking 실습 (Maya)</h1>
+            <p>Relationship Editor를 사용하여 직접 빛의 관계를 설정해봅니다.</p>
+        </div>
+        <div class="content">
+            <div class="content-column">
+                <div class="concept-box">
+                    <div class="concept-title"><i class="fas fa-tools mr-2"></i>Light-Centric 모드 실습</div>
+                    <ol>
+                        <li>Maya 메뉴에서 <kbd>Windows</kbd> > <kbd>Relationship Editors</kbd> > <kbd>Light Linking</kbd> > <kbd>Light-Centric</kbd>을 선택합니다.</li>
+                        <li><b>왼쪽 패널(Lights):</b> 제어하고 싶은 조명 (예: <span class="highlight">Rim_Light</span>)을 선택합니다.</li>
+                        <li><b>오른쪽 패널(Illuminated Objects):</b> 현재 조명이 영향을 미치는 모든 물체들이 하이라이트됩니다.</li>
+                        <li>빛의 영향을 받지 않게 할 물체 (예: 배경)를 <kbd>Ctrl</kbd> 키를 누른 채 클릭하여 <span class="highlight">선택 해제</span>합니다.</li>
+                        <li>렌더링하여 <span class="highlight">Rim_Light</span>가 지정된 물체(캐릭터)에만 영향을 미치는지 확인합니다.</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="content-column">
+                <div class="image-container">
+                    <img class="main-image" alt="Maya Relationship Editor" src="https://placehold.co/600x400/1A202C/FFFFFF?text=Maya+Relationship+Editor"/>
+                    <p class="caption">Light-Centric Relationship Editor 화면 예시</p>
+                </div>
+                <div class="concept-box">
+                    <div class="concept-title"><i class="fas fa-check-circle mr-2"></i>확인 포인트</div>
+                    <p>
+                        선택이 해제된 배경 오브젝트는 더 이상 Rim Light의 영향을 받지 않아, 캐릭터의 실루엣이 배경과 명확하게 분리되어 강조되는 것을 볼 수 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="footer">Pixar RenderMan 마스터클래스 | 5강</div>
+    </div>
+</body>
+</html>

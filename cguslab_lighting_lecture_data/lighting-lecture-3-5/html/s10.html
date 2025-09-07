@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RenderMan 5강 | 실습 과제 2: Shadow Linking</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { margin: 0; padding: 0; background: #000; font-family: 'Pretendard', sans-serif; }
+        .slide-container { width: 1280px; min-height: 720px; margin: 0 auto; background-color: #1a202c; color: #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.25); display: flex; flex-direction: column; }
+        .header { padding: 1.75rem 2rem; background: #0f172a; border-bottom: 4px solid #2b6cb0; }
+        .header h1 { font-size: 2.25rem; font-weight: 800; margin: 0; }
+        .header p { font-size: 1.125rem; opacity: 0.85; margin: 0.25rem 0 0 0; }
+        .content { padding: 2rem; flex-grow: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .content-column { display: flex; flex-direction: column; gap: 1.5rem; }
+        .concept-box { background-color: #334155; border: 1px solid #475569; border-radius: 10px; padding: 1.5rem; }
+        .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; color: #90cdf4; }
+        .concept-box ol { padding-left: 1.5rem; }
+        .concept-box li { font-size: 1.1rem; line-height: 1.8; margin-bottom: 1rem; }
+        .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #334155; }
+        .main-image { width: 100%; height: auto; object-fit: cover; background-color: #334155; }
+        .caption { text-align: center; font-size: 0.875rem; color: #a0aec0; padding: 0.5rem; background-color: #2d3748; }
+        .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
+        .highlight { color: #f6e05e; font-weight: 700; }
+        .task-box { background-color: #2d3748; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #63b3ed; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h1>오늘의 실습 과제 (2/2)</h1>
+            <p>Shadow Linking으로 불필요한 그림자 제거하기</p>
+        </div>
+        <div class="content">
+            <div class="content-column">
+                <div class="task-box">
+                    <div class="concept-title"><i class="fas fa-tasks mr-2"></i>Shadow Linking 실습</div>
+                    <ol>
+                        <li>캐릭터 앞에 복잡한 형태의 물체(예: 의자, 식물)를 하나 배치하여 <span class="highlight">Key Light</span>에 의해 캐릭터 얼굴에 거슬리는 그림자가 생기도록 만듭니다.</li>
+                        <li><b>Shadow Linking</b>의 <span class="highlight">'Casts Shadows'</span> 모드를 사용합니다.</li>
+                        <li>
+                           이 <span class="highlight">'방해물'</span>이 <span class="highlight">'Key Light'</span>에 의해 그림자를 생성하지 않도록 설정하여 캐릭터의 얼굴을 깨끗하게 만들어 보세요.
+                        </li>
+                        <li>링킹 설정 후, 방해물 자체는 여전히 빛을 받고 있지만 <span class.highlight>그림자만 사라진 것을 확인</span>합니다.</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="content-column">
+                <div class="image-container">
+                    <img class="main-image" alt="Shadow Linking 결과 비교" src="https://placehold.co/600x450/1A202C/FFFFFF?text=Shadow+Problem+Solved"/>
+                    <p class="caption">Before: 방해물이 캐릭터 얼굴에 그림자를 만듦 / After: 그림자만 제거됨</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer">Pixar RenderMan 마스터클래스 | 5강</div>
+    </div>
+</body>
+</html>
