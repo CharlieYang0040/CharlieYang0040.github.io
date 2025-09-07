@@ -1,0 +1,53 @@
+<!-- =================================================================
+     SLIDE 4-11: 4주차 3교시 - 마무리 및 최종 과제
+     파일 이름: s65.html
+================================================================== -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/><meta content="width-device-width, initial-scale=1.0" name="viewport"/><title>4-3.3 마무리: Shelf 등록 및 최종 과제</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet"><style>body{font-family:'Noto Sans KR',sans-serif;background-color:#0f172a;color:#f8fafc;overflow-x:hidden}.slide-container{width:1280px;min-height:720px;margin:0 auto;position:relative}.title-accent{color:#60a5fa}.number-badge{background-color:#a855f7}pre[class*="language-"]{background:#1e293b;padding:1.25em;border-radius:0.5rem;border:1px solid rgba(59,130,246,0.3)}code[class*="language-"]{font-family:'D2Coding','Courier New',monospace;font-size:0.9rem}.code-title{background-color:#374151;color:#d1d5db;padding:0.5rem 1rem;border-top-left-radius:0.5rem;border-top-right-radius:0.5rem;font-weight:bold;font-size:0.875rem}.inline-code{background-color:#374151;color:#fBBF24;padding:0.1rem 0.3rem;border-radius:0.25rem;font-family:monospace;font-size:0.9em}</style>
+</head>
+<body>
+<div class="slide-container relative bg-slate-900 p-10">
+    <div class="relative z-10 w-full">
+        <div class="mb-5">
+            <div class="flex items-center mb-3">
+                <div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">4.3.2</div>
+                <h1 class="text-4xl font-black">마무리: 진짜 '툴'처럼 사용하기 <span class="title-accent">(Shelf 등록)</span></h1>
+            </div>
+            <p class="text-gray-400 text-lg ml-14">매번 스크립트 에디터를 열지 않고, 클릭 한 번으로 툴을 실행할 수 있도록 Maya 선반에 등록합니다.</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8">
+            <div class="bg-slate-800 p-6 rounded-lg">
+                <h3 class="text-2xl font-bold text-blue-400 mb-3"><i class="fas fa-rocket mr-2"></i>Shelf에 등록하는 법</h3>
+                <ol class="list-decimal list-inside space-y-3 text-lg text-gray-300">
+                    <li>지금까지 작성한 최종 툴의 모든 코드를 스크립트 에디터에 붙여넣습니다.</li>
+                    <li>코드를 전체 선택(<kbd class="bg-gray-700 px-2 py-1 rounded">Ctrl</kbd> + <kbd class="bg-gray-700 px-2 py-1 rounded">A</kbd>)합니다.</li>
+                    <li>스크립트 에디터 메뉴에서 <span class="text-yellow-400 font-semibold">'파일(File) > 스크립트를 선반에 저장(Save Script to Shelf)...'</span>을 선택합니다.</li>
+                    <li>나타나는 창에서 원하는 이름을 입력하고 확인을 누르면, 현재 활성화된 선반에 새로운 아이콘이 생성됩니다.</li>
+                    <li class="mt-4">이제부터는 새 씬을 열고, 오브젝트를 선택한 뒤, 이 선반 버튼만 누르면 턴테이블 씬이 자동으로 만들어집니다!</li>
+                </ol>
+            </div>
+            <div class="bg-slate-800 p-6 rounded-lg">
+                <h3 class="text-2xl font-bold text-green-400 mb-3"><i class="fas fa-graduation-cap mr-2"></i>최종 과제 및 앞으로의 학습 방향</h3>
+                <p class="text-lg font-bold text-yellow-400">최종 과제:</p>
+                <p class="text-lg text-gray-300 mb-4">오늘 만든 '턴테이블 생성기' 툴을 사용하여, 자신이 만든 모델링(없다면 기본 도형 조합)의 멋진 턴테이블 영상을 플레이블라스트(Playblast)로 만들어 제출하세요.</p>
+                
+                <p class="text-lg font-bold text-blue-400">앞으로의 방향:</p>
+                 <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
+                    <li><strong class="text-white">PyMEL:</strong> <code class="inline-code">maya.cmds</code>보다 더 파이썬다운 방식으로 Maya를 제어하는 라이브러리.</li>
+                    <li><strong class="text-white">PySide2/PyQt5:</strong> Maya 기본 UI보다 훨씬 복잡하고 화려한 전문적인 UI를 제작하는 프레임워크.</li>
+                    <li><strong class="text-white">Maya API:</strong> C++이나 파이썬으로 Maya의 가장 깊은 곳까지 제어하여 자신만의 노드를 만드는 최고 난이도 기술.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
+        <div class="flex items-center"><i class="fas fa-book mr-2"></i><span class="text-sm">Maya Python 스크립팅 과정</span></div>
+        <div class="flex items-center space-x-4"><span class="text-sm">Slide 65</span></div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html> 

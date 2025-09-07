@@ -1,0 +1,66 @@
+<!-- =================================================================
+     SLIDE 4-9: 4주차 3교시 - 최종 프로젝트 2단계 (1)
+     파일 이름: s63.html
+================================================================== -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>4-3.1 최종 프로젝트 2단계: UI 통합</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet"><style>body{font-family:'Noto Sans KR',sans-serif;background-color:#0f172a;color:#f8fafc;overflow-x:hidden}.slide-container{width:1280px;min-height:720px;margin:0 auto;position:relative}.title-accent{color:#60a5fa}.number-badge{background-color:#a855f7}pre[class*="language-"]{background:#1e293b;padding:1.25em;border-radius:0.5rem;border:1px solid rgba(59,130,246,0.3)}code[class*="language-"]{font-family:'D2Coding','Courier New',monospace;font-size:0.9rem}.code-title{background-color:#374151;color:#d1d5db;padding:0.5rem 1rem;border-top-left-radius:0.5rem;border-top-right-radius:0.5rem;font-weight:bold;font-size:0.875rem}.inline-code{background-color:#374151;color:#fBBF24;padding:0.1rem 0.3rem;border-radius:0.25rem;font-family:monospace;font-size:0.9em}</style>
+</head>
+<body>
+<div class="slide-container relative bg-slate-900 p-10 flex flex-col">
+    <div class="relative z-10 w-full">
+        <div class="mb-5">
+            <div class="flex items-center mb-3">
+                <div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">4.3.0</div>
+                <h1 class="text-4xl font-black">3교시: 최종 프로젝트 2단계 - <span class="title-accent">UI 통합 및 툴 완성</span></h1>
+            </div>
+            <p class="text-gray-400 text-lg ml-14">지금까지 만든 모든 기능 함수들을 하나의 '마스터 함수'로 묶고, 최종 UI 버튼에 연결하여 툴을 완성합니다.</p>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-8 items-start">
+             <div class="bg-slate-800 p-6 rounded-lg">
+                <h3 class="text-2xl font-bold text-blue-400 mb-3"><i class="fas fa-cogs mr-2"></i>1단계: 마스터 함수 제작</h3>
+                <p class="text-lg text-gray-300">
+                    UI 버튼에 함수를 하나만 연결할 수 있으므로, 2교시에서 만든 3개의 핵심 기능 함수들을 순서대로 호출하는 '마스터 함수'를 만듭니다. 
+                </p>
+                <p class="text-lg text-gray-300 mt-4">
+                    이 함수는 전체 작업의 흐름을 제어하는 <span class="text-yellow-400 font-semibold">'컨트롤 타워'</span> 역할을 합니다. 또한, 사용자가 오브젝트를 선택하지 않고 버튼을 누르는 실수를 방지하기 위한 간단한 오류 처리(<code class="inline-code">mc.warning</code>)도 포함합니다.
+                </p>
+            </div>
+            <div>
+                <p class="code-title">[마스터 함수: run_turntable_generator]</p>
+                <pre class="rounded-b-lg"><code class="language-python">import maya.cmds as mc
+
+# (2교시에서 만든 3개의 함수: create_backdrop, create_three_point_lights,
+#  create_turntable_camera가 이 코드 위에 있다고 가정합니다)
+
+def run_turntable_generator(*args):
+    # 1. 현재 선택한 오브젝트를 확인합니다.
+    selection = mc.ls(sl=True)
+    if not selection:
+        mc.warning("오브젝트를 먼저 선택해주세요!") # 경고 메시지 출력
+        return # 함수 종료
+
+    target = selection[0]
+
+    # 2. 핵심 기능 함수들을 순서대로 호출합니다.
+    create_backdrop()
+    create_three_point_lights(target)
+    create_turntable_camera(target)
+
+    # 3. 사용자 편의를 위해 마지막에 오브젝트를 다시 선택해줍니다.
+    mc.select(target)
+    print("\n===== 턴테이블 씬 생성이 완료되었습니다! =====")
+</code></pre>
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
+        <div class="flex items-center"><i class="fas fa-book mr-2"></i><span class="text-sm">Maya Python 스크립팅 과정</span></div>
+        <div class="flex items-center space-x-4"><span class="text-sm">Slide 63</span></div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html> 

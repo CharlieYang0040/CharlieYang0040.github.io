@@ -1,0 +1,64 @@
+<!-- =================================================================
+     SLIDE 4-10: 4주차 3교시 - 최종 프로젝트 2단계 (2)
+     파일 이름: s64.html
+================================================================== -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>4-3.2 최종 툴: 룩뎁 턴테이블 생성기</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet"><style>body{font-family:'Noto Sans KR',sans-serif;background-color:#0f172a;color:#f8fafc;overflow-x:hidden}.slide-container{width:1280px;min-height:720px;margin:0 auto;position:relative}.title-accent{color:#60a5fa}.number-badge{background-color:#a855f7}pre[class*="language-"]{background:#1e293b;padding:1.25em;border-radius:0.5rem;border:1px solid rgba(59,130,246,0.3)}code[class*="language-"]{font-family:'D2Coding','Courier New',monospace;font-size:0.9rem}.code-title{background-color:#374151;color:#d1d5db;padding:0.5rem 1rem;border-top-left-radius:0.5rem;border-top-right-radius:0.5rem;font-weight:bold;font-size:0.875rem}.inline-code{background-color:#374151;color:#fBBF24;padding:0.1rem 0.3rem;border-radius:0.25rem;font-family:monospace;font-size:0.9em}</style>
+</head>
+<body>
+<div class="slide-container relative bg-slate-900 p-10 flex flex-col">
+    <div class="relative z-10 w-full">
+        <div class="mb-5">
+            <div class="flex items-center mb-3">
+                <div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">4.3.1</div>
+                <h1 class="text-4xl font-black">2단계: 최종 UI 제작 및 <span class="title-accent">연결</span></h1>
+            </div>
+            <p class="text-gray-400 text-lg ml-14">앞서 만든 마스터 함수를 버튼에 연결하고, 간단한 안내 문구를 추가하여 툴을 완성합니다.</p>
+        </div>
+        
+        <div class="flex-grow overflow-auto">
+            <p class="code-title">[최종 툴 전체 코드]</p>
+            <pre class="rounded-b-lg"><code class="language-python">import maya.cmds as mc
+
+# (2교시 함수들과 run_turntable_generator 함수가 이 코드 위에 모두 포함되어야 합니다)
+# def create_backdrop(...): ...
+# def create_three_point_lights(...): ...
+# def create_turntable_camera(...): ...
+# def run_turntable_generator(...): ...
+
+
+# --- 최종 UI 제작 ---
+UI_ID = "lookdevTurntableUI"
+if mc.window(UI_ID, exists=True):
+    mc.deleteUI(UI_ID)
+
+mc.window(UI_ID, title="룩뎁 턴테이블 생성기 v1.0", widthHeight=(350, 150))
+mc.columnLayout(adjustableColumn=True, rowSpacing=10, margin=10)
+
+# 사용자 안내를 위한 텍스트 추가
+mc.text(label="1. 턴테이블을 만들 오브젝트를 선택하세요.")
+mc.text(label="2. 아래 버튼을 클릭하세요.")
+
+# 시각적 구분을 위한 구분선 추가
+mc.separator(height=20, style='in')
+
+# 핵심 기능을 실행할 메인 버튼
+mc.button(label="턴테이블 씬 생성 실행", 
+          command=run_turntable_generator, 
+          height=50, 
+          backgroundColor=[0.2, 0.5, 0.3]) # 버튼 색상 변경
+
+mc.showWindow(UI_ID)
+</code></pre>
+        </div>
+    </div>
+    <div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
+        <div class="flex items-center"><i class="fas fa-book mr-2"></i><span class="text-sm">Maya Python 스크립팅 과정</span></div>
+        <div class="flex items-center space-x-4"><span class="text-sm">Slide 64</span></div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html> 

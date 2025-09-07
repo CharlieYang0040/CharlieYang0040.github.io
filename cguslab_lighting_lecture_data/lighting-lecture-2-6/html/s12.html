@@ -1,0 +1,51 @@
+<!-- =================================================================
+     SLIDE 2-7: 1교시 - maya.cmds 소개
+     파일 이름: s12.html
+================================================================== -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>1.1 Maya에게 말 걸기</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet"><style>body{font-family:'Noto Sans KR',sans-serif;background-color:#0f172a;color:#f8fafc;overflow-x:hidden}.slide-container{width:1280px;min-height:720px;margin:0 auto;position:relative}.title-accent{color:#60a5fa}.number-badge{background-color:#a855f7}pre[class*="language-"]{background:#1e293b;padding:1.25em;border-radius:0.5rem;border:1px solid rgba(59,130,246,0.3)}code[class*="language-"]{font-family:'D2Coding','Courier New',monospace;font-size:0.9rem}.code-title{background-color:#374151;color:#d1d5db;padding:0.5rem 1rem;border-top-left-radius:0.5rem;border-top-right-radius:0.5rem;font-weight:bold;font-size:0.875rem}.inline-code{background-color:#374151;color:#fBBF24;padding:0.1rem 0.3rem;border-radius:0.25rem;font-family:monospace;font-size:0.9em}</style>
+</head>
+<body>
+<div class="slide-container relative bg-slate-900 p-10">
+    <div class="relative z-10 w-full">
+        <div class="mb-5">
+            <div class="flex items-center mb-3">
+                <div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">1.1</div>
+                <h1 class="text-4xl font-black">개념 설명: Maya에게 말 걸기 - <span class="title-accent">maya.cmds</span></h1>
+            </div>
+            <p class="text-gray-400 text-lg ml-14">Maya의 거의 모든 기능을 파이썬으로 제어할 수 있게 해주는 마법 같은 도구, <code class="inline-code">maya.cmds</code>를 불러오는 것으로 시작합니다.</p>
+        </div>
+        
+        <div class="bg-slate-800 p-6 rounded-lg border border-blue-900/50">
+            <p class="text-gray-300 text-lg">
+                스크립트 맨 위에 이 한 줄을 추가하면, 우리는 Maya의 수많은 명령어들을 사용할 준비가 된 것입니다.
+                <br>
+                보통 <code class="inline-code">mc</code>라는 별명(alias)으로 줄여서 사용하는데, 코드를 더 간결하게 만들어줍니다.
+            </p>
+        </div>
+
+        <div class="mt-6">
+            <p class="code-title">[기본 선언]</p>
+            <pre class="rounded-b-lg"><code class="language-python"># Maya의 명령어 세트를 사용하겠다고 선언하고, mc라는 별명을 붙여줍니다.
+import maya.cmds as mc</code></pre>
+        </div>
+        
+        <div class="mt-8 flex items-center bg-yellow-900/30 border border-yellow-600/50 text-yellow-300 p-4 rounded-lg">
+            <i class="fas fa-info-circle text-2xl mr-4"></i>
+            <div>
+                <strong class="font-bold">앞으로 모든 예제 코드에서는 이 구문이 이미 실행되었다고 가정합니다.</strong>
+                <p>스크립트를 작성할 때는 항상 최상단에 이 코드를 넣어주는 것을 잊지 마세요.</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
+        <div class="flex items-center"><i class="fas fa-book mr-2"></i><span class="text-sm">Maya Python 스크립팅 과정</span></div>
+        <div class="flex items-center space-x-4"><span class="text-sm">Slide 12</span></div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html> 

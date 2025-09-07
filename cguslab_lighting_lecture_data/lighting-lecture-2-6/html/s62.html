@@ -1,0 +1,80 @@
+<!-- =================================================================
+     SLIDE 4-8: 4주차 2교시 - 최종 프로젝트 1단계 (3)
+     파일 이름: s62.html
+================================================================== -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>4-2.3 최종 프로젝트: 턴테이블 카메라</title><link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet"/><link href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-tomorrow.css" rel="stylesheet"><style>body{font-family:'Noto Sans KR',sans-serif;background-color:#0f172a;color:#f8fafc;overflow-x:hidden}.slide-container{width:1280px;min-height:720px;margin:0 auto;position:relative}.title-accent{color:#60a5fa}.number-badge{background-color:#a855f7}pre[class*="language-"]{background:#1e293b;padding:1.25em;border-radius:0.5rem;border:1px solid rgba(59,130,246,0.3)}code[class*="language-"]{font-family:'D2Coding','Courier New',monospace;font-size:0.9rem}.code-title{background-color:#374151;color:#d1d5db;padding:0.5rem 1rem;border-top-left-radius:0.5rem;border-top-right-radius:0.5rem;font-weight:bold;font-size:0.875rem}.inline-code{background-color:#374151;color:#fBBF24;padding:0.1rem 0.3rem;border-radius:0.25rem;font-family:monospace;font-size:0.9em}</style>
+</head>
+<body>
+<div class="slide-container relative bg-slate-900 p-10 flex flex-col">
+    <div class="relative z-10 w-full">
+        <div class="mb-5">
+            <div class="flex items-center mb-3">
+                <div class="number-badge rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-lg mr-4">4.2.2</div>
+                <h1 class="text-4xl font-black">함수 3: <span class="title-accent">턴테이블 카메라</span> 및 애니메이션 생성</h1>
+            </div>
+            <p class="text-gray-400 text-lg ml-14">오브젝트를 바라보며 120프레임 동안 360도 회전하는 카메라 애니메이션을 코드로 생성합니다.</p>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-8 items-start">
+            <div>
+                <p class="code-title">[함수 3: 턴테이블 카메라 생성]</p>
+                <pre class="rounded-b-lg"><code class="language-python">import maya.cmds as mc
+
+def create_turntable_camera(target_object):
+    """
+    오브젝트를 바라보며 회전하는 카메라와 애니메이션을 생성하는 함수
+    """
+    # 1. 카메라를 생성하고, 이름을 지정합니다.
+    cam_nodes = mc.camera(name="Turntable_Cam")
+    cam_transform = cam_nodes[0]
+
+    # 2. 생성된 카메라가 target_object를 꽉 채워 보이도록 뷰를 맞춥니다.
+    mc.viewFit(cam_transform, target_object)
+    
+    # 3. 카메라를 뒤로 조금 물러나게 하여 오브젝트와 거리를 둡니다.
+    mc.move(0, 0, 30, cam_transform, relative=True, objectSpace=True)
+
+    # 4. 카메라를 그룹으로 묶어 회전의 중심축(Pivot)을 월드 중심으로 만듭니다.
+    #    이렇게 해야 카메라가 제자리에서 돌지 않고, 원점을 중심으로 공전합니다.
+    cam_group = mc.group(cam_transform, name="Turntable_Cam_Group")
+
+    # 5. 애니메이션 키를 설정합니다. (1프레임과 120프레임)
+    mc.setKeyframe(cam_group, attribute='rotateY', time=1, value=0)
+    mc.setKeyframe(cam_group, attribute='rotateY', time=120, value=360)
+
+    # 6. 애니메이션의 전체 재생 시간을 1~120 프레임으로 설정합니다.
+    mc.playbackOptions(minTime=1, maxTime=120)
+
+    print("턴테이블 카메라를 생성했습니다.")
+    return cam_group
+</code></pre>
+            </div>
+            <div class="bg-slate-800 p-6 rounded-lg">
+                <p class="code-title flex justify-between items-center"><span>2교시 실습 문제</span> <span class="text-yellow-400 font-normal">★★★☆☆</span></p>
+                <div class="p-2">
+                    <p class="text-lg">지금까지 만든 3개의 함수(<code class="inline-code">create_backdrop</code>, <code class="inline-code">create_three_point_lights</code>, <code class="inline-code">create_turntable_camera</code>)를 스크립트 에디터에 모두 복사하세요.</p>
+                    <p class="mt-4 text-lg">씬에 구(Sphere)를 하나 만들고 이름을 <code class="inline-code">my_awesome_sphere</code>로 바꾼 뒤, 아래 코드를 한 줄씩 직접 입력하고 실행하여 각 함수가 잘 작동하는지 테스트해보세요.</p>
+                    <pre class="mt-4"><code class="language-python"># 1. 배경 생성 테스트
+create_backdrop(size=30)
+
+# 2. 3점 조명 생성 테스트
+create_three_point_lights("my_awesome_sphere")
+
+# 3. 턴테이블 카메라 생성 테스트
+create_turntable_camera("my_awesome_sphere")</code></pre>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="absolute bottom-6 left-12 right-12 flex justify-between items-center text-gray-400">
+        <div class="flex items-center"><i class="fas fa-book mr-2"></i><span class="text-sm">Maya Python 스크립팅 과정</span></div>
+        <div class="flex items-center space-x-4"><span class="text-sm">Slide 62</span></div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/components/prism-core.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html> 
