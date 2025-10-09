@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>필수 실습 AOV</title>
+    <title>4. LPE의 첫걸음 - 왜 필요한가?</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -13,44 +13,23 @@
         .header { display: flex; align-items: center; justify-content: space-between; padding: 1.75rem 2rem; background: #0f172a; border-bottom: 4px solid #2b6cb0; }
         .header h1 { font-size: 2.25rem; font-weight: 800; margin: 0; }
         .header p { font-size: 1.125rem; opacity: 0.85; margin: 0.25rem 0 0 0; }
-        .content { padding: 2rem; }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-        .aov-card {
-            background-color: #2d3748;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #4a5568;
-            display: flex;
+        .content { padding: 2.5rem 2rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; align-items: stretch; }
+        .concept-box { 
+            background-color: #334155; 
+            border: 1px solid #475569; 
+            border-radius: 12px; 
+            padding: 2rem; 
+            display: flex; 
             flex-direction: column;
         }
-        .aov-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background-color: #1a202c;
-        }
-        .aov-info {
-            padding: 1.25rem;
-        }
-        .aov-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-        .aov-title code {
-            font-size: 1.1rem;
-            background-color: #4a5568;
-            padding: 3px 8px;
-            border-radius: 6px;
-        }
-        .aov-description {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: #cbd5e0;
-            margin-top: 0.75rem;
+        .concept-title { font-size: 1.75rem; font-weight: 800; margin-bottom: 1.25rem; }
+        .concept-box p { font-size: 1.125rem; line-height: 1.8; }
+        .quote-box {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #2d3748;
+            border-left: 5px solid #f6e05e;
+            border-radius: 8px;
         }
         .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
         .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246, 224, 94, 0.15); padding: 2px 6px; border-radius: 4px; }
@@ -60,40 +39,33 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>필수 실습 AOV</h1>
-                <p>가장 기본적이고 중요한 4가지 패스</p>
+                <h1>4. LPE의 첫걸음 - 왜 필요한가?</h1>
+                <p>Light Path Expressions, 빛의 경로를 코딩하다</p>
             </div>
         </div>
 
         <div class="content">
-            <div class="grid-container">
-                <div class="aov-card">
-                    <img class="aov-image" src="https://placehold.co/400x200/1A202C/FFFFFF?text=Diffuse" alt="Diffuse AOV">
-                    <div class="aov-info">
-                        <div class="aov-title"><code>diffuse</code></div>
-                        <p class="aov-description">재질의 고유 색상(Diffuse Lobe) 부분만 출력합니다.</p>
-                    </div>
-                </div>
-                <div class="aov-card">
-                    <img class="aov-image" src="https://placehold.co/400x200/1A202C/FFFFFF?text=Specular" alt="Specular AOV">
-                    <div class="aov-info">
-                        <div class="aov-title"><code>specular</code></div>
-                        <p class="aov-description">하이라이트와 반사(Specular Lobe) 부분만 출력합니다.</p>
-                    </div>
-                </div>
-                <div class="aov-card">
-                    <img class="aov-image" src="https://placehold.co/400x200/1A202C/FFFFFF?text=Z-Depth" alt="Z-Depth AOV">
-                    <div class="aov-info">
-                        <div class="aov-title"><code>z</code> (Depth)</div>
-                        <p class="aov-description">카메라로부터의 거리를 흑백 이미지로 표현하며, DOF나 안개 효과에 사용됩니다.</p>
-                    </div>
-                </div>
-                <div class="aov-card">
-                    <img class="aov-image" src="https://placehold.co/400x200/1A202C/FFFFFF?text=Normal" alt="Normal AOV">
-                    <div class="aov-info">
-                        <div class="aov-title"><code>Nn</code> (Normal)</div>
-                        <p class="aov-description">표면의 방향을 RGB로 저장하며, 렌더링 후 조명을 바꾸는 '리라이팅'에 사용됩니다.</p>
-                    </div>
+            <div class="concept-box">
+                <div class="concept-title">🤔 Light Group의 한계</div>
+                <p>
+                    앞서 배운 <span class="highlight">Light Group</span>은 매우 강력하지만, '어떤 조명'이 기여했는지만 구분할 뿐, '어떻게' 기여했는지는 알려주지 않습니다.
+                </p>
+                <p class="mt-4">
+                    만약 슈퍼바이저가 "<span class="highlight">Rim Light가 만들어낸 반사(Specular)는 좋은데, 표면에 부딪혀 번지는 확산광(Diffuse)은 좀 줄여줄 수 있나요?</span>" 라고 요청한다면 어떻게 해야 할까요?
+                </p>
+                <p class="mt-4">
+                    Light Group만으로는 이 문제를 해결할 수 없습니다. 
+                </p>
+            </div>
+            <div class="concept-box">
+                <div class="concept-title">💡 LPE, 해답은 빛의 경로에 있다</div>
+                <div class="quote-box">
+                    <p>
+                        <strong>LPE(Light Path Expression)</strong>는 빛이 광원에서 출발하여, 물체 표면에서 어떤 종류의 반사를 거쳐 카메라에 도달하는지, 그 <span class="highlight">전체 경로를 문장처럼 서술</span>하여 원하는 빛만 정확하게 골라내는 기능입니다.
+                    </p>
+                    <p class="mt-4">
+                        이를 통해 우리는 "Rim Light의 Specular 성분"과 "Rim Light의 Diffuse 성분"을 별개의 AOV로 분리하여 자유롭게 제어할 수 있게 됩니다.
+                    </p>
                 </div>
             </div>
         </div>
@@ -102,4 +74,3 @@
     </div>
 </body>
 </html>
-

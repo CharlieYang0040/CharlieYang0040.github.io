@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5. 그림자와 데이터 패스 활용</title>
+    <title>실전 LPE 작성 - 예제로 배우기</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -13,59 +13,44 @@
         .header { display: flex; align-items: center; justify-content: space-between; padding: 1.75rem 2rem; background: #0f172a; border-bottom: 4px solid #2b6cb0; }
         .header h1 { font-size: 2.25rem; font-weight: 800; margin: 0; }
         .header p { font-size: 1.125rem; opacity: 0.85; margin: 0.25rem 0 0 0; }
-        .content { padding: 2rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-        .content-column { display: flex; flex-direction: column; gap: 2rem; }
-        .concept-box { background-color: #334155; border: 1px solid #475569; border-radius: 10px; padding: 2rem; }
-        .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; }
-        .concept-box p { font-size: 1.1rem; line-height: 1.6; }
-        .concept-box ul { list-style: none; padding: 0; }
-        .concept-box li { font-size: 1.1rem; line-height: 1.6; background-color: #2d3748; padding: 0.75rem 1rem; border-radius: 6px; margin-top: 0.5rem; }
-        .concept-box li code { background-color: #4a5568; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+        .content { padding: 2rem; }
+        .example-list { display: flex; flex-direction: column; gap: 1rem; }
+        .example-box { background-color: #2d3748; border-radius: 10px; padding: 1.25rem; }
+        .example-title { font-size: 1.25rem; font-weight: 600; color: #a0aec0; margin-bottom: 0.5rem; }
+        .example-code { font-family: 'Courier New', Courier, monospace; font-size: 1.5rem; font-weight: 700; color: #f6e05e; background-color: #1a202c; padding: 0.75rem; border-radius: 8px; }
+        .example-description { font-size: 1.125rem; margin-top: 0.75rem; }
+        .highlight { color: #f6e05e; }
         .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
-        .highlight { color: #f6e05e; font-weight: 700; }
-        kbd { background-color: #718096; color: #fff; border-radius: 4px; padding: 2px 6px; font-size: 0.95rem; font-weight: 700; border: 1px solid #a0aec0; }
     </style>
 </head>
 <body>
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>5. 그림자와 데이터 패스 활용</h1>
-                <p>후반 작업의 완성도를 높이는 필수 데이터</p>
+                <h1>실전 LPE 작성 - 예제로 배우기</h1>
+                <p>배운 문법을 조합하여 실제 AOV를 만들어봅시다.</p>
             </div>
         </div>
-
         <div class="content">
-            <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">🌑 그림자 패스 (Shadow Pass)</div>
-                    <p>
-                        그림자만 따로 렌더링하여 합성 시 실사 배경 위에 자연스럽게 올리거나, 그림자의 <span class="highlight">농도, 색상</span>을 자유롭게 조절하는 데 사용됩니다.
-                    </p>
-                    <ul class="mt-4">
-                        <li>AOV 설정 창에서 <code class="text-white">Create > Shadow</code> 로 생성</li>
-                        <li>생성 시 그림자를 만들 조명 지정 (예: Key Light)</li>
-                        <li>결과물: <code>shadow_key_0</code> 와 같은 이름으로 생성</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">💾 데이터 패스 (Data Pass)</div>
-                    <p>
-                        색상 정보가 아닌, 각 픽셀이 가진 <span class="highlight">위치, 방향</span> 같은 '데이터'를 담고 있는 AOV입니다. 후반 작업에서 3D 효과를 자연스럽게 적용하는 데 핵심적인 역할을 합니다.
-                    </p>
-                    <ul class="mt-4">
-                        <li><code>z</code> (Depth): 안개, 아웃포커싱 (DOF)</li>
-                        <li><code>Nn</code> (Normal): 리라이팅 (Relighting)</li>
-                        <li><code>P</code> (World Position): 3D 오브젝트 추가 합성</li>
-                    </ul>
-                </div>
-            </div>
+            <ul class="example-list">
+                <li class="example-box">
+                    <div class="example-title">USE CASE 1: 'rim' Light Group이 만드는 Specular만 추출</div>
+                    <div class="example-code">C&lt;S&gt;&lt;L.'rim'&gt;</div>
+                    <p class="example-description">카메라(<span class="highlight">C</span>)가 1회의 Specular(<span class="highlight">&lt;S&gt;</span>)를 보는데, 그 빛은 'rim' 그룹에 속한 라이트(<span class="highlight">&lt;L.'rim'&gt;</span>)에서 온 것.</p>
+                </li>
+                <li class="example-box">
+                    <div class="example-title">USE CASE 2: 모든 간접광(GI) 성분만 추출</div>
+                    <div class="example-code">C&lt;D|G&gt;+L</div>
+                    <p class="example-description">카메라(<span class="highlight">C</span>)가 1회 이상의 Diffuse 또는 Glossy(<span class="highlight">&lt;D|G&gt;+</span>) 반사를 거쳐 라이트(<span class="highlight">L</span>)에 도달하는 경로. 즉, 직접광을 제외한 모든 간접광.</p>
+                </li>
+                <li class="example-box">
+                    <div class="example-title">USE CASE 3: 모든 라이트가 만드는 Diffuse와 Specular를 함께 추출</div>
+                    <div class="example-code">C&lt;D|S&gt;L</div>
+                    <p class="example-description">카메라(<span class="highlight">C</span>)가 1회의 Diffuse 또는 Specular(<span class="highlight">&lt;D|S&gt;</span>)를 거쳐 라이트(<span class="highlight">L</span>)에 도달하는 모든 경로.</p>
+                </li>
+            </ul>
         </div>
-
         <div class="footer">Pixar RenderMan 마스터클래스 | 4강</div>
     </div>
 </body>
 </html>
-
