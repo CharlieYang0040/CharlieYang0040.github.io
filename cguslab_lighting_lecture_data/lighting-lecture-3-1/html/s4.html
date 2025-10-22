@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>RIS 아키텍처: 최고의 탐험가를 위한 최첨단 장비</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { font-family: 'Pretendard', sans-serif; margin: 0; padding: 0; background: #000; }
+        .slide-container { background-color: #2d3748; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 1280px; min-height: 720px; overflow: hidden; color: #e2e8f0; }
+        .header { display: flex; align-items: center; justify-content: space-between; padding: 1.75rem 2rem; background-color: #1a202c; color: #fff; border-bottom: 4px solid #2b6cb0; }
+        .header h1 { font-size: 2.25rem; font-weight: 800; }
+        .header p { font-size: 1.125rem; opacity: 0.8; margin-top: 0.25rem; }
+        .content { padding: 2rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .content-column { display: flex; flex-direction: column; gap: 1.5rem; }
+        .concept-box { background-color: #4a5568; border-radius: 10px; border: 1px solid #718096; padding: 1.5rem; }
+        .concept-title { font-weight: 800; font-size: 1.5rem; color: #fff; margin-bottom: 0.75rem; }
+        .concept-box p, .concept-box li { font-size: 1.25rem; line-height: 1.6; }
+        .concept-box li { margin-top: 0.6rem; }
+        .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #4a5568; }
+        .main-image { width: 100%; height: auto; object-fit: cover; background-color: #4a5568; }
+        .caption { text-align: center; font-size: 1rem; color: #a0aec0; padding: 0.75rem; background-color: #4a5568; }
+        .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246,224,94,0.15); padding: 2px 6px; border-radius: 4px; }
+        .footer { padding: 1rem 2rem; background-color: #1a202c; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #4a5568; }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+    <div class="header">
+        <div>
+            <h1>RIS 아키텍처: 최고의 탐험가를 위한 최첨단 장비</h1>
+            <p>더 빠르고, 더 똑똑하고, 더 유연하게</p>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="content-column">
+            <div class="concept-box">
+                <div class="concept-title">⚙️ RIS (Rix Integration Subsystem)란?</div>
+                <p>
+                    <strong>RIS</strong>는 RenderMan의 <strong><span class="highlight">핵심 엔진 아키텍처</span></strong>입니다. 정확하지만 때로는 비효율적일 수 있는 Path Tracing 탐험을 위한 <strong><span class="highlight">최첨단 장비 세트</span></strong>와 같습니다.
+                </p>
+                <p style="margin-top: 1rem;">
+                    Path Tracing을 <span class="highlight">더 빠르고</span>, <span class="highlight">더 똑똑하고</span>, <span class="highlight">더 유연하게</span> 만들어줍니다.
+                </p>
+            </div>
+
+            <div class="image-container">
+                <img class="main-image" alt="RIS Architecture Diagram" src="https://placehold.co/600x250/1A202C/FFFFFF?text=RIS+Modular+Engine"/>
+                <p class="caption">RIS는 Path Tracing을 위한 강력하고 유연한 기반을 제공합니다.</p>
+            </div>
+        </div>
+
+        <div class="content-column">
+            <div class="concept-box" style="height: 100%;">
+                <div class="concept-title">🧩 핵심 특징: 유연성</div>
+                <ul>
+                    <li>
+                        순수 Path Tracing 외에, 특정 상황에 더 효율적인 다른 계산 방식(<strong>Integrator</strong>)을 <strong><span class="highlight">플러그인처럼 쉽게 교체하거나 조합</span></strong>할 수 있습니다.
+                    </li>
+                    <li style="margin-top: 1rem;">
+                        이러한 모듈형 설계 덕분에 복잡한 VFX 장면에서도 <strong><span class="highlight">압도적인 퀄리티와 안정성</span></strong>을 유지할 수 있습니다.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">Pixar RenderMan 마스터클래스 | 1강</div>
+</div>
+</body>
+</html>
+

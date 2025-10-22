@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RenderMan 5강 | 핵심 요약 및 워크플로우</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { margin: 0; padding: 0; background: #000; font-family: 'Pretendard', sans-serif; }
+        .slide-container { width: 1280px; min-height: 720px; margin: 0 auto; background-color: #1a202c; color: #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.25); display: flex; flex-direction: column; }
+        .header { padding: 1.75rem 2rem; background: #0f172a; border-bottom: 4px solid #2b6cb0; }
+        .header h1 { font-size: 2.25rem; font-weight: 800; margin: 0; }
+        .header p { font-size: 1.125rem; opacity: 0.85; margin: 0.25rem 0 0 0; }
+        .content { padding: 2rem; flex-grow: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .content-column { display: flex; flex-direction: column; gap: 1.5rem; }
+        .concept-box { background-color: #334155; border: 1px solid #475569; border-radius: 10px; padding: 1.5rem; }
+        .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; color: #90cdf4; }
+        .concept-box p, .concept-box li { font-size: 1.125rem; line-height: 1.7; }
+        .concept-box ul { list-style-type: none; padding: 0; }
+        .concept-box li { margin-top: 0.75rem; }
+        .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
+        .highlight { color: #f6e05e; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h1>핵심 요약 및 워크플로우</h1>
+            <p>Light Linking과 Shadow Linking을 효과적으로 활용하기</p>
+        </div>
+        <div class="content">
+            <div class="content-column">
+                <div class="concept-box">
+                    <div class="concept-title"><i class="fas fa-check-double mr-2"></i>최종 정리</div>
+                    <ul>
+                        <li><i class="fas fa-link mr-2 text-blue-400"></i><b>Light Linking:</b><br> 조명이 <span class="highlight">어떤 물체를 비출지</span> 결정합니다. (1:N 관계)</li>
+                        <li class="mt-4"><i class="fas fa-magic mr-2 text-blue-400"></i><b>Shadow Linking:</b><br> 물체가 그림자를 <span class="highlight">만들지(Casts)</span> 또는 <span class="highlight">받지(Receives)</span> 않을지 결정합니다.</li>
+                    </ul>
+                </div>
+                <div class="concept-box">
+                     <div class="concept-title"><i class="fas fa-exclamation-triangle mr-2 text-yellow-400"></i>중요: 마지막 수단으로 사용!</div>
+                     <p>
+                        Linking은 물리 법칙을 거스르는 강력한 도구입니다. 라이팅 문제를 해결하는 가장 마지막 단계에서, 꼭 필요한 경우에만 신중하게 사용하여 <span class="highlight">씬의 복잡도와 비현실성을 관리</span>하는 것이 중요합니다.
+                    </p>
+                </div>
+            </div>
+            <div class="content-column">
+                <div class="concept-box">
+                    <div class="concept-title"><i class="fas fa-project-diagram mr-2"></i>추천 워크플로우</div>
+                    <ol class="list-decimal list-inside">
+                        <li class="mt-2"><b>1단계 (기본):</b> 먼저 물리적으로 정확한 기본 라이팅(Key, Fill, Rim)을 설정합니다.</li>
+                        <li class="mt-2"><b>2단계 (문제 식별):</b> 렌더링을 확인하며 의도치 않은 하이라이트, 반사, 그림자 등 문제점을 찾습니다.</li>
+                        <li class="mt-2"><b>3단계 (Light Linking):</b> 특정 조명이 불필요한 곳에 영향을 준다면 <span class="highlight">Light Linking</span>으로 조명 대상을 제한합니다. (예: Rim Light가 배경에 영향을 줄 때)</li>
+                        <li class="mt-2"><b>4단계 (Shadow Linking):</b> 그림자가 문제를 일으킨다면 <span class="highlight">Shadow Linking</span>으로 생성/수신 여부를 제어합니다. (예: 캐릭터 얼굴의 거슬리는 그림자)</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="footer">Pixar RenderMan 마스터클래스 | 5강</div>
+    </div>
+</body>
+</html>

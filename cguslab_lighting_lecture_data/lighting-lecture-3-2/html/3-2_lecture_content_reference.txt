@@ -1,0 +1,97 @@
+## 2강: PxrSurface 셰이더와 PBR 개념
+
+### 수업 목표
+
+- RenderMan의 만능 셰이더인 **PxrSurface**의 구조와 핵심 구성 요소(Lobe)를 이해합니다.
+- 물리 기반 렌더링(PBR)의 개념을 RenderMan의 관점에서 재해석하고, **과학적 데이터**를 활용한 정밀한 재질 표현법을 배웁니다.
+- PxrSurface의 **Artistic** 파라미터와 **Physical** 파라미터의 차이를 이해하고, 상황에 맞게 활용하는 방법을 익힙니다.
+- 다른 렌더러에서 사용하던 일반적인 PBR 텍스처(Roughness, Metallic 등)를 PxrSurface에서 효과적으로 사용하는 방법을 실습합니다.
+
+---
+
+### **1. PxrSurface: 모든 재질을 위한 하나의 솔루션**
+
+과거에는 플라스틱, 금속, 유리 등 재질별로 별도의 셰이더를 사용해야 했습니다. 하지만 RenderMan의 **PxrSurface**는 이 모든 것을 하나의 셰이더에서 구현할 수 있도록 설계된 강력한 **통합 셰이더(Uber Shader)**입니다.
+
+PxrSurface는 '레이어' 개념을 기반으로 합니다. 현실의 물체가 먼지, 코팅, 기본 재질 등 여러 층으로 이루어져 있듯이, PxrSurface도 Diffuse, Specular, Glass, Subsurface 등 다양한 재질 특성(이를 **Lobe**라고 부릅니다)을 겹겹이 쌓아 복합적인 재질을 만들어내는 방식입니다. 오늘은 가장 기본이 되는 Lobe들을 중심으로 살펴보겠습니다.
+
+---
+
+### **2. RenderMan 관점의 PBR: 과학을 예술로**
+
+- *PBR(Physically-Based Rendering)**은 빛이 재질과 상호작용하는 방식을 물리 법칙에 근거하여 시뮬레이션하는 접근법입니다. 대부분의 렌더러는 이를 'BaseColor', 'Metallic', 'Roughness' 같은 직관적인 파라미터로 단순화하여 사용합니다.
+
+RenderMan 역시 이 방식을 지원하지만, 한 걸음 더 나아가 **"과학적 데이터를 직접 사용하여 가장 정확한 재질을 구현한다"**는 철학을 가지고 있습니다. 이는 픽사의 아티스트와 엔지니어들이 현실 세계를 가장 정확하게 재현하기 위해 고민한 결과물입니다.
+
+### **Artistic vs. Physical: 직관과 정확성 사이**
+
+PxrSurface의 많은 파라미터는 **Artistic**와 **Physical** 두 가지 모드로 나뉩니다.
+
+- **Artistic Controls (예술적 제어):** 아티스트에게 익숙하고 직관적인 파라미터입니다. 예를 들어, 반사의 색상(Specular Edge Color)이나 거칠기(Roughness)를 직접 조절합니다. 빠르고 창의적인 표현에 유리합니다.
+- **Physical Controls (물리적 제어):** 실제 물질의 과학적인 광학 특성 값을 사용합니다. 대표적인 것이 **굴절률(Index of Refraction, IOR)**과 **소광 계수(Extinction Coefficient)**입니다. 이 값들을 사용하면 컴퓨터가 물리 법칙에 따라 정확한 반사 색상과 흡수율을 계산해 줍니다.
+
+> 전문가의 팁: 처음에는 Artistic 모드로 빠르게 원하는 느낌을 잡고, 극사실적인 표현이 필요할 때 Physical 모드로 전환하여 정밀도를 높이는 것이 효율적인 워크플로우입니다. 예를 들어, 금(Gold) 재질을 만들 때 Artistic 모드에서는 노란색 반사 색상을 직접 지정하지만, Physical 모드에서는 실제 금의 IOR(약 0.47)과 Extinction Coefficient(약 2.81) 값을 입력하여 훨씬 더 정확하고 깊이 있는 금속의 느낌을 구현할 수 있습니다.
+> 
+> 
+> *(참고: 이러한 과학적 데이터는 [RenderMan 과학적 데이터 사용 문서](https://www.google.com/search?q=https://rmanwiki.pixar.com/display/REN/PxrSurface%2BMaterial%2BProperties)나 [Filmetrics](https://www.filmetrics.com/refractive-index-database) 같은 데이터베이스에서 찾을 수 있습니다.)*
+> 
+
+---
+
+### **3. PxrSurface 핵심 파라미터 탐구**
+
+### **1) Diffuse (확산)**
+
+- 물체의 고유한 표면 색상을 결정합니다. 빛을 여러 방향으로 흩뿌리는 특성을 표현합니다.
+- `Color`: 재질의 기본 색상(Base Color 텍스처 연결)
+- `Roughness`: 표면의 미세한 거칠기를 시뮬레이션합니다. 값이 높을수록 빛이 더 넓게 퍼져 벨벳이나 분필 같은 느낌을 줍니다.
+
+### **2) Specular (정반사) - Primary & Rough Specular**
+
+- 하이라이트, 즉 빛의 반사를 제어합니다. PxrSurface는 이를 두 개의 레이어(Primary, Rough)로 나누어 더 정교한 표현이 가능하게 합니다.
+- **Artistic 모드:**
+    - `Face Color`: 정면에서 보이는 반사 색상
+    - `Edge Color`: 비스듬한 각도(Fresnel 효과)에서 보이는 반사 색상. 금속의 특징적인 색상은 주로 이 Edge Color에 의해 결정됩니다. (Metallic 워크플로우의 Metallic 맵과 유사한 역할을 합니다.)
+    - `Roughness`: 하이라이트의 퍼짐 정도. 0에 가까울수록 거울처럼 선명하고, 1에 가까울수록 넓게 퍼져 거칠어 보입니다. (Roughness 텍스처 연결)
+- **Physical 모드:**
+    - `Refractive Index (IOR)` & `Extinction Coefficient`: 이 두 값만 입력하면 렌더러가 물리적으로 정확한 Face/Edge Color를 계산합니다. **금속(Conductor) 재질을 만들 때** 주로 사용합니다. 비금속(Dielectric)은 Extinction 값이 0입니다.
+
+### **3) Clear Coat (투명 코팅)**
+
+- Specular 레이어 위에 얇은 투명 코팅 층을 추가합니다. 자동차 도색, 유광 처리된 목재, 카본 파이버 등의 재질에 유용합니다. Specular와 별개의 Roughness 값을 가질 수 있어, 거친 표면 위에 매끄러운 코팅이 된 느낌을 쉽게 만들 수 있습니다.
+
+### **4. 외부 PBR 텍스처 활용법**
+
+Substance Painter 등 다른 툴에서 만든 PBR 텍스처(BaseColor, Roughness, Metallic, Normal)를 PxrSurface에서 어떻게 사용할까요?
+
+- `Base Color` 텍스처 → `Diffuse Color`에 연결합니다.
+- `Roughness` 텍스처 → `Specular Roughness`에 연결합니다.
+- `Normal Map` 텍스처 → **PxrNormalMap** 노드를 생성하여 연결한 뒤, 그 결과를 `Globals` 탭의 `Bump Normal`에 연결합니다.
+- `Metallic` 텍스처: `PxrMetallicWorkflow` 노드를 사용하면 Substance Painter와 같은 툴의 Metallic 워크플로우를 쉽게 적용할 수 있습니다. 이 노드는 PBR 맵을 `PxrSurface`가 사용하는 Specular 워크플로우로 변환해줍니다.
+    1. `PxrMetallicWorkflow` 노드를 생성하고 PBR 텍스처 맵을 연결합니다.
+        - `Base Color` 맵 -> `Base Color` 입력
+        - `Metallic` 맵 -> `Metallic` 입력
+        - `Specular` 맵 (선택 사항) -> `Specular` 입력 (기본값 0.5, IOR 1.5에 해당)
+    2. `PxrMetallicWorkflow` 노드의 결과 출력을 `PxrSurface`의 해당 입력에 연결합니다.
+        - `Result Diffuse Color` -> `Diffuse Color`
+        - `Result Specular Face Color` -> `Specular Face Color`
+        - `Result Specular Edge Color` -> `Specular Edge Color`
+
+[Image showing a node graph of PBR textures connected to PxrSurface in Maya]
+
+---
+
+### **오늘의 실습 과제**
+
+1. **플라스틱 재질 만들기 (Artistic 모드):**
+    - `Diffuse Color`를 원하는 색으로 지정합니다.
+    - `Specular Roughness` 값을 조절하며 하이라이트의 변화를 관찰하세요. (0.1 ~ 0.8)
+    - `Clear Coat`를 추가하여 유광 코팅 효과를 만들어보세요.
+2. **금속 재질 만들기 (Artistic vs. Physical 비교):**
+    - **Artistic:** `Diffuse Color`를 검은색으로, `Specular Face Color`를 금색 계열로, `Edge Color`를 더 밝고 채도 높은 금색으로 설정하여 금 재질을 만들어보세요.
+    - **Physical:** `Diffuse`를 비활성화하고, `Specular`의 Physical 모드를 활성화하세요. 웹에서 찾은 금(Gold)의 **Refractive Index**와 **Extinction Coefficient** 값을 입력하고 Artistic 모드로 만든 결과물과 비교해 보세요. 어떤 차이가 느껴지나요?
+3. **외부 PBR 텍스처 적용:**
+    - 온라인에서 PBR 텍스처 세트(예: 목재, 녹슨 금속)를 다운로드 받으세요.
+    - 위에서 배운 방법을 참고하여 BaseColor, Roughness, Normal, Metallic 텍스처를 PxrSurface 셰이더에 직접 연결하여 렌더링해 보세요.
+
+다음 시간에는 오늘 만든 재질을 더욱 돋보이게 할 **HDRI 및 RenderMan의 다양한 조명**에 대해 배우겠습니다.

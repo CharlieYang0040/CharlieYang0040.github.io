@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 2강 | PxrSurface와 PBR 개념</title>
+    <title>Diffuse 파라미터</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -30,41 +30,34 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>PxrSurface와 PBR 개념</h1>
-                <p>RenderMan 마스터클래스 2강</p>
+                <h1>PxrSurface 핵심 파라미터 2: Clear Coat & PBR 텍스처</h1>
+                <p>재질의 깊이를 더하고 외부 텍스처를 활용하는 방법</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
+                    <div class="concept-title">3) Clear Coat (투명 코팅)</div>
+                    <p>Specular 레이어 위에 얇은 투명 코팅 층을 추가하여 깊이감을 더합니다.</p>
                     <ul>
-                        <li>만능 통합 셰이더 <span class="highlight">PxrSurface</span>의 구조와 핵심 <span class="highlight">Lobe</span></li>
-                        <li>RenderMan 관점의 <span class="highlight">PBR</span>: 과학적 데이터를 예술로</li>
-                        <li><span class="highlight">Artistic</span> 모드의 직관성과 <span class="highlight">Physical</span> 모드의 정확성 비교</li>
-                        <li>외부 PBR 텍스처(Roughness, Metallic 등)의 효과적인 활용법</li>
+                        <li><strong>활용 예시</strong>: 자동차 도색, 유광 처리된 목재, 카본 파이버 등</li>
+                        <li><strong>특징</strong>: Specular와 <span class="highlight">별개의 Roughness</span> 값을 가질 수 있어, 거친 표면 위에 매끄러운 코팅이 된 느낌을 쉽게 만들 수 있습니다.</li>
                     </ul>
                 </div>
                 <div class="image-container">
-                    <img class="main-image" alt="PxrSurface로 구현된 다양한 재질 예시" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PxrSurface+Materials"/>
-                    <p class="caption">PxrSurface로 구현된 다양한 재질 예시</p>
+                    <img class="main-image" alt="Clear Coat 적용 전후 비교" src="https://placehold.co/600x400/1A202C/FFFFFF?text=Clear+Coat+Effect"/>
+                    <p class="caption">Clear Coat는 재질에 사실적인 깊이와 광택을 더합니다.</p>
                 </div>
             </div>
             <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">핵심 키워드</div>
+                <div class="concept-box" style="height: 100%;">
+                    <div class="concept-title">4) 외부 PBR 텍스처 연결 (기본)</div>
+                    <p>Substance Painter 등 다른 툴에서 만든 PBR 텍스처를 아래 규칙에 따라 연결합니다.</p>
                     <ul>
-                        <li><span class="highlight">Uber Shader</span>, Lobe 기반 레이어링</li>
-                        <li><span class="highlight">IOR</span> & <span class="highlight">Extinction Coefficient</span>: 과학적 데이터 기반 재질 표현</li>
-                        <li><span class="highlight">Metallic 워크플로우</span>를 PxrSurface에서 구현하는 방법</li>
-                    </ul>
-                </div>
-                <div class="concept-box">
-                    <div class="concept-title">진행 방식</div>
-                    <ul>
-                        <li>핵심 개념 요약 → 파라미터 안내 → 실습</li>
-                        <li>외부 PBR 텍스처 연결 실습 포함</li>
+                        <li><kbd>Base Color</kbd> 텍스처 → <span class="highlight">Diffuse Color</span>에 연결</li>
+                        <li class="mt-2"><kbd>Roughness</kbd> 텍스처 → <span class="highlight">Specular Roughness</span>에 연결</li>
+                        <li class="mt-2"><kbd>Normal Map</kbd> 텍스처 → <span class="highlight">PxrNormalMap</span> 노드를 통해 <span class="highlight">Bump Normal</span>에 연결</li>
                     </ul>
                 </div>
             </div>
@@ -74,3 +67,4 @@
     </div>
 </body>
 </html>
+

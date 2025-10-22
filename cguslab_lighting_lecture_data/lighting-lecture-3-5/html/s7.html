@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RenderMan 5강 | Shadow Linking: Receives Shadows</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { margin: 0; padding: 0; background: #000; font-family: 'Pretendard', sans-serif; }
+        .slide-container { width: 1280px; min-height: 720px; margin: 0 auto; background-color: #1a202c; color: #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.25); display: flex; flex-direction: column; }
+        .header { padding: 1.75rem 2rem; background: #0f172a; border-bottom: 4px solid #2b6cb0; }
+        .header h1 { font-size: 2.25rem; font-weight: 800; margin: 0; }
+        .header p { font-size: 1.125rem; opacity: 0.85; margin: 0.25rem 0 0 0; }
+        .content { padding: 2rem; flex-grow: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .content-column { display: flex; flex-direction: column; gap: 1.5rem; }
+        .concept-box { background-color: #334155; border: 1px solid #475569; border-radius: 10px; padding: 1.5rem; }
+        .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; color: #90cdf4; }
+        .concept-box p { font-size: 1.125rem; line-height: 1.7; }
+        .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #334155; }
+        .main-image { width: 100%; height: auto; object-fit: cover; background-color: #334155; }
+        .caption { text-align: center; font-size: 0.875rem; color: #a0aec0; padding: 0.5rem; background-color: #2d3748; }
+        .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
+        .highlight { color: #f6e05e; font-weight: 700; }
+        blockquote { border-left: 4px solid #475569; padding-left: 1rem; margin-top: 1rem; font-style: italic; color: #cbd5e0; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h1>Receives Shadows 모드: 그림자 수신 제어</h1>
+            <p>특정 물체가 다른 물체의 그림자를 '받지 않도록' 설정합니다.</p>
+        </div>
+        <div class="content">
+            <div class="content-column">
+                <div class="concept-box">
+                    <div class="concept-title"><i class="fas fa-sign-in-alt mr-2"></i>'Receives Shadows'란?</div>
+                    <p>
+                        이 모드는 특정 물체가 다른 오브젝트에 의해 생긴 그림자를 <span class="highlight">받지 않도록(무시하도록)</span> 만듭니다.
+                        다른 오브젝트들은 여전히 정상적으로 그림자를 받지만, 지정된 물체 위에만 그림자가 생기지 않습니다.
+                    </p>
+                </div>
+                <div class="concept-box">
+                    <div class="concept-title"><i class="fas fa-user-shield mr-2"></i>활용 예시</div>
+                    <blockquote>
+                        배경에 있는 커다란 기둥이 주인공 캐릭터의 얼굴에 그림자를 드리워 표정이 잘 보이지 않습니다.
+                    </blockquote>
+                    <p class="mt-4">
+                        이때, <span class="highlight">'캐릭터'</span>가 '기둥'의 그림자를 받지 않도록 Shadow Linking을 설정하면, 기둥의 그림자는 바닥에는 정상적으로 생기지만 <span class="highlight">캐릭터의 얼굴 위에는 생기지 않아</span> 항상 깨끗하고 선명한 표정을 연출할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="content-column">
+                 <div class="image-container">
+                    <img class="main-image" alt="Receives Shadows 예시" src="https://placehold.co/600x450/1A202C/FFFFFF?text=Shadow+Receiving+Disabled"/>
+                    <p class="caption">캐릭터가 기둥의 그림자를 받지 않아 얼굴이 밝게 유지되는 모습</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer">Pixar RenderMan 마스터클래스 | 5강</div>
+    </div>
+</body>
+</html>

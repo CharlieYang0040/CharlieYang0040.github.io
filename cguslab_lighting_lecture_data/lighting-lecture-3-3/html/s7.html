@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PxrEnvDayLight 비교</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { margin: 0; padding: 0; background: #000; font-family: 'Pretendard', sans-serif; }
+        .slide-container { width: 1280px; min-height: 720px; margin: 0 auto; background-color: #1a202c; color: #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.25); }
+        .header { display: flex; align-items: center; justify-content: space-between; padding: 1.75rem 2rem; background: #0f172a; border-bottom: 4px solid #2b6cb0; }
+        .header h1 { font-size: 2.25rem; font-weight: 800; margin: 0; }
+        .header p { font-size: 1.125rem; opacity: 0.85; margin: 0.25rem 0 0 0; }
+        .content { padding: 2rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .content-column { display: flex; flex-direction: column; gap: 1.5rem; }
+        .concept-box { background-color: #334155; border: 1px solid #475569; border-radius: 10px; padding: 1.5rem; }
+        .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem; }
+        .concept-box p, .concept-box li { font-size: 1.25rem; line-height: 1.6; }
+        .concept-box li { margin-top: 0.6rem; }
+        .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
+        .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246, 224, 94, 0.15); padding: 2px 6px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div>
+                <h1>대안: PxrEnvDayLight</h1>
+                <p>물리 기반 하늘 vs. 예술적 제어</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="content-column">
+                <div class="concept-box" style="height: 100%;">
+                    <div class="concept-title">☀️ PxrEnvDayLight (물리 기반 하늘)</div>
+                    <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-check-circle" style="color: #48bb78;"></i></span><strong>장점:</strong> <span class="highlight">빠른 설정</span>과 물리적 <span class="highlight">정확성</span></li>
+                        <li class="mt-2"><span class="fa-li"><i class="fas fa-check-circle" style="color: #48bb78;"></i></span>위도, 경도, 시간, 날짜 입력 시 <span class="highlight">자동으로 하늘 생성</span></li>
+                    </ul>
+                    <hr style="border-color: #475569; margin: 1.5rem 0;">
+                    <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-times-circle" style="color: #f56565;"></i></span><strong>단점:</strong> 예술적/세밀한 제어의 <span class="highlight">어려움</span></li>
+                         <li class="mt-2"><span class="fa-li"><i class="fas fa-times-circle" style="color: #f56565;"></i></span>원하는 특정 분위기, 구름 형태 등을 <span class="highlight">정확히 연출하기 힘듦</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content-column">
+                <div class="concept-box" style="height: 100%;">
+                    <div class="concept-title">🎨 HDRI 분리 기법 (예술적 제어)</div>
+                     <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-check-circle" style="color: #48bb78;"></i></span><strong>장점:</strong> 하늘의 톤을 유지하며 태양의 <span class="highlight">강도, 색상, 위치</span>를 완벽 제어</li>
+                        <li class="mt-2"><span class="fa-li"><i class="fas fa-check-circle" style="color: #48bb78;"></i></span>아티스트의 <span class="highlight">의도를 100% 반영</span>하는 라이팅 가능</li>
+                    </ul>
+                     <hr style="border-color: #475569; margin: 1.5rem 0;">
+                    <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-times-circle" style="color: #f56565;"></i></span><strong>단점:</strong> Sun-only HDRI를 <span class="highlight">별도로 준비</span>해야 하는 번거로움</li>
+                        <li class="mt-2"><span class="fa-li"><i class="fas fa-times-circle" style="color: #f56565;"></i></span>두 개의 라이트를 관리해야 하는 <span class="highlight">복잡성</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">상황에 맞는 도구를 선택하는 것이 중요합니다.</div>
+    </div>
+</body>
+</html>
+

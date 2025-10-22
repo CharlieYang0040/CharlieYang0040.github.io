@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RenderMan 5강 | Light Linking이란?</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { margin: 0; padding: 0; background: #000; font-family: 'Pretendard', sans-serif; }
+        .slide-container { width: 1280px; min-height: 720px; margin: 0 auto; background-color: #1a202c; color: #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.25); display: flex; flex-direction: column; }
+        .header { padding: 1.75rem 2rem; background: #0f172a; border-bottom: 4px solid #2b6cb0; }
+        .header h1 { font-size: 2.25rem; font-weight: 800; margin: 0; }
+        .header p { font-size: 1.125rem; opacity: 0.85; margin: 0.25rem 0 0 0; }
+        .content { padding: 2rem; flex-grow: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .content-column { display: flex; flex-direction: column; gap: 1.5rem; }
+        .concept-box { background-color: #334155; border: 1px solid #475569; border-radius: 10px; padding: 1.5rem; }
+        .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; color: #90cdf4; }
+        .concept-box p, .concept-box li { font-size: 1.125rem; line-height: 1.7; }
+        .concept-box ul { list-style-type: none; padding: 0; }
+        .concept-box li { margin-top: 0.75rem; }
+        .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #334155; }
+        .main-image { width: 100%; height: auto; object-fit: cover; background-color: #334155; }
+        .caption { text-align: center; font-size: 0.875rem; color: #a0aec0; padding: 0.5rem; background-color: #2d3748; }
+        .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
+        .highlight { color: #f6e05e; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h1>Light Linking: 빛에게 대상을 정해주기</h1>
+            <p>특정 조명이 특정 물체에만 영향을 미치도록 설정하는 기능입니다.</p>
+        </div>
+        <div class="content">
+            <div class="content-column">
+                <div class="concept-box">
+                    <div class="concept-title"><i class="fas fa-link mr-2"></i>핵심 정의</div>
+                    <p>
+                        <span class="highlight">Light Linking</span>은 특정 조명과 특정 물체(또는 그룹)를 '연결'하여, 해당 조명이 오직 연결된 물체에만 영향을 미치도록 만드는 매우 강력한 제어 기능입니다.
+                    </p>
+                </div>
+                <div class="concept-box">
+                    <div class="concept-title"><i class="fas fa-question-circle mr-2"></i>왜 사용하는가?</div>
+                    <ul>
+                        <li><i class="fas fa-eye mr-2 text-blue-400"></i><b>시선 유도:</b> 중요한 캐릭터나 사물에만 빛을 집중시켜 관객의 시선을 자연스럽게 유도합니다.</li>
+                        <li><i class="fas fa-wrench mr-2 text-blue-400"></i><b>문제 해결:</b> 불필요한 하이라이트나 반사를 제거하여 씬을 더 깔끔하게 만듭니다.</li>
+                        <li><i class="fas fa-palette mr-2 text-blue-400"></i><b>예술적 표현:</b> 비현실적이더라도 의도한 느낌을 정확하게 연출하여 라이팅의 예술적 가치를 높입니다.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content-column">
+                <div class="concept-box">
+                    <div class="concept-title"><i class="fas fa-lightbulb mr-2"></i>대표적인 활용 사례</div>
+                    <ul>
+                        <li>
+                            <b class="text-lg text-yellow-300">1. 캐릭터 눈동자 하이라이트</b>
+                            <p class="mt-1">캐릭터의 눈에만 생기(Glint)를 더하는 작은 조명이 코나 뺨에는 영향을 주지 않고 <span class="highlight">오직 눈동자에만 반사</span>되도록 만들 수 있습니다.</p>
+                        </li>
+                        <li class="mt-4">
+                            <b class="text-lg text-yellow-300">2. 배경과 캐릭터 라이팅 분리</b>
+                            <p class="mt-1">캐릭터를 돋보이게 하는 <span class="highlight">Rim Light</span>가 배경에는 영향을 주지 않도록 하여, 캐릭터의 실루엣을 더욱 선명하게 강조할 수 있습니다.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="image-container">
+                    <img class="main-image" alt="Rim Light 예시" src="https://placehold.co/600x250/1A202C/FFFFFF?text=Rim+Light+on+Character+Only"/>
+                    <p class="caption">Rim Light가 캐릭터에게만 적용되고 배경에는 영향을 미치지 않는 모습</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer">Pixar RenderMan 마스터클래스 | 5강</div>
+    </div>
+</body>
+</html>

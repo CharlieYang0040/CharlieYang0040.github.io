@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RenderMan 5강 | '링킹'의 필요성</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { margin: 0; padding: 0; background: #000; font-family: 'Pretendard', sans-serif; }
+        .slide-container { width: 1280px; min-height: 720px; margin: 0 auto; background-color: #1a202c; color: #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.25); display: flex; flex-direction: column; }
+        .header { padding: 1.75rem 2rem; background: #0f172a; border-bottom: 4px solid #2b6cb0; }
+        .header h1 { font-size: 2.25rem; font-weight: 800; margin: 0; }
+        .header p { font-size: 1.125rem; opacity: 0.85; margin: 0.25rem 0 0 0; }
+        .content { padding: 2rem; flex-grow: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+        .concept-box { background-color: #334155; border: 1px solid #475569; border-radius: 10px; padding: 1.5rem; }
+        .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; color: #90cdf4; }
+        .concept-box p { font-size: 1.125rem; line-height: 1.7; }
+        .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
+        .highlight { color: #f6e05e; font-weight: 700; }
+        blockquote { border-left: 4px solid #475569; padding-left: 1rem; margin-top: 1rem; font-style: italic; color: #cbd5e0; }
+        .arrow { text-align: center; font-size: 2.5rem; color: #4a5568; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h1>왜 '링킹'이 필요한가?</h1>
+            <p>물리적 현실 vs. 예술적 연출</p>
+        </div>
+        <div class="content">
+            <div class="concept-box">
+                <div class="concept-title"><i class="fas fa-atom mr-2"></i>물리적 정확성의 한계</div>
+                <p>
+                    RenderMan의 Path Tracing은 현실의 빛을 매우 정확하게 시뮬레이션합니다. 현실에서 빛은 범위 내의 <span class="highlight">모든 물체</span>에 영향을 미치고, 모든 물체는 그림자를 만듭니다.
+                </p>
+                <p class="mt-4">
+                    하지만 때로는 이런 <span class="highlight">물리적 정확성이 예술적 표현에 방해</span>가 되기도 합니다. 아티스트는 종종 현실을 '선택적으로' 보여주고 싶어 합니다.
+                </p>
+            </div>
+            <div class="concept-box">
+                <div class="concept-title"><i class="fas fa-theater-masks mr-2"></i>연극 무대 비유</div>
+                <blockquote>
+                    무대 위 <span class="highlight">주인공에게만 스포트라이트</span>를 비추고 싶다고 상상해 보세요. 이때 스포트라이트는 주인공만 비추고, 바로 옆의 배경 소품이나 다른 배우는 비추지 않아야 합니다.
+                </blockquote>
+                <p class="mt-4">
+                    이것이 바로 <span class="highlight">Light Linking</span>의 핵심 개념입니다. 특정 조명(스포트라이트)과 특정 물체(주인공)를 <span class="highlight">연결(Link)</span>하여, 그 관계 속에서만 빛이 작동하도록 만드는 것입니다.
+                </p>
+            </div>
+        </div>
+        <div class="footer">Pixar RenderMan 마스터클래스 | 5강</div>
+    </div>
+</body>
+</html>

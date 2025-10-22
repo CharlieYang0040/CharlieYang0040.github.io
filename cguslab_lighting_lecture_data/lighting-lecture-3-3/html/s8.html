@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 3강 | HDRI 및 조명 실습</title>
+    <title>3점 조명 설계</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -19,9 +19,6 @@
         .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem; }
         .concept-box p, .concept-box li { font-size: 1.25rem; line-height: 1.6; }
         .concept-box li { margin-top: 0.6rem; }
-        .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #334155; }
-        .main-image { width: 100%; height: auto; object-fit: cover; background-color: #334155; }
-        .caption { text-align: center; font-size: 1rem; color: #a0aec0; padding: 0.75rem; background-color: #334155; }
         .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
         .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246, 224, 94, 0.15); padding: 2px 6px; border-radius: 4px; }
     </style>
@@ -30,36 +27,37 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>HDRI 및 RenderMan 조명 실습</h1>
-                <p>RenderMan 마스터클래스 3강</p>
+                <h1>3. 3점 조명: 빛으로 형태를 조각하다</h1>
+                <p>피사체를 돋보이게 만드는 핵심 조명 설계</p>
             </div>
         </div>
 
-        <div class="content">
-            <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
-                    <ul>
-                        <li>HDRI의 원리와 <span class="highlight">PxrDomeLight</span> 활용법</li>
-                        <li><span class="highlight">하늘/태양 분리</span>를 통한 전문 라이팅 기법</li>
-                        <li><span class="highlight">3점 조명</span> 설계와 <span class="highlight">Light Filter</span>를 이용한 빛의 제어</li>
-                    </ul>
-                </div>
-                <div class="image-container">
-                    <img class="main-image" alt="RenderMan Lighting" src="https://placehold.co/600x300/1A202C/FFFFFF?text=RenderMan+Lighting"/>
-                    <p class="caption">HDRI, 3점 조명, Light Filter를 활용한 사실적인 조명</p>
-                </div>
+        <div class="content" style="grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+            <div class="concept-box">
+                <div class="concept-title">🔦 Key Light (주 조명)</div>
+                <p>장면에서 <strong class="highlight">가장 강한</strong> 주된 광원. 피사체의 형태와 질감을 결정합니다.</p>
+                <ul class="list-disc list-inside mt-4">
+                    <li><strong>위치:</strong> 보통 45° 위, 45° 옆</li>
+                    <li><strong>라이트:</strong> PxrRectLight, PxrDiskLight</li>
+                    <li><strong>제어:</strong> <span class="highlight">크기(Size)</span>로 그림자 부드러움 조절</li>
+                </ul>
             </div>
-            <div class="content-column">
-                <div class="concept-box" style="height: 100%;">
-                    <div class="concept-title">핵심 키워드</div>
-                    <ul>
-                        <li>이미지 기반 라이팅 (<span class="highlight">IBL</span>)</li>
-                        <li>하늘/태양 분리 (<span class="highlight">Sky/Sun Separation</span>)</li>
-                        <li>3점 조명 (<span class="highlight">Key, Fill, Rim</span>)</li>
-                        <li>라이트 필터 (<span class="highlight">Barn, Gobo</span>)</li>
-                    </ul>
-                </div>
+            <div class="concept-box">
+                <div class="concept-title">💡 Fill Light (보조 조명)</div>
+                <p>Key Light가 만든 <strong class="highlight">강한 그림자를 부드럽게</strong> 채워주는 빛.</p>
+                 <ul class="list-disc list-inside mt-4">
+                    <li><strong>위치:</strong> Key Light 반대편</li>
+                    <li><strong>밝기:</strong> Key Light보다 <span class="highlight">훨씬 약하게</span></li>
+                    <li><strong>역할:</strong> 장면의 대비(Contrast) 조절</li>
+                </ul>
+            </div>
+            <div class="concept-box">
+                <div class="concept-title">✨ Rim Light (윤곽 조명)</div>
+                <p>피사체 뒤에서 비춰 <strong class="highlight">배경과 분리</strong>시키고 실루엣을 강조합니다.</p>
+                 <ul class="list-disc list-inside mt-4">
+                    <li><strong>역할:</strong> 입체감, 깊이감 부여</li>
+                    <li><strong>핵심:</strong> <span class="highlight">정밀한 위치/각도</span> 조절이 중요</li>
+                </ul>
             </div>
         </div>
 
@@ -67,3 +65,4 @@
     </div>
 </body>
 </html>
+

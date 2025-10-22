@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5. LPE 심화 및 데이터 패스</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { margin: 0; padding: 0; background: #000; font-family: 'Pretendard', sans-serif; }
+        .slide-container { width: 1280px; min-height: 720px; margin: 0 auto; background-color: #1a202c; color: #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.25); }
+        .header { display: flex; align-items: center; justify-content: space-between; padding: 1.75rem 2rem; background: #0f172a; border-bottom: 4px solid #2b6cb0; }
+        .header h1 { font-size: 2.25rem; font-weight: 800; margin: 0; }
+        .header p { font-size: 1.125rem; opacity: 0.85; margin: 0.25rem 0 0 0; }
+        .content { padding: 2rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .content-column { display: flex; flex-direction: column; gap: 2rem; }
+        .concept-box { background-color: #334155; border: 1px solid #475569; border-radius: 10px; padding: 2rem; }
+        .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .concept-box p { font-size: 1.1rem; line-height: 1.6; }
+        .concept-box ul { list-style: none; padding: 0; }
+        .concept-box li { font-size: 1.1rem; line-height: 1.6; background-color: #2d3748; padding: 0.75rem 1rem; border-radius: 6px; margin-top: 0.5rem; }
+        .concept-box li code { background-color: #4a5568; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+        .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
+        .highlight { color: #f6e05e; font-weight: 700; }
+        kbd { background-color: #718096; color: #fff; border-radius: 4px; padding: 2px 6px; font-size: 0.95rem; font-weight: 700; border: 1px solid #a0aec0; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div>
+                <h1>5. LPE 심화 및 데이터 패스</h1>
+                <p>후반 작업의 완성도를 높이는 특수 목적 AOV</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="content-column">
+                <div class="concept-box">
+                    <div class="concept-title">🌑 그림자 AOV와 LPE</div>
+                    <p>
+                        그림자는 빛이 가려져서 생기는 현상으로, 그 자체로 빛의 경로는 아닙니다. 따라서 RenderMan은 그림자 패스를 위해 <code class="highlight text-base">lpe:shadow</code> 라는 특별한 구문을 제공합니다.
+                    </p>
+                    <ul class="mt-4">
+                        <li>AOV 설정 창에서 <kbd>Create > Shadow</kbd> 메뉴를 사용하는 것은 사실상 특정 조명 그룹에 대한 <code class="text-white">lpe:shadow</code> 표현식을 자동으로 만들어주는 기능입니다.</li>
+                        <li>(예: Key Light의 그림자 <i class="fas fa-arrow-right mx-2"></i> <code class="text-white">lpe:shadow;C&lt;L.'key'&gt;</code>)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content-column">
+                <div class="concept-box">
+                    <div class="concept-title">💾 데이터 패스 (Data Pass)</div>
+                    <p>
+                        색상 정보가 아닌, 각 픽셀이 가진 <span class="highlight">위치, 방향</span> 같은 '데이터'를 담고 있는 AOV입니다. 후반 작업에서 3D 효과를 자연스럽게 적용하는 데 핵심적인 역할을 합니다.
+                    </p>
+                    <ul class="mt-4">
+                        <li><code>z</code> (Depth): 안개, 아웃포커싱 (DOF)</li>
+                        <li><code>Nn</code> (Normal): 리라이팅 (Relighting)</li>
+                        <li><code>P</code> (World Position): 3D 오브젝트 추가 합성</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">Pixar RenderMan 마스터클래스 | 4강</div>
+    </div>
+</body>
+</html>
+

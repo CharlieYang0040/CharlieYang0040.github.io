@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 2강 | PxrSurface와 PBR 개념</title>
+    <title>PxrSurface: Uber Shader</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -30,41 +30,31 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>PxrSurface와 PBR 개념</h1>
-                <p>RenderMan 마스터클래스 2강</p>
+                <h1>PxrSurface: 모든 재질을 위한 하나의 솔루션</h1>
+                <p>레이어링 기반 통합 셰이더</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
-                    <ul>
-                        <li>만능 통합 셰이더 <span class="highlight">PxrSurface</span>의 구조와 핵심 <span class="highlight">Lobe</span></li>
-                        <li>RenderMan 관점의 <span class="highlight">PBR</span>: 과학적 데이터를 예술로</li>
-                        <li><span class="highlight">Artistic</span> 모드의 직관성과 <span class="highlight">Physical</span> 모드의 정확성 비교</li>
-                        <li>외부 PBR 텍스처(Roughness, Metallic 등)의 효과적인 활용법</li>
-                    </ul>
-                </div>
-                <div class="image-container">
-                    <img class="main-image" alt="PxrSurface로 구현된 다양한 재질 예시" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PxrSurface+Materials"/>
-                    <p class="caption">PxrSurface로 구현된 다양한 재질 예시</p>
+                    <div class="concept-title">개념: 통합 셰이더 (Uber Shader)</div>
+                    <p>과거에는 플라스틱, 금속, 유리 등 재질별로 별도의 셰이더를 사용했지만, PxrSurface는 이 모든 것을 하나의 셰이더에서 구현하는 강력한 <span class="highlight">통합 셰이더</span>입니다.</p>
+                    <p class="mt-4">현실의 물체가 여러 층으로 이루어져 있듯이, PxrSurface도 다양한 재질 특성(<span class="highlight">Lobe</span>)을 겹겹이 쌓아 복합적인 재질을 만듭니다.</p>
                 </div>
             </div>
             <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">핵심 키워드</div>
-                    <ul>
-                        <li><span class="highlight">Uber Shader</span>, Lobe 기반 레이어링</li>
-                        <li><span class="highlight">IOR</span> & <span class="highlight">Extinction Coefficient</span>: 과학적 데이터 기반 재질 표현</li>
-                        <li><span class="highlight">Metallic 워크플로우</span>를 PxrSurface에서 구현하는 방법</li>
-                    </ul>
+                <div class="image-container">
+                    <img class="main-image" alt="PxrSurface의 레이어 구조" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PxrSurface+Layers"/>
+                    <p class="caption">다양한 Lobe를 레이어처럼 쌓아 복합 재질을 생성</p>
                 </div>
                 <div class="concept-box">
-                    <div class="concept-title">진행 방식</div>
+                    <div class="concept-title">핵심 구조: Lobe</div>
                     <ul>
-                        <li>핵심 개념 요약 → 파라미터 안내 → 실습</li>
-                        <li>외부 PBR 텍스처 연결 실습 포함</li>
+                        <li><strong>Diffuse</strong>: 표면의 고유 색상과 거칠기</li>
+                        <li><strong>Specular</strong>: 하이라이트와 빛 반사</li>
+                        <li><strong>Glass</strong>: 유리와 같은 투명/굴절 재질</li>
+                        <li><strong>Subsurface</strong>: 피부나 왁스 같은 반투명 재질</li>
                     </ul>
                 </div>
             </div>
@@ -74,3 +64,4 @@
     </div>
 </body>
 </html>
+

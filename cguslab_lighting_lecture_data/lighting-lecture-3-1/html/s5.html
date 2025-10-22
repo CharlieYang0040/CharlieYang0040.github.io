@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>RenderMan vs. V-Ray vs. Arnold</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { font-family: 'Pretendard', sans-serif; margin: 0; padding: 0; background: #000; }
+        .slide-container { background-color: #2d3748; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 1280px; min-height: 720px; overflow: hidden; color: #e2e8f0; }
+        .header { display: flex; align-items: center; justify-content: space-between; padding: 1.75rem 2rem; background-color: #1a202c; color: #fff; border-bottom: 4px solid #2b6cb0; }
+        .header h1 { font-size: 2.25rem; font-weight: 800; }
+        .header p { font-size: 1.125rem; opacity: 0.8; margin-top: 0.25rem; }
+        .content { padding: 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .content-column { display: flex; flex-direction: column; gap: 1.5rem; }
+        .concept-box { background-color: #4a5568; border-radius: 10px; border: 1px solid #718096; padding: 1.5rem; height: 100%; }
+        .concept-title { font-weight: 800; font-size: 1.5rem; color: #fff; margin-bottom: 0.75rem; }
+        .concept-box p, .concept-box li { font-size: 1.1rem; line-height: 1.6; }
+        .concept-box li { margin-top: 0.75rem; }
+        .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #4a5568; }
+        .main-image { width: 100%; height: auto; object-fit: cover; background-color: #4a5568; }
+        .caption { text-align: center; font-size: 1rem; color: #a0aec0; padding: 0.75rem; background-color: #4a5568; }
+        .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246,224,94,0.15); padding: 2px 6px; border-radius: 4px; }
+        .footer { padding: 1rem 2rem; background-color: #1a202c; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #4a5568; }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+    <div class="header">
+        <div>
+            <h1>RenderMan vs. V-Ray vs. Arnold</h1>
+            <p>각자의 철학과 강점 비교</p>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="content-column">
+            <div class="concept-box">
+                <div class="concept-title" style="color: #63b3ed;">RenderMan</div>
+                <ul>
+                    <li><strong>철학/강점:</strong><br><span class="highlight">VFX 및 장편 애니메이션</span>을 위한 타협 없는 <span class="highlight">퀄리티</span>와 <span class="highlight">유연성</span>.</li>
+                    <li><strong>차별점:</strong><br>PxrSurface의 독보적 유연성, 업계 최고 수준의 <span class="highlight">Denoise</span>, <span class="highlight">Deep 렌더링</span> 지원.</li>
+                    <li><strong>주 사용 분야:</strong><br>영화, VFX, 고퀄리티 애니메이션.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-column">
+            <div class="concept-box">
+                <div class="concept-title" style="color: #68d391;">Arnold</div>
+                <ul>
+                    <li><strong>철학/강점:</strong><br>아티스트 친화적인 <span class="highlight">단순함</span>과 <span class="highlight">예측 가능성</span>.</li>
+                    <li><strong>차별점:</strong><br>Standard Surface의 업계 표준화, 강력한 <span class="highlight">CPU 렌더링 안정성</span>.</li>
+                    <li><strong>주 사용 분야:</strong><br>영화, VFX, 광고.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-column">
+            <div class="concept-box">
+                <div class="concept-title" style="color: #fc8181;">V-Ray</div>
+                <ul>
+                    <li><strong>철학/강점:</strong><br><span class="highlight">속도</span>와 <span class="highlight">범용성</span>.</li>
+                    <li><strong>차별점:</strong><br>빠른 GI 계산, 세밀한 최적화, 강력한 <span class="highlight">재질/에셋 생태계</span>.</li>
+                    <li><strong>주 사용 분야:</strong><br>건축(Archviz), 인테리어, 제품 디자인.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">Pixar RenderMan 마스터클래스 | 1강</div>
+</div>
+</body>
+</html>
+

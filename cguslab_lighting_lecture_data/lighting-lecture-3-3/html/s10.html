@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 2강 | PxrSurface와 PBR 개념</title>
+    <title>실습 과제</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -24,53 +24,42 @@
         .caption { text-align: center; font-size: 1rem; color: #a0aec0; padding: 0.75rem; background-color: #334155; }
         .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
         .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246, 224, 94, 0.15); padding: 2px 6px; border-radius: 4px; }
+        kbd { background-color: #718096; color: #fff; border-radius: 4px; padding: 2px 6px; font-size: 0.95rem; font-weight: 700; border: 1px solid #a0aec0; }
     </style>
 </head>
 <body>
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>PxrSurface와 PBR 개념</h1>
-                <p>RenderMan 마스터클래스 2강</p>
+                <h1>오늘의 실습 과제</h1>
+                <p>배운 모든 기법을 종합하여 작품 만들기</p>
             </div>
         </div>
 
-        <div class="content">
-            <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
-                    <ul>
-                        <li>만능 통합 셰이더 <span class="highlight">PxrSurface</span>의 구조와 핵심 <span class="highlight">Lobe</span></li>
-                        <li>RenderMan 관점의 <span class="highlight">PBR</span>: 과학적 데이터를 예술로</li>
-                        <li><span class="highlight">Artistic</span> 모드의 직관성과 <span class="highlight">Physical</span> 모드의 정확성 비교</li>
-                        <li>외부 PBR 텍스처(Roughness, Metallic 등)의 효과적인 활용법</li>
-                    </ul>
-                </div>
-                <div class="image-container">
-                    <img class="main-image" alt="PxrSurface로 구현된 다양한 재질 예시" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PxrSurface+Materials"/>
-                    <p class="caption">PxrSurface로 구현된 다양한 재질 예시</p>
-                </div>
-            </div>
-            <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">핵심 키워드</div>
-                    <ul>
-                        <li><span class="highlight">Uber Shader</span>, Lobe 기반 레이어링</li>
-                        <li><span class="highlight">IOR</span> & <span class="highlight">Extinction Coefficient</span>: 과학적 데이터 기반 재질 표현</li>
-                        <li><span class="highlight">Metallic 워크플로우</span>를 PxrSurface에서 구현하는 방법</li>
-                    </ul>
-                </div>
-                <div class="concept-box">
-                    <div class="concept-title">진행 방식</div>
-                    <ul>
-                        <li>핵심 개념 요약 → 파라미터 안내 → 실습</li>
-                        <li>외부 PBR 텍스처 연결 실습 포함</li>
-                    </ul>
-                </div>
+        <div class="content" style="grid-template-columns: 1fr; padding: 2rem 4rem;">
+            <div class="concept-box" style="padding: 2rem;">
+                 <ol style="font-size: 1.5rem; list-style-type: decimal; padding-left: 2rem; line-height: 1.8;">
+                    <li style="margin-bottom: 1.5rem;">
+                        <strong>고급 HDRI 라이팅:</strong>
+                        <ul style="font-size: 1.25rem; list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem;">
+                            <li><span class="highlight">하늘/태양 분리 기법</span>을 사용하여 IBL을 설정합니다.</li>
+                            <li>태양 DomeLight를 회전/제어하며 <span class="highlight">그림자의 방향과 선명도</span>를 의도적으로 연출합니다.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>3점 조명 및 Light Filter 적용:</strong>
+                         <ul style="font-size: 1.25rem; list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem;">
+                            <li>IBL 씬에 <span class="highlight">Key, Fill, Rim</span> 3점 조명을 추가하여 모델을 강조합니다.</li>
+                            <li>Key Light에 <span class="highlight">PxrBarnLightFilter</span>를 적용하여 빛의 영역을 제어합니다.</li>
+                            <li>Rim Light에 <span class="highlight">PxrGoboLightFilter</span>를 적용하여 재미있는 패턴을 추가합니다.</li>
+                        </ul>
+                    </li>
+                </ol>
             </div>
         </div>
 
-        <div class="footer">Pixar RenderMan 마스터클래스 | 2강</div>
+        <div class="footer">궁금한 점은 언제든지 질문해 주세요!</div>
     </div>
 </body>
 </html>
+

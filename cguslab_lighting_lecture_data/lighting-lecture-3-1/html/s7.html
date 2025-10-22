@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>It 뷰어: ACES 컬러 스페이스 설정</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { font-family: 'Pretendard', sans-serif; margin: 0; padding: 0; background: #000; }
+        .slide-container { background-color: #2d3748; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 1280px; min-height: 720px; overflow: hidden; color: #e2e8f0; }
+        .header { display: flex; align-items: center; justify-content: space-between; padding: 1.75rem 2rem; background-color: #1a202c; color: #fff; border-bottom: 4px solid #2b6cb0; }
+        .header h1 { font-size: 2.25rem; font-weight: 800; }
+        .header p { font-size: 1.125rem; opacity: 0.8; margin-top: 0.25rem; }
+        .content { padding: 2rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .content-column { display: flex; flex-direction: column; gap: 1.5rem; }
+        .concept-box { background-color: #4a5568; border-radius: 10px; border: 1px solid #718096; padding: 1.5rem; }
+        .concept-title { font-weight: 800; font-size: 1.5rem; color: #fff; margin-bottom: 0.75rem; }
+        .concept-box p, .concept-box li { font-size: 1.25rem; line-height: 1.6; }
+        .concept-box li { margin-top: 0.6rem; }
+        .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #4a5568; }
+        .main-image { width: 100%; height: auto; object-fit: cover; background-color: #4a5568; }
+        .caption { text-align: center; font-size: 1rem; color: #a0aec0; padding: 0.75rem; background-color: #4a5568; }
+        .footer { padding: 1rem 2rem; background-color: #1a202c; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #4a5568; }
+        .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246,224,94,0.15); padding: 2px 6px; border-radius: 4px; }
+        kbd { background-color: #718096; color: #fff; border-radius: 4px; padding: 2px 6px; font-size: 0.95rem; font-weight: 700; border: 1px solid #a0aec0; }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+    <div class="header">
+        <div>
+            <h1>가장 중요한 첫 단계: 컬러 스페이스 설정</h1>
+            <p>프로덕션 표준 ACES 워크플로우 동기화</p>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="content-column">
+            <div class="concept-box">
+                <div class="concept-title">🤔 왜 필요한가? (Why)</div>
+                <p>
+                    프로덕션 환경에서는 반드시 <strong><span class="highlight">표준화된 컬러 워크플로우</span></strong>를 사용해야 합니다. 우리는 <strong><span class="highlight">ACES</span></strong>(Academy Color Encoding System)를 사용합니다.
+                </p>
+                <p style="margin-top: 1rem;">
+                    Maya의 컬러 설정과 "It" 뷰어를 동일하게 맞춰야만 <span class="highlight">정확한 색상을 보며 작업</span>할 수 있습니다.
+                </p>
+            </div>
+             <div class="image-container">
+                <img class="main-image" alt="It Preferences - Color Management" src="https://placehold.co/600x280/1A202C/FFFFFF?text=It+Preferences+%7C+ACES"/>
+                <p class="caption">"It" 뷰어의 컬러 매니지먼트 설정 화면</p>
+            </div>
+        </div>
+
+        <div class="content-column">
+            <div class="concept-box" style="height: 100%">
+                <div class="concept-title">🛠️ 설정 방법 (How)</div>
+                <ol style="list-style-type: decimal; padding-left: 1.5rem;">
+                    <li>"It" 뷰어를 엽니다. (RenderMan 셸프의 <kbd>it</kbd> 아이콘 클릭)</li>
+                    <li style="margin-top: 0.75rem;">상단 메뉴에서 <strong>Edit > Preferences</strong> 로 이동합니다.</li>
+                    <li style="margin-top: 0.75rem;"><strong>Color Management</strong> 탭을 선택합니다.</li>
+                    <li style="margin-top: 0.75rem;"><kbd>OCIO Config</kbd> 옵션을 <strong><span class="highlight">Use Maya's setting</span></strong>으로 변경합니다.</li>
+                    <li style="margin-top: 0.75rem;">이제 "It" 뷰어는 Maya와 동일한 <strong>ACES 1.2</strong> 컬러 스페이스로 이미지를 보여줍니다.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">Pixar RenderMan 마스터클래스 | 1강</div>
+</div>
+</body>
+</html>
+

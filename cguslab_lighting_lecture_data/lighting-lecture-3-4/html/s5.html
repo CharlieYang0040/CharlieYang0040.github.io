@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 3강 | HDRI 및 조명 실습</title>
+    <title>2. 기본 AOV 설정하기</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -13,57 +13,48 @@
         .header { display: flex; align-items: center; justify-content: space-between; padding: 1.75rem 2rem; background: #0f172a; border-bottom: 4px solid #2b6cb0; }
         .header h1 { font-size: 2.25rem; font-weight: 800; margin: 0; }
         .header p { font-size: 1.125rem; opacity: 0.85; margin: 0.25rem 0 0 0; }
-        .content { padding: 2rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .content { padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
         .content-column { display: flex; flex-direction: column; gap: 1.5rem; }
         .concept-box { background-color: #334155; border: 1px solid #475569; border-radius: 10px; padding: 1.5rem; }
         .concept-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem; }
-        .concept-box p, .concept-box li { font-size: 1.25rem; line-height: 1.6; }
-        .concept-box li { margin-top: 0.6rem; }
+        .concept-box ol { list-style-type: decimal; padding-left: 1.5rem; }
+        .concept-box li { font-size: 1.125rem; line-height: 1.6; margin-top: 1rem; }
         .image-container { border-radius: 10px; overflow: hidden; border: 1px solid #334155; }
         .main-image { width: 100%; height: auto; object-fit: cover; background-color: #334155; }
-        .caption { text-align: center; font-size: 1rem; color: #a0aec0; padding: 0.75rem; background-color: #334155; }
-        .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
+        .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1.0rem; color: #a0aec0; border-top: 1px solid #334155; }
         .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246, 224, 94, 0.15); padding: 2px 6px; border-radius: 4px; }
+        kbd { background-color: #718096; color: #fff; border-radius: 4px; padding: 2px 6px; font-size: 0.95rem; font-weight: 700; border: 1px solid #a0aec0; }
     </style>
 </head>
 <body>
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>HDRI 및 RenderMan 조명 실습</h1>
-                <p>RenderMan 마스터클래스 3강</p>
+                <h1>2. 기본 AOV 설정하기</h1>
+                <p>RenderMan Render Settings에서 AOV 채널 활성화</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
-                <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
-                    <ul>
-                        <li>HDRI의 원리와 <span class="highlight">PxrDomeLight</span> 활용법</li>
-                        <li><span class="highlight">하늘/태양 분리</span>를 통한 전문 라이팅 기법</li>
-                        <li><span class="highlight">3점 조명</span> 설계와 <span class="highlight">Light Filter</span>를 이용한 빛의 제어</li>
-                    </ul>
-                </div>
                 <div class="image-container">
-                    <img class="main-image" alt="RenderMan Lighting" src="https://placehold.co/600x300/1A202C/FFFFFF?text=RenderMan+Lighting"/>
-                    <p class="caption">HDRI, 3점 조명, Light Filter를 활용한 사실적인 조명</p>
+                    <img class="main-image" src="./resources/rendersettings.png" alt="RenderMan AOV Settings">
                 </div>
             </div>
             <div class="content-column">
-                <div class="concept-box" style="height: 100%;">
-                    <div class="concept-title">핵심 키워드</div>
-                    <ul>
-                        <li>이미지 기반 라이팅 (<span class="highlight">IBL</span>)</li>
-                        <li>하늘/태양 분리 (<span class="highlight">Sky/Sun Separation</span>)</li>
-                        <li>3점 조명 (<span class="highlight">Key, Fill, Rim</span>)</li>
-                        <li>라이트 필터 (<span class="highlight">Barn, Gobo</span>)</li>
-                    </ul>
+                <div class="concept-box">
+                    <div class="concept-title">⚙️ 설정 절차 (2가지 방법)</div>
+                    <ol>
+                        <li><strong>방법 1 (목록에서 추가):</strong> 왼쪽 <span class="highlight">Available Channels</span>에서 원하는 AOV(예: `diffuse`)를 선택 후 <kbd>→</kbd> 버튼을 눌러 오른쪽 <span class="highlight">Displays</span>로 옮깁니다.</li>
+                        <li><strong>방법 2 (직접 생성):</strong> 오른쪽 <span class="highlight">Displays</span> 하단의 <kbd>+</kbd> 버튼을 눌러 새 채널을 만들고, 아래 <span class="highlight">Channel Source</span>에 `z` 또는 `Nn` 같은 AOV 토큰을 직접 입력합니다.</li>
+                        <li>렌더링 후 "It" 뷰어의 드롭다운 메뉴에서 활성화된 AOV들을 각각 확인할 수 있습니다.</li>
+                    </ol>
                 </div>
             </div>
         </div>
 
-        <div class="footer">Pixar RenderMan 마스터클래스 | 3강</div>
+        <div class="footer">Pixar RenderMan 마스터클래스 | 4강</div>
     </div>
 </body>
 </html>
+

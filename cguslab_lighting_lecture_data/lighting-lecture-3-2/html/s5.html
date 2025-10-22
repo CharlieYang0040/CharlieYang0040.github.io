@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 2강 | PxrSurface와 PBR 개념</title>
+    <title>RenderMan 관점의 PBR</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -30,42 +30,39 @@
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>PxrSurface와 PBR 개념</h1>
-                <p>RenderMan 마스터클래스 2강</p>
+                <h1>Artistic vs. Physical</h1>
+                <p>직관과 정확성 사이의 선택</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
+                    <div class="concept-title">🎨 Artistic Controls (예술적 제어)</div>
+                    <p>아티스트에게 익숙하고 직관적인 파라미터를 사용합니다.</p>
                     <ul>
-                        <li>만능 통합 셰이더 <span class="highlight">PxrSurface</span>의 구조와 핵심 <span class="highlight">Lobe</span></li>
-                        <li>RenderMan 관점의 <span class="highlight">PBR</span>: 과학적 데이터를 예술로</li>
-                        <li><span class="highlight">Artistic</span> 모드의 직관성과 <span class="highlight">Physical</span> 모드의 정확성 비교</li>
-                        <li>외부 PBR 텍스처(Roughness, Metallic 등)의 효과적인 활용법</li>
+                        <li><strong>예시</strong>: 반사 색상(<span class="highlight">Specular Edge Color</span>)이나 거칠기(<span class="highlight">Roughness</span>)를 직접 조절</li>
+                        <li><strong>장점</strong>: 빠르고 창의적인 표현에 유리</li>
                     </ul>
                 </div>
-                <div class="image-container">
-                    <img class="main-image" alt="PxrSurface로 구현된 다양한 재질 예시" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PxrSurface+Materials"/>
-                    <p class="caption">PxrSurface로 구현된 다양한 재질 예시</p>
+                <div class="concept-box">
+                    <div class="concept-title">💡 전문가의 팁: 효율적인 워크플로우</div>
+                    <p>처음에는 <span class="highlight">Artistic</span> 모드로 빠르게 원하는 느낌을 잡고, 극사실적인 표현이 필요할 때 <span class="highlight">Physical</span> 모드로 전환하여 정밀도를 높이는 것이 효율적입니다.</p>
                 </div>
             </div>
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">핵심 키워드</div>
+                    <div class="concept-title">🧪 Physical Controls (물리적 제어)</div>
+                    <p>실제 물질의 과학적인 광학 특성 값을 사용합니다.</p>
                     <ul>
-                        <li><span class="highlight">Uber Shader</span>, Lobe 기반 레이어링</li>
-                        <li><span class="highlight">IOR</span> & <span class="highlight">Extinction Coefficient</span>: 과학적 데이터 기반 재질 표현</li>
-                        <li><span class="highlight">Metallic 워크플로우</span>를 PxrSurface에서 구현하는 방법</li>
+                        <li><strong>예시</strong>: 굴절률(<span class="highlight">IOR</span>)과 소광 계수(<span class="highlight">Extinction Coefficient</span>)</li>
+                        <li><strong>장점</strong>: 물리 법칙에 따라 컴퓨터가 정확한 반사 색상과 흡수율을 계산하여 사실적인 결과 제공</li>
                     </ul>
                 </div>
-                <div class="concept-box">
-                    <div class="concept-title">진행 방식</div>
-                    <ul>
-                        <li>핵심 개념 요약 → 파라미터 안내 → 실습</li>
-                        <li>외부 PBR 텍스처 연결 실습 포함</li>
-                    </ul>
+                 <div class="concept-box">
+                    <div class="concept-title">🪙 예시: 금(Gold) 재질</div>
+                    <p><strong>Artistic</strong>: 노란색 계열 반사 색상을 직접 지정</p>
+                    <p class="mt-2"><strong>Physical</strong>: 실제 금의 IOR(약 0.47)과 Extinction(약 2.81) 값을 입력하여 훨씬 더 정확하고 깊이 있는 금속 느낌 구현</p>
                 </div>
             </div>
         </div>
@@ -74,3 +71,4 @@
     </div>
 </body>
 </html>
+

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RenderMan 2강 | PxrSurface와 PBR 개념</title>
+    <title>실습 과제</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <style>
@@ -24,48 +24,39 @@
         .caption { text-align: center; font-size: 1rem; color: #a0aec0; padding: 0.75rem; background-color: #334155; }
         .footer { padding: 1rem 2rem; background-color: #0f172a; text-align: center; font-size: 1rem; color: #a0aec0; border-top: 1px solid #334155; }
         .highlight { color: #f6e05e; font-weight: 700; background-color: rgba(246, 224, 94, 0.15); padding: 2px 6px; border-radius: 4px; }
+        kbd { background-color: #718096; color: #fff; border-radius: 4px; padding: 2px 6px; font-size: 0.95rem; font-weight: 700; border: 1px solid #a0aec0; }
     </style>
 </head>
 <body>
     <div class="slide-container">
         <div class="header">
             <div>
-                <h1>PxrSurface와 PBR 개념</h1>
-                <p>RenderMan 마스터클래스 2강</p>
+                <h1>2강 정리 및 다음 강의 예고</h1>
+                <p>핵심 개념 복습과 다음 스텝</p>
             </div>
         </div>
 
         <div class="content">
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">강의 개요</div>
-                    <ul>
-                        <li>만능 통합 셰이더 <span class="highlight">PxrSurface</span>의 구조와 핵심 <span class="highlight">Lobe</span></li>
-                        <li>RenderMan 관점의 <span class="highlight">PBR</span>: 과학적 데이터를 예술로</li>
-                        <li><span class="highlight">Artistic</span> 모드의 직관성과 <span class="highlight">Physical</span> 모드의 정확성 비교</li>
-                        <li>외부 PBR 텍스처(Roughness, Metallic 등)의 효과적인 활용법</li>
+                    <div class="concept-title">오늘의 핵심 요약</div>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><span class="highlight">PxrSurface</span>는 Lobe를 레이어처럼 쌓아 모든 재질을 만드는 강력한 통합 셰이더입니다.</li>
+                        <li>RenderMan의 PBR은 <span class="highlight">과학적 데이터(IOR, Extinction)</span>를 활용하여 높은 사실성을 추구합니다.</li>
+                        <li><span class="highlight">Artistic</span> 모드는 빠른 작업을, <span class="highlight">Physical</span> 모드는 정확한 결과를 보장합니다.</li>
+                        <li><span class="highlight">Metallic 맵</span>은 Diffuse/Face Color와 Edge Color에 연결하여 효과적으로 변환할 수 있습니다.</li>
                     </ul>
-                </div>
-                <div class="image-container">
-                    <img class="main-image" alt="PxrSurface로 구현된 다양한 재질 예시" src="https://placehold.co/600x300/1A202C/FFFFFF?text=PxrSurface+Materials"/>
-                    <p class="caption">PxrSurface로 구현된 다양한 재질 예시</p>
                 </div>
             </div>
             <div class="content-column">
                 <div class="concept-box">
-                    <div class="concept-title">핵심 키워드</div>
-                    <ul>
-                        <li><span class="highlight">Uber Shader</span>, Lobe 기반 레이어링</li>
-                        <li><span class="highlight">IOR</span> & <span class="highlight">Extinction Coefficient</span>: 과학적 데이터 기반 재질 표현</li>
-                        <li><span class="highlight">Metallic 워크플로우</span>를 PxrSurface에서 구현하는 방법</li>
-                    </ul>
+                    <div class="concept-title">다음 시간에는...</div>
+                    <p class="text-2xl font-bold">HDRI 및 RenderMan의 다양한 조명</p>
+                    <p class="mt-4">오늘 만든 재질을 더욱 돋보이게 할 다양한 조명 기법과 HDRI 활용법에 대해 배우게 됩니다.</p>
                 </div>
-                <div class="concept-box">
-                    <div class="concept-title">진행 방식</div>
-                    <ul>
-                        <li>핵심 개념 요약 → 파라미터 안내 → 실습</li>
-                        <li>외부 PBR 텍스처 연결 실습 포함</li>
-                    </ul>
+                 <div class="image-container">
+                    <img class="main-image" alt="멋진 조명이 적용된 씬" src="https://placehold.co/600x300/1A202C/FFFFFF?text=Next+Lesson:+Lighting"/>
+                    <p class="caption">다음 시간에는 조명에 대해 배웁니다.</p>
                 </div>
             </div>
         </div>
@@ -74,3 +65,4 @@
     </div>
 </body>
 </html>
+
