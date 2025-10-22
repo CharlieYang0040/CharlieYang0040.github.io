@@ -10,7 +10,8 @@ function replaceAt(string: string, index: number, replace: string): string {
 
 
 // Step speed is a scale from 1-10, where 10 is the fastest (almost instant)
-const INTIAL_STEP_SPEED = 8;
+const INITIAL_SLIDER_SPEED = 3;
+const BASE_SPEED = 6;
 
 
 interface GameState extends Level {
@@ -22,6 +23,8 @@ interface GameState extends Level {
   functions: FunctionCommands,
   currentInstruction: CurrentInstruction | null,
   hoveredCommand: { funcNum: string, position: number } | null,
+  executionState: 'stopped' | 'running' | 'paused',
+  executionHistory: GameState[],
 }
 
 interface GameProps {
@@ -41,11 +44,13 @@ class Game extends Component<GameProps, GameState> {
       ...this.props.board,
       functions: {},
       stack: [],
-      stepDelay: this.calculateStepDelay(INTIAL_STEP_SPEED),
+      stepDelay: this.calculateStepDelay(INITIAL_SLIDER_SPEED + BASE_SPEED),
       clean: true,
       dragging: null,
       currentInstruction: null,
       hoveredCommand: null,
+      executionState: 'stopped',
+      executionHistory: [],
     };
   }
 
@@ -70,6 +75,8 @@ class Game extends Component<GameProps, GameState> {
       functions: state.functions,
       stack: [],
       currentInstruction: null,
+      executionState: 'stopped',
+      executionHistory: [],
     }));
   };
 
@@ -170,6 +177,36 @@ class Game extends Component<GameProps, GameState> {
   };
 
   handleKeyDown = (evt: KeyboardEvent) => {
+    // Global shortcuts that don't depend on a hovered command
+    switch (evt.key.toLowerCase()) {
+      case ' ':
+        evt.preventDefault();
+        this.togglePause();
+        return;
+      case 'arrowleft':
+        evt.preventDefault();
+        this.stepBackward();
+        return;
+      case 'arrowright':
+        evt.preventDefault();
+        this.stepForward();
+        return;
+      case 'c':
+        if (evt.shiftKey) {
+          evt.preventDefault();
+          this.clearAllFunctions();
+        }
+        return; // 'c' without shift does nothing and we shouldn't continue
+      case 'r':
+        if (evt.shiftKey) {
+            evt.preventDefault();
+            this.reset();
+            return;
+        }
+        // Fallthrough for 'r' without shift to be handled by command block shortcuts
+    }
+
+    // Command block shortcuts - require a hovered command
     const { hoveredCommand } = this.state;
     if (!hoveredCommand) return;
 
@@ -201,16 +238,17 @@ class Game extends Component<GameProps, GameState> {
       case "4":
       case "5":
       case "6":
-        command = `f${parseInt(evt.key) - 1}`;
+        command = `f${parseInt(evt.key, 10) - 1}`;
         break;
       case "q":
+      case "s": // Add 's' for default/gray color
         color = "clear";
         break;
       default:
-        return;
+        return; // Not a command block shortcut
     }
 
-    evt.preventDefault();
+    evt.preventDefault(); // Prevent default action only for command block shortcuts
 
     this.setState(state => {
       const { funcNum, position } = hoveredCommand;
@@ -228,9 +266,9 @@ class Game extends Component<GameProps, GameState> {
         newAction.command = command;
       }
 
-      if (color) {
+      if (color !== null) { // if a color-related key was pressed
         if (color === 'clear') {
-            newAction.color = null;
+            newAction.color = null; // sets to default/gray
         } else {
             newAction.color = color;
         }
@@ -244,6 +282,53 @@ class Game extends Component<GameProps, GameState> {
     });
   };
 
+  clearAllFunctions = () => {
+    this.setState({ functions: {} });
+  };
+
+  stepBackward = () => {
+    if (this.state.executionHistory.length > 0) {
+      this.setState(state => {
+        const lastState = state.executionHistory[state.executionHistory.length - 1];
+        return {
+          ...lastState,
+          executionHistory: state.executionHistory.slice(0, -1),
+          executionState: 'paused',
+        };
+      });
+    }
+  };
+
+  stepForward = () => {
+    let { executionState, stack } = this.state;
+    if (executionState === 'stopped' && (!stack || stack.length === 0)) {
+       this.reset();
+       const { functions } = this.state;
+       const starting = functions.f0;
+       stack = [].concat(starting);
+       this.setState({ stack, clean: false, currentInstruction: { function: "f0", index: 0 }, executionState: 'paused' });
+    } else {
+        this.setState({ executionState: 'paused' });
+    }
+
+    this.runSingleStep();
+  };
+
+
+  togglePause = () => {
+    const { executionState } = this.state;
+
+    if (executionState === 'stopped') {
+      this.start();
+    } else if (executionState === 'running') {
+      clearTimeout(this.timeout);
+      this.setState({ executionState: 'paused' });
+    } else if (executionState === 'paused') {
+      this.setState({ executionState: 'running' });
+      this.runStack();
+    }
+  };
+
   start = () => {
     this.reset();
     clearTimeout(this.timeout);
@@ -251,23 +336,45 @@ class Game extends Component<GameProps, GameState> {
     const { functions } = this.state;
     const starting = functions.f0;
     const stack: StackElement[] = [].concat(starting);
-    this.setState({ stack, clean: false, currentInstruction: { function: "f0", index: 0 } });
+    this.setState({ stack, clean: false, currentInstruction: { function: "f0", index: 0 }, executionState: 'running' });
     setTimeout(this.runStack, this.state.stepDelay);
   };
 
   runStack = () => {
+    if (this.state.executionState !== 'running') {
+      return;
+    }
+    this.runSingleStep(true);
+  }
+
+  runSingleStep = (isContinuousRun = false) => {
     this.setState(state => {
-      const { stack, Colors, RobotRow, RobotCol } = state;
-      if (stack.length === 0) {
+      if (state.stack.length === 0) {
         clearTimeout(this.timeout);
-        return;
+        return null; // No state update, this is safe.
       }
 
-      const action = stack.shift();
+      // Record state for history *before* any changes in this step
+      const clonedState = JSON.parse(JSON.stringify(state));
+      delete clonedState.executionHistory;
+
+      // Work with a copy of the stack to avoid direct state mutation
+      const newStack = [...state.stack];
+      const action = newStack.shift();
+
+      const { Colors, RobotRow, RobotCol } = state;
+
       if (!action) {
-        this.runNow();
-        return { stack, currentInstruction: null };
+        if (isContinuousRun) {
+          this.runNow();
+        }
+        return {
+          stack: newStack, // Use the new stack
+          currentInstruction: null,
+          executionHistory: [...state.executionHistory, clonedState], // Always return history
+        };
       }
+
       const { command, color, index } = action;
       let boardColor = "#";
       if (RobotRow in Colors && 0 <= RobotCol && RobotCol < Colors[RobotRow].length) {
@@ -281,13 +388,24 @@ class Game extends Component<GameProps, GameState> {
         (color === "blue" && boardColor === "B")
       ) {
         this.performAction(command);
-        this.timeout = setTimeout(this.runStack, this.state.stepDelay);
-        return { stack, currentInstruction: { function: action.function, index: index } };
+        if (isContinuousRun) {
+          this.timeout = setTimeout(this.runStack, this.state.stepDelay);
+        }
+        return {
+          stack: newStack, // Use the new stack
+          currentInstruction: { function: action.function, index: index },
+          executionHistory: [...state.executionHistory, clonedState],
+        };
       } else {
-        this.runNow();
-        return { stack, currentInstruction: null };
+        if (isContinuousRun) {
+          this.runNow();
+        }
+        return {
+          stack: newStack, // Use the new stack
+          currentInstruction: null,
+          executionHistory: [...state.executionHistory, clonedState],
+        };
       }
-
     });
   };
 
@@ -435,11 +553,22 @@ class Game extends Component<GameProps, GameState> {
                 dragging={dragging}
               />
               <div style={{ display: "flex" }}>
-                <button onClick={this.start} style={{ flex: 1 }}>
-                  Go
+                <button onClick={this.stepBackward} disabled={this.state.executionHistory.length === 0} style={{ flex: 0.5 }}>
+                  &lt;
                 </button>
+                <button onClick={this.togglePause} style={{ flex: 1 }}>
+                  {this.state.executionState === 'running' ? 'Pause' : this.state.executionState === 'paused' ? 'Resume' : 'Go'}
+                </button>
+                <button onClick={this.stepForward} disabled={this.state.executionState === 'running'} style={{ flex: 0.5 }}>
+                  &gt;
+                </button>
+              </div>
+              <div style={{ display: "flex" }}>
                 <button onClick={this.reset} style={{ flex: 1 }}>
                   Reset
+                </button>
+                <button onClick={this.clearAllFunctions} style={{ flex: 1 }}>
+                  Clear All
                 </button>
               </div>
               <div className="slider-container">
@@ -449,11 +578,11 @@ class Game extends Component<GameProps, GameState> {
                   id="seed"
                   type="range"
                   min="1"
-                  max="10"
-                  defaultValue={INTIAL_STEP_SPEED}
+                  max="5"
+                  defaultValue={INITIAL_SLIDER_SPEED}
                   onChange={evt => {
                     this.setState({
-                      stepDelay: this.calculateStepDelay(parseInt(evt.target.value, 10)),
+                      stepDelay: this.calculateStepDelay(parseInt(evt.target.value, 10) + BASE_SPEED),
                     });
                   }}
                 />
@@ -464,8 +593,12 @@ class Game extends Component<GameProps, GameState> {
                 <ul>
                   <li><b>W, A, D:</b> 이동 (전진, 좌, 우)</li>
                   <li><b>R, G, B:</b> 색상 조건</li>
+                  <li><b>Q, S:</b> 색상 조건 제거</li>
                   <li><b>1 - 6:</b> 함수 호출 (F0-F5)</li>
-                  <li><b>Q:</b> 명령/조건 제거</li>
+                  <li><b>Shift+C:</b> 모든 칸 초기화</li>
+                  <li><b>Shift+R:</b> 로봇 위치 초기화</li>
+                  <li><b>Space:</b> 실행 / 일시정지</li>
+                  <li><b>← →:</b> 한 단계씩 실행</li>
                 </ul>
                 <p className="attribution">
                   This project is a fork of <a href="https://github.com/alexanderson1993/robozzle-react" target="_blank" rel="noopener noreferrer">alexanderson1993's Robozzle</a>.

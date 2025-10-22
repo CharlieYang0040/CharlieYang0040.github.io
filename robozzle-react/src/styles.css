@@ -185,7 +185,7 @@ body {
 }
 
 .function-block.hovered {
-  border: solid 1px yellow;
+  border: solid 1px yellow !important;
 }
 
 .game-controls.dragging .function-block:hover {

@@ -51,6 +51,7 @@ const Controls = ({ SubLengths, dragging, functions, onMouseDown, currentInstruc
                       data-position={fi}
                       onMouseDown={onMouseDown}
                       onMouseEnter={() => onCommandHover(`f${i}`, fi)}
+                      onMouseLeave={() => onCommandHover(null, null)}
                     />
                   ))}
               </div>
