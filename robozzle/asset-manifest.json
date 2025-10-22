@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/robozzle/static/css/main.4d8f1c00.css",
+    "main.js": "/robozzle/static/js/main.d1a1829e.js",
+    "static/media/index.tsx": "/robozzle/static/media/index.386500e9e6b53d4774ad.tsx",
+    "static/media/ship.svg": "/robozzle/static/media/ship.ebe0a368114f2631bfaee37695ebdd81.svg",
+    "static/media/f0.svg": "/robozzle/static/media/f0.17a1b94e56510843c729.svg",
+    "static/media/f3.svg": "/robozzle/static/media/f3.a394fda28ef6640655ec.svg",
+    "static/media/f5.svg": "/robozzle/static/media/f5.eb98d464f295c8588187.svg",
+    "static/media/f2.svg": "/robozzle/static/media/f2.44128c2623e43492ac2a.svg",
+    "static/media/star.svg": "/robozzle/static/media/star.452eab406c29df207139.svg",
+    "static/media/right.svg": "/robozzle/static/media/right.4f1d44bb1b0dd66e22a9.svg",
+    "static/media/left.svg": "/robozzle/static/media/left.1bc416775b1ce5b484d1.svg",
+    "static/media/forward.svg": "/robozzle/static/media/forward.248b7f753c72930bc06c.svg",
+    "static/media/f4.svg": "/robozzle/static/media/f4.029274566cdb0848df65.svg",
+    "static/media/f1.svg": "/robozzle/static/media/f1.e63357ea000cb3917bba.svg",
+    "index.html": "/robozzle/index.html",
+    "main.4d8f1c00.css.map": "/robozzle/static/css/main.4d8f1c00.css.map",
+    "main.d1a1829e.js.map": "/robozzle/static/js/main.d1a1829e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4d8f1c00.css",
+    "static/js/main.d1a1829e.js"
+  ]
+}
