@@ -23,12 +23,14 @@ interface CommandsProps {
   functions: any,
   onMouseDown,
   currentInstruction: CurrentInstruction,
+  onCommandHover: (funcNum: string | null, position: number | null) => void,
+  hoveredCommand: { funcNum: string, position: number } | null,
 }
 
 
-const Controls = ({ SubLengths, dragging, functions, onMouseDown, currentInstruction }: CommandsProps) => {
+const Controls = ({ SubLengths, dragging, functions, onMouseDown, currentInstruction, onCommandHover, hoveredCommand }: CommandsProps) => {
   return (
-    <div className={`game-controls ${dragging ? "dragging" : ""}`}>
+    <div className={`game-controls ${dragging ? "dragging" : ""}`} onMouseLeave={() => onCommandHover(null, null)}>
       {SubLengths.map(
         (s, i) =>
           s > 0 && (
@@ -44,10 +46,11 @@ const Controls = ({ SubLengths, dragging, functions, onMouseDown, currentInstruc
                   .map((f, fi) => (
                     <div
                       key={`f${i}-${fi}`}
-                      className={`function-block ${functionClasses(`f${i}`, fi, functions, currentInstruction)} `}
+                      className={`function-block ${functionClasses(`f${i}`, fi, functions, currentInstruction)} ${hoveredCommand && hoveredCommand.funcNum === `f${i}` && hoveredCommand.position === fi ? 'hovered' : ''}`}
                       data-funcnum={`f${i}`}
                       data-position={fi}
                       onMouseDown={onMouseDown}
+                      onMouseEnter={() => onCommandHover(`f${i}`, fi)}
                     />
                   ))}
               </div>

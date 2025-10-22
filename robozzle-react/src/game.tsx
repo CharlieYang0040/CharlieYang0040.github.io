@@ -21,6 +21,7 @@ interface GameState extends Level {
   dragging: DragInfo | null,
   functions: FunctionCommands,
   currentInstruction: CurrentInstruction | null,
+  hoveredCommand: { funcNum: string, position: number } | null,
 }
 
 interface GameProps {
@@ -44,7 +45,17 @@ class Game extends Component<GameProps, GameState> {
       clean: true,
       dragging: null,
       currentInstruction: null,
+      hoveredCommand: null,
     };
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyDown);
+    clearTimeout(this.timeout);
   }
 
   calculateStepDelay = (stepSpeed: number) => {
@@ -146,6 +157,89 @@ class Game extends Component<GameProps, GameState> {
       return {
         dragging: null,
         functions: { ...state.functions, [funcKey]: func }
+      };
+    });
+  };
+
+  handleCommandHover = (funcNum: string | null, position: number | null) => {
+    if (funcNum === null || position === null) {
+      this.setState({ hoveredCommand: null });
+    } else {
+      this.setState({ hoveredCommand: { funcNum, position } });
+    }
+  };
+
+  handleKeyDown = (evt: KeyboardEvent) => {
+    const { hoveredCommand } = this.state;
+    if (!hoveredCommand) return;
+
+    let command: string | null = null;
+    let color: string | null = null;
+
+    switch (evt.key.toLowerCase()) {
+      case "w":
+        command = "forward";
+        break;
+      case "a":
+        command = "left";
+        break;
+      case "d":
+        command = "right";
+        break;
+      case "r":
+        color = "red";
+        break;
+      case "g":
+        color = "green";
+        break;
+      case "b":
+        color = "blue";
+        break;
+      case "1":
+      case "2":
+      case "3":
+      case "4":
+      case "5":
+      case "6":
+        command = `f${parseInt(evt.key) - 1}`;
+        break;
+      case "q":
+        color = "clear";
+        break;
+      default:
+        return;
+    }
+
+    evt.preventDefault();
+
+    this.setState(state => {
+      const { funcNum, position } = hoveredCommand;
+      const func = state.functions[funcNum] || [];
+      const existingCommand = func[position] || { command: null, color: null };
+
+      let newAction = {
+        function: funcNum,
+        index: position,
+        command: existingCommand.command,
+        color: existingCommand.color
+      };
+
+      if (command) {
+        newAction.command = command;
+      }
+
+      if (color) {
+        if (color === 'clear') {
+            newAction.color = null;
+        } else {
+            newAction.color = color;
+        }
+      }
+      
+      func[position] = newAction;
+
+      return {
+        functions: { ...state.functions, [funcNum]: func }
       };
     });
   };
@@ -315,7 +409,7 @@ class Game extends Component<GameProps, GameState> {
   };
 
   render() {
-    const { dragging, functions, stepDelay } = this.state;
+    const { dragging, functions, stepDelay, hoveredCommand } = this.state;
     return (
       <Fragment>
         <style>
@@ -332,6 +426,8 @@ class Game extends Component<GameProps, GameState> {
                 dragging={dragging}
                 functions={functions}
                 onMouseDown={this.commandMouseDown}
+                onCommandHover={this.handleCommandHover}
+                hoveredCommand={hoveredCommand}
               />
               <Commands
                 {...this.state}

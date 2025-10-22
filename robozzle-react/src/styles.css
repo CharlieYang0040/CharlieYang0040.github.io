@@ -184,6 +184,10 @@ body {
   transition: background-color 0.2s ease;
 }
 
+.function-block.hovered {
+  border: solid 1px yellow;
+}
+
 .game-controls.dragging .function-block:hover {
   background-color: rgba(255, 255, 255, 0.5);
 }
