@@ -366,3 +366,52 @@ body {
   border-color: yellow;
   border-width: 1px;
 }
+
+.info-box {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.info-box h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.info-box ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 14px;
+  margin: 0;
+}
+
+.info-box li {
+  margin-bottom: 5px;
+}
+
+.info-box b {
+  width: 80px;
+  display: inline-block;
+  font-weight: 500;
+  color: #61dafb;
+}
+
+.info-box .attribution {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 15px;
+  border-top: 1px solid #555;
+  padding-top: 10px;
+  margin-bottom: 0;
+}
+
+.info-box .attribution a {
+  color: #61dafb;
+  text-decoration: none;
+}
+
+.info-box .attribution a:hover {
+  text-decoration: underline;
+}

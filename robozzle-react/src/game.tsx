@@ -459,6 +459,18 @@ class Game extends Component<GameProps, GameState> {
                 />
                 <label htmlFor="speed">Fast</label>
               </div>
+              <div className="info-box">
+                <h4>단축키 안내</h4>
+                <ul>
+                  <li><b>W, A, D:</b> 이동 (전진, 좌, 우)</li>
+                  <li><b>R, G, B:</b> 색상 조건</li>
+                  <li><b>1 - 6:</b> 함수 호출 (F0-F5)</li>
+                  <li><b>Q:</b> 명령/조건 제거</li>
+                </ul>
+                <p className="attribution">
+                  This project is a fork of <a href="https://github.com/alexanderson1993/robozzle-react" target="_blank" rel="noopener noreferrer">alexanderson1993's Robozzle</a>.
+                </p>
+              </div>
             </div>
           </Fragment>
         </div>

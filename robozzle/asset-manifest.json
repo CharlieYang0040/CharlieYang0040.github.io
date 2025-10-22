@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/robozzle/static/css/main.ae852f21.css",
-    "main.js": "/robozzle/static/js/main.9982fc0d.js",
+    "main.css": "/robozzle/static/css/main.b45effc0.css",
+    "main.js": "/robozzle/static/js/main.d90578c6.js",
     "static/media/index.tsx": "/robozzle/static/media/index.386500e9e6b53d4774ad.tsx",
     "static/media/ship.svg": "/robozzle/static/media/ship.ebe0a368114f2631bfaee37695ebdd81.svg",
     "static/media/f0.svg": "/robozzle/static/media/f0.17a1b94e56510843c729.svg",
@@ -15,11 +15,11 @@
     "static/media/f4.svg": "/robozzle/static/media/f4.029274566cdb0848df65.svg",
     "static/media/f1.svg": "/robozzle/static/media/f1.e63357ea000cb3917bba.svg",
     "index.html": "/robozzle/index.html",
-    "main.ae852f21.css.map": "/robozzle/static/css/main.ae852f21.css.map",
-    "main.9982fc0d.js.map": "/robozzle/static/js/main.9982fc0d.js.map"
+    "main.b45effc0.css.map": "/robozzle/static/css/main.b45effc0.css.map",
+    "main.d90578c6.js.map": "/robozzle/static/js/main.d90578c6.js.map"
   },
   "entrypoints": [
-    "static/css/main.ae852f21.css",
-    "static/js/main.9982fc0d.js"
+    "static/css/main.b45effc0.css",
+    "static/js/main.d90578c6.js"
   ]
 }
