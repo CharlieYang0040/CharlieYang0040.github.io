@@ -1,29 +1,50 @@
 {
-  "version": 1,
+  "version": 2,
   "locations": {
     "sydney_airport": { "lat": -33.9461, "lng": 151.1772, "name": "시드니 공항 (SYD)" },
-    "sydney_cbd": { "lat": -33.8651, "lng": 151.2099, "name": "시드니 CBD" },
+    "sydney_cbd": { "lat": -33.8651, "lng": 151.2099, "name": "시드니 CBD (숙소)" },
+    "macchiato_pizza": { "lat": -33.8762, "lng": 151.2064, "name": "Macchiato Wood Fire Pizza" },
     "world_square": { "lat": -33.8769, "lng": 151.2071, "name": "World Square" },
     "hyde_park": { "lat": -33.8737, "lng": 151.2135, "name": "하이드 파크" },
-    "paddys_market": { "lat": -33.8796, "lng": 151.203, "name": "패디스 마켓" },
-    "chinatown": { "lat": -33.8782, "lng": 151.2053, "name": "차이나타운" },
-    "darling_harbour": { "lat": -33.8737, "lng": 151.1989, "name": "달링 하버" },
+    "qvb": { "lat": -33.8718, "lng": 151.2067, "name": "QVB (Queen Victoria Building)" },
+    "rest_hubert": { "lat": -33.8633, "lng": 151.2093, "name": "Restaurant Hubert (재즈바)" },
     "sydney_bondi": { "lat": -33.8915, "lng": 151.2767, "name": "본다이 비치" },
+    "north_bondi_fish": { "lat": -33.8894, "lng": 151.2818, "name": "North Bondi Fish" },
     "bondi_icebergs": { "lat": -33.8943, "lng": 151.2747, "name": "본다이 아이스버그" },
     "sydney_watsons": { "lat": -33.8431, "lng": 151.2825, "name": "왓슨스 베이" },
     "gap_park": { "lat": -33.8411, "lng": 151.2803, "name": "갭팍 (Gap Park)" },
-    "sydney_quay": { "lat": -33.861, "lng": 151.2109, "name": "서큘러 키" },
+    "sydney_quay": { "lat": -33.861, "lng": 151.2109, "name": "서큘러 키 (페리)" },
+    "hurricanes_grill": { "lat": -33.8608, "lng": 151.2114, "name": "Hurricane's Grill Circular Quay" },
     "opera_house": { "lat": -33.8568, "lng": 151.2153, "name": "오페라 하우스" },
     "harbour_bridge": { "lat": -33.8523, "lng": 151.2108, "name": "하버 브리지" },
     "the_rocks": { "lat": -33.859, "lng": 151.2076, "name": "더 록스" },
     "sydney_uni": { "lat": -33.8886, "lng": 151.1873, "name": "시드니 대학교" },
     "sydney_observatory": { "lat": -33.859, "lng": 151.2052, "name": "천문대 언덕" },
-    "barangaroo": { "lat": -33.8597, "lng": 151.2014, "name": "바랑가루" },
-    "christchurch": { "lat": -43.5321, "lng": 172.6362, "name": "크라이스트처치" },
-    "tekapo": { "lat": -44.0046, "lng": 170.4771, "name": "테카포 호수" },
-    "mountcook": { "lat": -43.7335, "lng": 170.0962, "name": "마운트쿡" },
-    "queenstown": { "lat": -45.0312, "lng": 168.6626, "name": "퀸스타운" },
-    "auckland": { "lat": -36.8485, "lng": 174.7633, "name": "오클랜드" }
+    "meat_wine_barangaroo": { "lat": -33.8643, "lng": 151.2018, "name": "The Meat & Wine Co Barangaroo" },
+    "blue_mountains": { "lat": -33.7297, "lng": 150.3017, "name": "블루마운틴 (세자매봉)" },
+    "featherdale": { "lat": -33.7663, "lng": 150.8844, "name": "페더데일 동물원" },
+    
+    "christchurch": { "lat": -43.5321, "lng": 172.6362, "name": "크라이스트처치 (Hotel Give)" },
+    "riverside_market": { "lat": -43.5342, "lng": 172.6338, "name": "리버사이드 마켓" },
+    "castle_hill": { "lat": -43.2285, "lng": 171.7188, "name": "캐슬 힐" },
+    "fairlie_bakehouse": { "lat": -44.0945, "lng": 170.8306, "name": "Fairlie Bakehouse (미트파이)" },
+    "tekapo": { "lat": -44.0046, "lng": 170.4771, "name": "테카포 호수 (Haka House)" },
+    "lake_pukaki": { "lat": -44.1751, "lng": 170.1065, "name": "푸카키 호수 전망대" },
+    "mt_cook_airport": { "lat": -43.7672, "lng": 170.1338, "name": "마운트쿡 공항 (헬기투어)" },
+    "mountcook": { "lat": -43.7335, "lng": 170.0962, "name": "마운트쿡 빌리지 (Haka House)" },
+    "queenstown": { "lat": -45.0312, "lng": 168.6626, "name": "퀸스타운 (Lake View Suite)" },
+    "onsen_hot_pools": { "lat": -44.9881, "lng": 168.6811, "name": "온센 핫풀" },
+    "queenstown_airport": { "lat": -45.0211, "lng": 168.7392, "name": "퀸스타운 공항" },
+
+    "auckland_airport": { "lat": -37.0082, "lng": 174.7850, "name": "오클랜드 공항" },
+    "auckland_cbd": { "lat": -36.8485, "lng": 174.7633, "name": "오클랜드 CBD (Ramada)" },
+    "waitomo_caves": { "lat": -38.2612, "lng": 175.1035, "name": "와이토모 동굴" },
+    "hobbiton": { "lat": -37.8721, "lng": 175.6829, "name": "호비튼 무비 세트" },
+    "rotorua_quest": { "lat": -38.1368, "lng": 176.2497, "name": "로토루아 (Quest Central)" },
+    "redwoods_rotorua": { "lat": -38.1565, "lng": 176.2736, "name": "레드우드 숲" },
+    "okere_falls": { "lat": -38.0125, "lng": 176.3456, "name": "Okere Falls (래프팅)" },
+    "auckland_grand": { "lat": -36.8491, "lng": 174.7622, "name": "오클랜드 (The Grand/Avani)" },
+    "mt_eden": { "lat": -36.8773, "lng": 174.7645, "name": "마운트 이든" }
   },
   "sydney": {
     "mapCenter": { "lat": -33.8651, "lng": 151.2099, "zoom": 11 },
@@ -37,21 +58,28 @@
         "popupPrefix": "<strong>1일차 (1/19):</strong>",
         "markerColor": "#dc2626",
         "pathColor": "#dc2626",
-        "locationKeys": ["sydney_airport", "sydney_cbd", "world_square", "hyde_park", "paddys_market", "chinatown", "darling_harbour"]
+        "locationKeys": ["sydney_airport", "sydney_cbd", "macchiato_pizza", "world_square", "hyde_park", "qvb", "rest_hubert"]
       },
       {
         "label": "2일차 (1/20)",
         "popupPrefix": "<strong>2일차 (1/20):</strong>",
         "markerColor": "#2563eb",
         "pathColor": "#2563eb",
-        "locationKeys": ["sydney_cbd", "sydney_bondi", "bondi_icebergs", "sydney_watsons", "gap_park", "sydney_quay"]
+        "locationKeys": ["sydney_cbd", "sydney_bondi", "north_bondi_fish", "bondi_icebergs", "sydney_watsons", "gap_park", "sydney_quay", "hurricanes_grill"]
       },
       {
         "label": "3일차 (1/21)",
         "popupPrefix": "<strong>3일차 (1/21):</strong>",
         "markerColor": "#16a34a",
         "pathColor": "#16a34a",
-        "locationKeys": ["sydney_quay", "opera_house", "harbour_bridge", "the_rocks", "sydney_uni", "sydney_observatory", "barangaroo"]
+        "locationKeys": ["sydney_quay", "opera_house", "harbour_bridge", "the_rocks", "sydney_uni", "sydney_observatory", "meat_wine_barangaroo"]
+      },
+      {
+        "label": "4일차 (1/22)",
+        "popupPrefix": "<strong>4일차 (1/22):</strong>",
+        "markerColor": "#f59e0b",
+        "pathColor": "#f59e0b",
+        "locationKeys": ["sydney_cbd", "blue_mountains", "featherdale", "sydney_cbd"]
       }
     ]
   },
@@ -61,13 +89,15 @@
       "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       "attribution": "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"
     },
-    "cityKeys": ["christchurch", "tekapo", "mountcook", "queenstown", "auckland"],
+    "cityKeys": ["christchurch", "tekapo", "mountcook", "queenstown", "auckland_cbd", "rotorua_quest", "waitomo_caves", "hobbiton"],
     "cityDateLabels": {
       "christchurch": "5일차 (1/23)",
       "tekapo": "6일차 (1/24)",
       "mountcook": "7일차 (1/25)",
       "queenstown": "8-9일차 (1/26-27)",
-      "auckland": "10-11일차 (1/28-29)"
+      "auckland_cbd": "10일차 (1/28)",
+      "rotorua_quest": "11일차 (1/29)",
+      "auckland_grand": "12-13일차 (1/30-31)"
     },
     "paths": [
       {
@@ -83,7 +113,8 @@
         "color": "#f97316",
         "weight": 4,
         "opacity": 1,
-        "locationKeys": ["christchurch", "tekapo", "mountcook", "queenstown"]
+        "label": "남섬 로드트립",
+        "locationKeys": ["christchurch", "castle_hill", "fairlie_bakehouse", "tekapo", "lake_pukaki", "mt_cook_airport", "mountcook", "queenstown", "onsen_hot_pools"]
       },
       {
         "type": "flight",
@@ -91,10 +122,16 @@
         "weight": 3,
         "opacity": 0.7,
         "dashArray": "8, 12",
-        "locationKeys": ["queenstown", "auckland"]
+        "locationKeys": ["queenstown_airport", "auckland_airport"]
+      },
+      {
+        "type": "road",
+        "color": "#8b5cf6",
+        "weight": 4,
+        "opacity": 1,
+        "label": "북섬 로드트립",
+        "locationKeys": ["auckland_cbd", "waitomo_caves", "hobbiton", "rotorua_quest", "redwoods_rotorua", "okere_falls", "auckland_grand"]
       }
     ]
   }
 }
-
-
