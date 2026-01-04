@@ -1,116 +1,116 @@
 {
-  "version": 4,
+  "version": 7,
   "days": [
     {
       "dayNumber": 1,
       "dateLabel": "1월 19일 (월)",
       "locationLabel": "🇦🇺 시드니",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전 (10:05~):</strong> <strong class=\"text-emerald-600\">시드니 공항(SYD)</strong> 도착. 입국 심사 후 <strong>공항철도</strong>로 시티 이동.</li>\n  <li><strong class=\"text-teal-700\">오후 (15:00):</strong> <strong class=\"text-blue-600\">The Sydney Boulevard Hotel</strong> 체크인 (짐 보관 후 이동).</li>\n  <li><strong class=\"text-teal-700\">점심:</strong> <strong class=\"text-purple-600\">Macchiato Wood Fire Pizza</strong>에서 화덕피자.</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> <strong class=\"text-emerald-600\">World Square</strong> 쇼핑 (Peter Alexander, Stussy) 및 <strong class=\"text-emerald-600\">하이드 파크</strong> 산책. 이후 <strong class=\"text-emerald-600\">QVB</strong> 관람.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-emerald-600\">달링 하버</strong> 산책 및 야경 감상하며 저녁 식사.</li>\n</ul>",
-      "tipsHtml": "<strong>QVB:</strong> 17~18시경 상점 마감 유의",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전 (10:05~):</strong> <strong class=\"text-emerald-600\">시드니 공항(SYD)</strong> 도착. 입국 심사(1h) → <strong>공항철도</strong> 이동(20m).</li>\n  <li><strong class=\"text-teal-700\">13:00:</strong> 시내 도착. <strong class=\"text-blue-600\">The Sydney Boulevard Hotel</strong> 짐 보관.</li>\n  <li><strong class=\"text-teal-700\">13:30:</strong> <strong class=\"text-purple-600\">Macchiato Wood Fire Pizza</strong> 늦은 점심.</li>\n  <li><strong class=\"text-teal-700\">14:30:</strong> <strong class=\"text-emerald-600\">World Square</strong> (Peter Alexander, Stussy) 쇼핑 & <strong class=\"text-emerald-600\">하이드 파크</strong> 산책.</li>\n  <li><strong class=\"text-teal-700\">16:30:</strong> <strong class=\"text-emerald-600\">QVB (Queen Victoria Building)</strong> 내부 관람.</li>\n  <li><strong class=\"text-teal-700\">저녁 (19:00):</strong> <strong class=\"text-purple-600\">Restaurant Hubert</strong>. 프랑스 감성의 재즈 바에서 로맨틱한 디너. (💡재즈 공연 시간 맞춰 예약 필수)</li>\n</ul>",
+      "tipsHtml": "<strong>Hubert:</strong> 예약 필수 (인기 매우 많음)",
       "lodging": "The Sydney Boulevard Hotel"
     },
     {
       "dayNumber": 2,
       "dateLabel": "1월 20일 (화)",
       "locationLabel": "🇦🇺 시드니",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전:</strong> <strong>333번 버스</strong>로 <strong class=\"text-emerald-600\">본다이 비치</strong> 이동. 해변 산책 및 <strong class=\"text-emerald-600\">아이스버그 수영장</strong> 인생샷.</li>\n  <li><strong class=\"text-teal-700\">점심:</strong> 본다이 비치 인근 브런치 카페.</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> 버스/우버로 <strong class=\"text-emerald-600\">왓슨스 베이</strong> 이동. <strong class=\"text-emerald-600\">갭팍(Gap Park)</strong> 절벽 절경 감상.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> 일몰 시간에 맞춰 페리 탑승(왓슨스베이→서큘러키). <strong class=\"text-purple-600\">허리케인 그릴 서큘러키점</strong>에서 폭립 식사.</li>\n</ul>",
-      "tipsHtml": "<strong>페리:</strong> 일몰 시간 우측 좌석 추천<br><strong>저녁:</strong> 서큘러키 지점 예약 필수",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">09:00:</strong> <strong>333번 버스</strong>로 <strong class=\"text-emerald-600\">본다이 비치</strong> 이동. 해변 산책 & <strong class=\"text-emerald-600\">아이스버그 수영장</strong> 인생샷.</li>\n  <li><strong class=\"text-teal-700\">점심 (12:00):</strong> <strong class=\"text-purple-600\">North Bondi Fish</strong>. 오션뷰와 신선한 해산물 요리.</li>\n  <li><strong class=\"text-teal-700\">14:00:</strong> 버스/우버로 <strong class=\"text-emerald-600\">왓슨스 베이</strong> 이동. <strong class=\"text-emerald-600\">갭팍</strong> 절벽 감상.</li>\n  <li><strong class=\"text-teal-700\">19:00:</strong> 페리 탑승 (Watsons Bay → Circular Quay). <strong>일몰 감상</strong>.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-purple-600\">Hurricane's Grill Circular Quay</strong>. 페리 터미널 뷰와 폭립.</li>\n</ul>",
+      "tipsHtml": "<strong>예약:</strong> 두 식당 모두 예약 권장",
       "lodging": "The Sydney Boulevard Hotel"
     },
     {
       "dayNumber": 3,
       "dateLabel": "1월 21일 (수)",
       "locationLabel": "🇦🇺 시드니",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전:</strong> <strong class=\"text-emerald-600\">서큘러 키</strong> 및 <strong class=\"text-emerald-600\">오페라 하우스</strong> 주변 산책. <strong class=\"text-emerald-600\">하버 브리지 파일런 전망대</strong> 등반.</li>\n  <li><strong class=\"text-teal-700\">점심:</strong> <strong class=\"text-emerald-600\">더 록스(The Rocks)</strong>의 오래된 펍에서 피쉬 앤 칩스와 맥주.</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> 버스로 <strong class=\"text-emerald-600\">시드니 대학교</strong> 이동. 해리포터 느낌의 <strong>메인 쿼드랭글</strong>에서 스냅 사진 촬영.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> 시내 복귀 후 <strong class=\"text-emerald-600\">천문대 언덕</strong> 노을 감상. <strong class=\"text-emerald-600\">바랑가루</strong> 지역 레스토랑에서 저녁.</li>\n</ul>",
-      "tipsHtml": "<strong>사진:</strong> 시드니대 쿼드랭글 포토존 추천",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전 (09:00):</strong> <strong class=\"text-emerald-600\">서큘러 키</strong> 산책, <strong class=\"text-emerald-600\">하버 브리지 파일런 전망대</strong> 등반.</li>\n  <li><strong class=\"text-teal-700\">점심 (12:00):</strong> <strong class=\"text-emerald-600\">더 록스</strong> 펍(The Australian Heritage Hotel 등)에서 피자 또는 피쉬앤칩스.</li>\n  <li><strong class=\"text-blue-700\">[Option A: 시드니대]</strong> 13:30 버스 → <strong>시드니 대학교(Quadrangle)</strong> 스냅 → 16:00 복귀.<br><strong class=\"text-blue-700\">[Option B: 시내]</strong> 13:30 <strong>로열 보타닉 가든</strong> & <strong>미세스 맥콰리 체어</strong> → 도보 복귀.</li>\n  <li><strong class=\"text-teal-700\">17:30:</strong> <strong class=\"text-emerald-600\">천문대 언덕</strong> 노을 감상.</li>\n  <li><strong class=\"text-teal-700\">저녁 (19:00):</strong> <strong class=\"text-purple-600\">The Meat & Wine Co Barangaroo</strong>. 고급 스테이크와 와인.</li>\n</ul>",
+      "tipsHtml": "<strong>Barangaroo:</strong> 예약 시간 15분 전 도착",
       "lodging": "The Sydney Boulevard Hotel"
     },
     {
       "dayNumber": 4,
       "dateLabel": "1월 22일 (목)",
       "locationLabel": "🇦🇺 시드니",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">투어 (07:30~):</strong> <strong>씨 라이프 아쿠아리움 오른편</strong> 집결. <strong class=\"text-emerald-600\">블루마운틴 & 동물원 투어</strong> 출발.</li>\n  <li><strong class=\"text-teal-700\">코스:</strong> 페더데일 동물원, 킹스 테이블랜드, 에코 포인트(세자매봉), 시닉월드 등.</li>\n  <li><strong class=\"text-teal-700\">복귀 (16:15):</strong> <strong>리지스 월드 스퀘어</strong> 도착.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> 시드니에서의 마지막 밤, 숙소 근처에서 여유로운 식사 및 휴식.</li>\n</ul>",
-      "tipsHtml": "<strong>투어:</strong> 07:30 출발 시간 엄수",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">07:30:</strong> <strong>씨 라이프 아쿠아리움 오른편</strong> 집결. <strong class=\"text-emerald-600\">블루마운틴 & 동물원 투어</strong> 출발.</li>\n  <li><strong class=\"text-teal-700\">오전/오후:</strong> 링컨스 락, 세자매봉, 시닉월드, 페더데일 동물원.</li>\n  <li><strong class=\"text-teal-700\">16:15:</strong> 투어 종료 (리지스 월드 스퀘어 하차).</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> 피로도 고려 <strong class=\"text-emerald-600\">월드 스퀘어</strong> 내 <strong class=\"text-purple-600\">Din Tai Fung</strong>(딤섬) 또는 근처 <strong class=\"text-purple-600\">Masala Theory</strong>(모던 인도식) 추천.</li>\n</ul>",
+      "tipsHtml": "<strong>휴식:</strong> 내일 이동 위해 컨디션 조절",
       "lodging": "The Sydney Boulevard Hotel"
     },
     {
       "dayNumber": 5,
       "dateLabel": "1월 23일 (금)",
       "locationLabel": "🇳🇿 크라이스트처치",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전 (08:45):</strong> 시드니 출발 (SYD → CHC).</li>\n  <li><strong class=\"text-teal-700\">오후 (14:00):</strong> <strong class=\"text-emerald-600\">크라이스트처치 공항</strong> 도착.</li>\n  <li><strong class=\"text-teal-700\">렌터카 (16:00):</strong> Snap Rentals 셔틀 탑승 후 차량 인수 (Toyota Yaris Hybrid).</li>\n  <li><strong class=\"text-teal-700\">체크인:</strong> <strong class=\"text-blue-600\">Hotel Give</strong> (15:00 이후).</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-emerald-600\">리버사이드 마켓(Riverside Market)</strong> 방문. 다양한 푸드코트에서 저녁 해결 및 활기찬 분위기 즐기기.</li>\n</ul>",
-      "tipsHtml": "<strong>운전:</strong> 한국과 반대 방향 주의",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">이동 (08:45):</strong> 시드니 출발 → 14:00 <strong class=\"text-emerald-600\">크라이스트처치 공항</strong> 도착.</li>\n  <li><strong class=\"text-teal-700\">렌터카 (16:00):</strong> Snap Rentals 셔틀 → 차량 인수.</li>\n  <li><strong class=\"text-teal-700\">체크인 (16:30):</strong> <strong class=\"text-blue-600\">Hotel Give</strong> (체크인 15:00~).</li>\n  <li><strong class=\"text-teal-700\">저녁 (18:00):</strong> <strong class=\"text-emerald-600\">리버사이드 마켓</strong>. 다양한 푸드코트 음식 즐기기.</li>\n</ul>",
+      "tipsHtml": "<strong>체크아웃:</strong> 내일 10:00 체크아웃 준비",
       "lodging": "Hotel Give"
     },
     {
       "dayNumber": 6,
       "dateLabel": "1월 24일 (토)",
       "locationLabel": "🇳🇿 테카포",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전 (10:00):</strong> 체크아웃 후 테카포로 출발. <strong>아서스 패스 방향</strong>으로 우회하여 <strong class=\"text-emerald-600\">캐슬 힐(Castle Hill)</strong> 방문. 거대한 석회암 바위 사이 산책.</li>\n  <li><strong class=\"text-teal-700\">오후 (14:00):</strong> <strong class=\"text-blue-600\">Haka House Lake Tekapo</strong> 체크인.</li>\n  <li><strong class=\"text-teal-700\">관광:</strong> <strong class=\"text-emerald-600\">선한 목자의 교회</strong>, 호숫가 산책.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-purple-600\">Kohan Restaurant</strong>(예약 권장) 또는 인근 식당. 밤에는 별 관측.</li>\n</ul>",
-      "tipsHtml": "<strong>경로:</strong> 캐슬 힐 경유 시 시간 여유 갖기",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">10:00:</strong> 체크아웃 후 출발.</li>\n  <li><strong class=\"text-teal-700\">11:30:</strong> <strong class=\"text-emerald-600\">캐슬 힐(Castle Hill)</strong> 산책.</li>\n  <li><strong class=\"text-teal-700\">점심 (13:00):</strong> 이동 중 <strong class=\"text-purple-600\">Fairlie Bakehouse</strong>에서 뉴질랜드 최고의 미트 파이 맛보기.</li>\n  <li><strong class=\"text-teal-700\">15:00:</strong> <strong class=\"text-blue-600\">Haka House Lake Tekapo</strong> 체크인 (14:00~).</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> 선한 목자의 교회, 호숫가 산책.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-purple-600\">Kohan</strong> 일식당. 식사 후 별 관측.</li>\n</ul>",
+      "tipsHtml": "<strong>Fairlie:</strong> 포크 벨리 파이 추천",
       "lodging": "Haka House Lake Tekapo"
     },
     {
       "dayNumber": 7,
       "dateLabel": "1월 25일 (일)",
       "locationLabel": "🇳🇿 마운트쿡",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전:</strong> 마운트쿡 이동 (약 1시간). <strong class=\"text-emerald-600\">푸카키 호수</strong> 감상.</li>\n  <li><strong class=\"text-teal-700\">오후 (14:00):</strong> <strong class=\"text-blue-600\">Haka House Aoraki Mt Cook</strong> 체크인.</li>\n  <li><strong class=\"text-teal-700\">액티비티:</strong> <strong class=\"text-emerald-600\">타스만 빙하 헬기 투어 (Heli-Hike)</strong>. 빙하 위를 걷는 특별한 경험.</li>\n  <li><strong class=\"text-teal-700\">저녁 (17:00 이후):</strong> 투어 종료 후, 숙소 근처 <strong class=\"text-emerald-600\">키아 포인트(Kea Point)</strong> 트랙 가볍게 산책 (왕복 1시간, 평지, 빙하호수 뷰). 이후 숙소나 <strong class=\"text-purple-600\">허미티지 호텔</strong>에서 일몰을 보며 저녁 식사.</li>\n</ul>",
-      "tipsHtml": "<strong>투어:</strong> 날씨에 따라 변동 가능성 있음",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">11:30:</strong> 체크아웃(10:00) 후 <strong class=\"text-emerald-600\">푸카키 호수 전망대</strong> 경유하여 출발. (늦어도 12:00엔 출발해야 함)</li>\n  <li><strong class=\"text-teal-700\">13:30:</strong> 마운트쿡 빌리지 도착. <strong class=\"text-blue-600\">Haka House Aoraki Mt Cook</strong> 짐 보관.</li>\n  <li><strong class=\"text-teal-700\">14:30:</strong> <strong>Mount Cook Airport</strong> 이동.</li>\n  <li><strong class=\"text-teal-700\">14:45:</strong> <strong>⚠️ 헬기 투어 체크인 완료 (필수).</strong></li>\n  <li><strong class=\"text-teal-700\">15:30:</strong> <strong class=\"text-emerald-600\">Tasman Taster Flight</strong> 탑승.</li>\n  <li><strong class=\"text-teal-700\">17:00:</strong> 숙소 체크인 및 <strong class=\"text-emerald-600\">키아 포인트</strong> 가벼운 산책 또는 <strong class=\"text-purple-600\">Old Mountaineers' Cafe</strong> 저녁.</li>\n</ul>",
+      "tipsHtml": "<strong>시간엄수:</strong> 헬기 체크인 시간 절대 준수",
       "lodging": "Haka House Aoraki Mt Cook"
     },
     {
       "dayNumber": 8,
       "dateLabel": "1월 26일 (월)",
       "locationLabel": "🇳🇿 퀸스타운",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전 (10:00):</strong> 퀸스타운 이동 (약 3.5시간). <strong class=\"text-emerald-600\">린디스 패스</strong> 경유.</li>\n  <li><strong class=\"text-teal-700\">점심:</strong> <strong class=\"text-emerald-600\">크롬웰</strong> 과일 가게 들러 휴식.</li>\n  <li><strong class=\"text-teal-700\">오후 (15:00):</strong> <strong class=\"text-blue-600\">Lake View Suite</strong> 체크인. 퀸스타운 시내 및 호숫가 산책.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-purple-600\">퍼그버거</strong> 또는 <strong class=\"text-purple-600\">Botswana Butchery</strong> 등 맛집 탐방.</li>\n</ul>",
-      "tipsHtml": "<strong>숙소:</strong> Exceptional Views 즐기기",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">10:00:</strong> 체크아웃(10:00) 후 출발 (약 3.5시간 소요).</li>\n  <li><strong class=\"text-teal-700\">점심:</strong> 크롬웰 <strong class=\"text-purple-600\">The Stoaker Room</strong> (통나무 찜 요리) 또는 과일가게 간식.</li>\n  <li><strong class=\"text-teal-700\">15:00:</strong> <strong class=\"text-blue-600\">Lake View Suite</strong> 체크인 (15:00~).</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-purple-600\">퍼그버거</strong> 테이크아웃 또는 <strong class=\"text-purple-600\">Botswana Butchery</strong>.</li>\n</ul>",
+      "tipsHtml": "<strong>운전:</strong> 린디스 패스 구간 안전 운전",
       "lodging": "Lake View Suite"
     },
     {
       "dayNumber": 9,
       "dateLabel": "1월 27일 (화)",
       "locationLabel": "🇳🇿 퀸스타운",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전 (09:00):</strong> <strong class=\"text-amber-600\">온센 핫풀 (Onsen Hot Pools)</strong> 예약 방문.</li>\n  <li><strong class=\"text-teal-700\">점심:</strong> 시내 자유 식사.</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> <strong class=\"text-emerald-600\">스카이라인 곤돌라 & 루지</strong>. 퀸스타운 가든스 산책 등 시내에서 여유롭게 즐기기.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> 호숫가 펍이나 레스토랑에서 퀸스타운의 마지막 밤 만끽.</li>\n</ul>",
-      "tipsHtml": "<strong>일정:</strong> 퀸스타운 내에서 힐링",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">09:00:</strong> <strong class=\"text-amber-600\">온센 핫풀 (Onsen Hot Pools)</strong>. (숙소에서 08:30 출발).</li>\n  <li><strong class=\"text-teal-700\">점심:</strong> <strong class=\"text-purple-600\">Vudu Cafe & Larder</strong> 등 시내 브런치.</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> <strong class=\"text-emerald-600\">스카이라인 곤돌라 & 루지</strong>.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-purple-600\">Flame Bar & Grill</strong> (폭립/스테이크) 또는 호숫가 펍.</li>\n</ul>",
+      "tipsHtml": "<strong>온센핫풀:</strong> 예약 내역 재확인",
       "lodging": "Lake View Suite"
     },
     {
       "dayNumber": 10,
       "dateLabel": "1월 28일 (수)",
       "locationLabel": "🇳🇿 오클랜드",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전:</strong> 공항 이동, 렌터카 반납 후 12:10 퀸스타운 출발 → 14:00 오클랜드 도착.</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> <strong>북섬 렌터카 인수</strong>. <strong class=\"text-blue-600\">Ramada Suites Victoria St West</strong> 체크인.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> 오클랜드 시내 구경. <strong class=\"text-emerald-600\">비아덕트 하버</strong>나 <strong class=\"text-emerald-600\">스카이 타워</strong> 주변 관광.</li>\n</ul>",
-      "tipsHtml": "<strong>이동:</strong> 내일 장거리 운전 대비 휴식",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">10:00:</strong> <strong>체크아웃(10:00)</strong> 후 공항 이동.</li>\n  <li><strong class=\"text-teal-700\">10:30:</strong> 렌터카 반납 완료.</li>\n  <li><strong class=\"text-teal-700\">12:10:</strong> 퀸스타운 출발 → 14:00 오클랜드 도착.</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> 시내 이동 및 <strong class=\"text-blue-600\">Ramada Suites Victoria St West</strong> 체크인.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-emerald-600\">스카이시티</strong> 주변 구경 및 휴식. (내일 매우 바쁨).</li>\n</ul>",
+      "tipsHtml": "<strong>휴식:</strong> 내일 장거리 운전 위해 음주 자제",
       "lodging": "Ramada Suites Victoria St West"
     },
     {
       "dayNumber": 11,
       "dateLabel": "1월 29일 (목)",
       "locationLabel": "🇳🇿 로토루아",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전 (08:00~):</strong> 체크아웃 후 출발. <strong class=\"text-emerald-600\">와이토모 동굴</strong> 도착 (약 2.5시간 소요). 글로우웜 동굴 투어.</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> <strong class=\"text-emerald-600\">호비튼 무비 세트(마타마타)</strong>로 이동 (약 1.5시간). 샤이어 마을 투어 후 그린 드래곤 펍에서 음료 한잔.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-emerald-600\">로토루아</strong>로 이동 (약 1시간). 숙소 체크인 후 로토루아 호수 산책 또는 폴리네시안 스파(선택).</li>\n</ul>",
-      "tipsHtml": "<strong>운전:</strong> 총 이동거리 김. 졸음 운전 주의<br><strong>투어:</strong> 사전 예약 시간 엄수",
-      "lodging": "로토루아 숙소 (미정)"
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">08:00:</strong> <strong class=\"text-emerald-600\">Thrifty Auckland Downtown</strong> 렌터카 픽업. <strong>즉시 출발</strong>.</li>\n  <li><strong class=\"text-teal-700\">10:30:</strong> <strong class=\"text-emerald-600\">와이토모</strong> 도착. 11:00~12:00 글로우웜 투어 진행.</li>\n  <li><strong class=\"text-teal-700\">12:00:</strong> 마타마타로 이동 (1.5h).</li>\n  <li><strong class=\"text-teal-700\">13:30:</strong> <strong class=\"text-purple-600\">The Shire's Rest Cafe</strong> (호비튼 입구)에서 점심.</li>\n  <li><strong class=\"text-teal-700\">15:00:</strong> <strong class=\"text-emerald-600\">호비튼 무비 세트 투어</strong> 시작.</li>\n  <li><strong class=\"text-teal-700\">17:00:</strong> 로토루아로 이동 (1h).</li>\n  <li><strong class=\"text-teal-700\">18:15:</strong> <strong class=\"text-blue-600\">Quest Rotorua Central</strong> 체크인. (⚠️사전에 'Late Arrival' 메일 보내서 키박스 비밀번호 받아둘 것).</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-emerald-600\">Eat Streat</strong> 거리의 식당 이용.</li>\n</ul>",
+      "tipsHtml": "<strong>체크인:</strong> Quest는 리셉션 일찍 닫음. 사전 연락 필수.",
+      "lodging": "Quest Rotorua Central"
     },
     {
       "dayNumber": 12,
       "dateLabel": "1월 30일 (금)",
       "locationLabel": "🇳🇿 오클랜드",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전:</strong> <strong class=\"text-emerald-600\">오케레 폭포 (761 State Highway 33)</strong>로 이동. <strong>카이투나 강 급류 래프팅</strong> (7m 폭포 낙하 체험).</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> 래프팅 종료 후 오클랜드로 복귀 (약 3시간 소요). <strong class=\"text-blue-600\">The Grand by SkyCity</strong> 체크인.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> 호텔 휴식 및 <strong class=\"text-emerald-600\">페더럴 스트리트</strong>의 고급 레스토랑에서 저녁.</li>\n</ul>",
-      "tipsHtml": "<strong>래프팅:</strong> 수영복, 여벌 옷 준비",
-      "lodging": "The Grand by SkyCity"
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전:</strong> 체크아웃(10:00). <strong class=\"text-emerald-600\">레드우드 숲</strong> 산책.</li>\n  <li><strong class=\"text-teal-700\">13:50:</strong> <strong class=\"text-emerald-600\">Okere Falls (Kaituna Cascades)</strong> 이동.</li>\n  <li><strong class=\"text-teal-700\">14:20:</strong> <strong>⚠️ 래프팅 도착 (시간 엄수)</strong>. 14:30~16:30 투어.</li>\n  <li><strong class=\"text-teal-700\">16:45:</strong> 오클랜드로 출발 (약 3.5~4시간 예상 - 금요일 트래픽).</li>\n  <li><strong class=\"text-teal-700\">20:30:</strong> 오클랜드 도착. <strong class=\"text-blue-600\">Avani Metropolis Residence</strong> 체크인.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> 늦은 저녁 (룸서비스 또는 근처 펍).</li>\n</ul>",
+      "tipsHtml": "<strong>교통:</strong> 오클랜드 진입 시 정체 심함",
+      "lodging": "Avani Metropolis Residence"
     },
     {
       "dayNumber": 13,
       "dateLabel": "1월 31일 (토)",
       "locationLabel": "🇳🇿 오클랜드",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전:</strong> 여유롭게 기상. <strong class=\"text-emerald-600\">마운트 이든</strong> 분화구 산책 또는 <strong class=\"text-emerald-600\">오클랜드 도메인</strong> 방문.</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> <strong class=\"text-emerald-600\">폰손비(Ponsonby)</strong> 로드에서 쇼핑 및 카페 투어. 신혼여행 마지막 날의 여유 즐기기.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-purple-600\">Orbit 360</strong> 또는 호텔 내 다이닝에서 로맨틱한 마지막 만찬.</li>\n</ul>",
-      "tipsHtml": "<strong>쇼핑:</strong> 기념품 및 선물 구매",
-      "lodging": "The Grand by SkyCity"
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전:</strong> 체크아웃(10:00). <strong class=\"text-emerald-600\">마운트 이든</strong> 방문.</li>\n  <li><strong class=\"text-teal-700\">11:30:</strong> 시내 주유소에서 주유(Full).</li>\n  <li><strong class=\"text-teal-700\">12:00:</strong> <strong class=\"text-emerald-600\">Thrifty Downtown</strong> 렌터카 반납.</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> <strong class=\"text-emerald-600\">폰손비</strong> 구경 또는 <strong class=\"text-emerald-600\">커머셜 베이</strong> 쇼핑.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-purple-600\">Orbit 360</strong>, <strong class=\"text-purple-600\">Ahi</strong>, <strong class=\"text-purple-600\">Soul Bar</strong> 중 예약하여 만찬.</li>\n</ul>",
+      "tipsHtml": "<strong>반납:</strong> Downtown 지점 위치 미리 확인",
+      "lodging": "Avani Metropolis Residence"
     },
     {
       "dayNumber": 14,
       "dateLabel": "2월 1일 (일)",
       "locationLabel": "✈️ 귀국",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전 (08:45):</strong> 체크아웃 후 공항 이동, 렌터카 반납.</li>\n  <li><strong class=\"text-teal-700\">비행:</strong> 11:45 오클랜드 출발 → 19:45 인천 도착.</li>\n</ul>",
-      "tipsHtml": "<strong>공항:</strong> 3시간 전 도착 권장",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">08:45:</strong> 체크아웃 후 공항 이동.</li>\n  <li><strong class=\"text-teal-700\">09:45:</strong> 오클랜드 공항 도착.</li>\n  <li><strong class=\"text-teal-700\">11:45:</strong> 인천행 항공편 출발.</li>\n</ul>",
+      "tipsHtml": "<strong>마무리:</strong> 여권/지갑 최종 확인",
       "lodging": "-"
     }
   ]
