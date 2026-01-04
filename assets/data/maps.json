@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "locations": {
+    "sydney_airport": { "lat": -33.9461, "lng": 151.1772, "name": "시드니 공항 (SYD)" },
+    "sydney_cbd": { "lat": -33.8651, "lng": 151.2099, "name": "시드니 CBD" },
+    "world_square": { "lat": -33.8769, "lng": 151.2071, "name": "World Square" },
+    "hyde_park": { "lat": -33.8737, "lng": 151.2135, "name": "하이드 파크" },
+    "paddys_market": { "lat": -33.8796, "lng": 151.203, "name": "패디스 마켓" },
+    "chinatown": { "lat": -33.8782, "lng": 151.2053, "name": "차이나타운" },
+    "darling_harbour": { "lat": -33.8737, "lng": 151.1989, "name": "달링 하버" },
+    "sydney_bondi": { "lat": -33.8915, "lng": 151.2767, "name": "본다이 비치" },
+    "bondi_icebergs": { "lat": -33.8943, "lng": 151.2747, "name": "본다이 아이스버그" },
+    "sydney_watsons": { "lat": -33.8431, "lng": 151.2825, "name": "왓슨스 베이" },
+    "gap_park": { "lat": -33.8411, "lng": 151.2803, "name": "갭팍 (Gap Park)" },
+    "sydney_quay": { "lat": -33.861, "lng": 151.2109, "name": "서큘러 키" },
+    "opera_house": { "lat": -33.8568, "lng": 151.2153, "name": "오페라 하우스" },
+    "harbour_bridge": { "lat": -33.8523, "lng": 151.2108, "name": "하버 브리지" },
+    "the_rocks": { "lat": -33.859, "lng": 151.2076, "name": "더 록스" },
+    "sydney_uni": { "lat": -33.8886, "lng": 151.1873, "name": "시드니 대학교" },
+    "sydney_observatory": { "lat": -33.859, "lng": 151.2052, "name": "천문대 언덕" },
+    "barangaroo": { "lat": -33.8597, "lng": 151.2014, "name": "바랑가루" },
+    "christchurch": { "lat": -43.5321, "lng": 172.6362, "name": "크라이스트처치" },
+    "tekapo": { "lat": -44.0046, "lng": 170.4771, "name": "테카포 호수" },
+    "mountcook": { "lat": -43.7335, "lng": 170.0962, "name": "마운트쿡" },
+    "queenstown": { "lat": -45.0312, "lng": 168.6626, "name": "퀸스타운" },
+    "auckland": { "lat": -36.8485, "lng": 174.7633, "name": "오클랜드" }
+  },
+  "sydney": {
+    "mapCenter": { "lat": -33.8651, "lng": 151.2099, "zoom": 11 },
+    "tileLayer": {
+      "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "attribution": "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"
+    },
+    "days": [
+      {
+        "label": "1일차 (1/19)",
+        "popupPrefix": "<strong>1일차 (1/19):</strong>",
+        "markerColor": "#dc2626",
+        "pathColor": "#dc2626",
+        "locationKeys": ["sydney_airport", "sydney_cbd", "world_square", "hyde_park", "paddys_market", "chinatown", "darling_harbour"]
+      },
+      {
+        "label": "2일차 (1/20)",
+        "popupPrefix": "<strong>2일차 (1/20):</strong>",
+        "markerColor": "#2563eb",
+        "pathColor": "#2563eb",
+        "locationKeys": ["sydney_cbd", "sydney_bondi", "bondi_icebergs", "sydney_watsons", "gap_park", "sydney_quay"]
+      },
+      {
+        "label": "3일차 (1/21)",
+        "popupPrefix": "<strong>3일차 (1/21):</strong>",
+        "markerColor": "#16a34a",
+        "pathColor": "#16a34a",
+        "locationKeys": ["sydney_quay", "opera_house", "harbour_bridge", "the_rocks", "sydney_uni", "sydney_observatory", "barangaroo"]
+      }
+    ]
+  },
+  "newZealand": {
+    "mapCenter": { "lat": -41.5, "lng": 172, "zoom": 6 },
+    "tileLayer": {
+      "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "attribution": "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"
+    },
+    "cityKeys": ["christchurch", "tekapo", "mountcook", "queenstown", "auckland"],
+    "cityDateLabels": {
+      "christchurch": "5일차 (1/23)",
+      "tekapo": "6일차 (1/24)",
+      "mountcook": "7일차 (1/25)",
+      "queenstown": "8-9일차 (1/26-27)",
+      "auckland": "10-11일차 (1/28-29)"
+    },
+    "paths": [
+      {
+        "type": "flight",
+        "color": "#0d9488",
+        "weight": 3,
+        "opacity": 0.7,
+        "dashArray": "8, 12",
+        "locationKeys": ["sydney_airport", "christchurch"]
+      },
+      {
+        "type": "road",
+        "color": "#f97316",
+        "weight": 4,
+        "opacity": 1,
+        "locationKeys": ["christchurch", "tekapo", "mountcook", "queenstown"]
+      },
+      {
+        "type": "flight",
+        "color": "#0d9488",
+        "weight": 3,
+        "opacity": 0.7,
+        "dashArray": "8, 12",
+        "locationKeys": ["queenstown", "auckland"]
+      }
+    ]
+  }
+}
+
+

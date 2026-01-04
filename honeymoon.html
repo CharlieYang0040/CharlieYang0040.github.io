@@ -6,10 +6,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>호주 & 뉴질랜드 허니문 대화형 일정표</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -26,9 +26,9 @@
             <div class="flex justify-center items-center min-h-[64px] py-2">
                 <div class="flex flex-wrap justify-center gap-1 sm:gap-2 md:gap-6 text-xs sm:text-sm">
                     <a href="#hero" class="nav-link font-medium border-b-2 border-transparent hover:text-teal-600 px-2 py-2 sm:px-3">소개</a>
+                    <a href="#timeline" class="nav-link font-medium border-b-2 border-transparent hover:text-teal-600 px-2 py-2 sm:px-3">전체 일정표</a>
                     <a href="#prep" class="nav-link font-medium border-b-2 border-transparent hover:text-teal-600 px-2 py-2 sm:px-3">핵심 준비</a>
                     <a href="#map-route" class="nav-link font-medium border-b-2 border-transparent hover:text-teal-600 px-2 py-2 sm:px-3">여행 경로</a>
-                    <a href="#timeline" class="nav-link font-medium border-b-2 border-transparent hover:text-teal-600 px-2 py-2 sm:px-3">전체 일정표</a>
                     <a href="#journey" class="nav-link font-medium border-b-2 border-transparent hover:text-teal-600 px-2 py-2 sm:px-3">상세 여정</a>
                     <a href="#budget" class="nav-link font-medium border-b-2 border-transparent hover:text-teal-600 px-2 py-2 sm:px-3">예상 비용</a>
                 </div>
@@ -53,6 +53,30 @@
                 <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
                     <div class="text-3xl font-bold text-teal-600">5+ 지역</div>
                     <div class="text-stone-500 mt-1">다채로운 경험</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="timeline" class="py-16 md:py-24 content-card">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">한눈에 보는 전체 일정표</h2>
+                <p class="text-stone-600 max-w-2xl mx-auto">여행 중 쉽게 참고할 수 있도록 전체 여정을 시간 순서대로 정리했습니다.</p>
+            </div>
+            <div class="max-w-full mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="overflow-x-auto scroll-container">
+                    <table class="w-full text-left text-stone-700 timeline-table min-w-[800px]">
+                    <thead class="text-xs text-stone-800 uppercase bg-stone-100">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">일차</th>
+                            <th scope="col" class="px-6 py-3">날짜</th>
+                            <th scope="col" class="px-6 py-3">위치</th>
+                            <th scope="col" class="px-6 py-3 min-w-[350px]">상세 활동 계획</th>
+                            <th scope="col" class="px-6 py-3 min-w-[200px]">특이사항 / 팁</th>
+                            <th scope="col" class="px-6 py-3">숙소</th>
+                        </tr>
+                    </thead>
+                    <tbody id="timelineTbody"></tbody>
+                    </table>
                 </div>
             </div>
         </section>
@@ -99,30 +123,6 @@
                 <div id="newZealandMap" class="w-full max-w-6xl mx-auto rounded-lg shadow-md z-0"></div>
             </div>
         </section>
-        
-        <section id="timeline" class="py-16 md:py-24 content-card">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-2">한눈에 보는 전체 일정표</h2>
-                <p class="text-stone-600 max-w-2xl mx-auto">여행 중 쉽게 참고할 수 있도록 전체 여정을 시간 순서대로 정리했습니다.</p>
-            </div>
-            <div class="max-w-full mx-auto bg-white shadow-md rounded-lg overflow-hidden">
-                <div class="overflow-x-auto scroll-container">
-                    <table class="w-full text-left text-stone-700 timeline-table min-w-[800px]">
-                    <thead class="text-xs text-stone-800 uppercase bg-stone-100">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">일차</th>
-                            <th scope="col" class="px-6 py-3">날짜</th>
-                            <th scope="col" class="px-6 py-3">위치</th>
-                            <th scope="col" class="px-6 py-3 min-w-[350px]">상세 활동 계획</th>
-                            <th scope="col" class="px-6 py-3 min-w-[200px]">특이사항 / 팁</th>
-                            <th scope="col" class="px-6 py-3">숙소</th>
-                        </tr>
-                    </thead>
-                    <tbody id="timelineTbody"></tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
 
         <section id="journey" class="py-16 md:py-24 content-card">
             <div class="text-center mb-12">
@@ -167,107 +167,11 @@
                                 <th class="px-4 py-3 text-center">비고</th>
                             </tr>
                         </thead>
-                        <tbody class="text-sm">
-                            <tr class="border-b border-stone-200">
-                                <td rowspan="3" class="px-4 py-3 font-semibold bg-blue-50">✈️ 항공</td>
-                                <td class="px-4 py-3">인천 ↔ 시드니 왕복</td>
-                                <td class="px-4 py-3 text-center">3개월 전</td>
-                                <td class="px-4 py-3 text-right font-semibold">₩2,400,000</td>
-                                <td class="px-4 py-3 text-center text-red-600">최우선 예약</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td class="px-4 py-3">시드니 → 크라이스트처치</td>
-                                <td class="px-4 py-3 text-center">2개월 전</td>
-                                <td class="px-4 py-3 text-right">₩550,000</td>
-                                <td class="px-4 py-3 text-center">-</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td class="px-4 py-3">퀸스타운 → 오클랜드</td>
-                                <td class="px-4 py-3 text-center">2개월 전</td>
-                                <td class="px-4 py-3 text-right">₩650,000</td>
-                                <td class="px-4 py-3 text-center">-</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td rowspan="3" class="px-4 py-3 font-semibold bg-green-50">🏨 숙박</td>
-                                <td class="px-4 py-3">시드니 (4박)</td>
-                                <td class="px-4 py-3 text-center">2개월 전</td>
-                                <td class="px-4 py-3 text-right">₩1,200,000</td>
-                                <td class="px-4 py-3 text-center">CBD + 서리힐스</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td class="px-4 py-3">뉴질랜드 (7박)</td>
-                                <td class="px-4 py-3 text-center">2개월 전</td>
-                                <td class="px-4 py-3 text-right">₩2,100,000</td>
-                                <td class="px-4 py-3 text-center">크라-테카포-퀸스타운-오클랜드</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td class="px-4 py-3">총 숙박비 (11박)</td>
-                                <td class="px-4 py-3 text-center">-</td>
-                                <td class="px-4 py-3 text-right font-semibold">₩3,600,000</td>
-                                <td class="px-4 py-3 text-center">허니문 스위트 우선</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td class="px-4 py-3 font-semibold bg-orange-50">🚗 렌터카</td>
-                                <td class="px-4 py-3">남섬 5일 (크라-퀸스타운)</td>
-                                <td class="px-4 py-3 text-center">3개월 전</td>
-                                <td class="px-4 py-3 text-right font-semibold">₩750,000</td>
-                                <td class="px-4 py-3 text-center text-red-600">성수기 조기 예약 필수</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td rowspan="6" class="px-4 py-3 font-semibold bg-purple-50">🎯 투어/액티비티</td>
-                                <td class="px-4 py-3">블루마운틴 & 동물원 투어</td>
-                                <td class="px-4 py-3 text-center">1개월 전</td>
-                                <td class="px-4 py-3 text-right">₩360,000</td>
-                                <td class="px-4 py-3 text-center">링컨스락 포함 확인</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td class="px-4 py-3">테카포 별 관측 투어</td>
-                                <td class="px-4 py-3 text-center">2개월 전</td>
-                                <td class="px-4 py-3 text-right">₩560,000</td>
-                                <td class="px-4 py-3 text-center text-orange-600">Summit 체험</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td class="px-4 py-3">온센 핫풀 (프라이빗)</td>
-                                <td class="px-4 py-3 text-center">4개월 전</td>
-                                <td class="px-4 py-3 text-right">₩500,000</td>
-                                <td class="px-4 py-3 text-center text-red-600">세레니티 소크</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td class="px-4 py-3">스카이라인 곤돌라 & 루지</td>
-                                <td class="px-4 py-3 text-center">현장 구매</td>
-                                <td class="px-4 py-3 text-right">₩270,000</td>
-                                <td class="px-4 py-3 text-center">6회 패키지</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td class="px-4 py-3">와이헤케 섬 와인 투어</td>
-                                <td class="px-4 py-3 text-center">1개월 전</td>
-                                <td class="px-4 py-3 text-right">₩280,000</td>
-                                <td class="px-4 py-3 text-center">페리 포함</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td class="px-4 py-3">기타 액티비티</td>
-                                <td class="px-4 py-3 text-center">-</td>
-                                <td class="px-4 py-3 text-right">₩600,000</td>
-                                <td class="px-4 py-3 text-center">번지, 젯보트 등</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td rowspan="2" class="px-4 py-3 font-semibold bg-pink-50">🍽️ 특별 다이닝</td>
-                                <td class="px-4 py-3">트램웨이 레스토랑</td>
-                                <td class="px-4 py-3 text-center">2개월 전</td>
-                                <td class="px-4 py-3 text-right">₩420,000</td>
-                                <td class="px-4 py-3 text-center">36석 한정</td>
-                            </tr>
-                            <tr class="border-b border-stone-200">
-                                <td class="px-4 py-3">파인 다이닝 (Rātā 등)</td>
-                                <td class="px-4 py-3 text-center">1개월 전</td>
-                                <td class="px-4 py-3 text-right">₩600,000</td>
-                                <td class="px-4 py-3 text-center">미슐랭 스타 셰프</td>
-                            </tr>
-                        </tbody>
+                        <tbody id="bookingsTbody" class="text-sm"></tbody>
                         <tfoot class="bg-teal-600 text-white">
                             <tr>
                                 <td colspan="3" class="px-4 py-3 text-right font-bold">예약 필수 항목 총합:</td>
-                                <td class="px-4 py-3 text-right font-bold text-lg">₩11,620,000</td>
+                                <td id="bookingsTotalCost" class="px-4 py-3 text-right font-bold text-lg">₩11,620,000</td>
                                 <td class="px-4 py-3 text-center">2인 기준</td>
                             </tr>
                         </tfoot>

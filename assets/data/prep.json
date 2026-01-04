@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "key": "visa",
+      "title": "✈️ 입국 비자 (ETA / NZeTA)",
+      "contentHtml": "<strong>호주 (ETA):</strong> 대한민국 여권 소지자는 관광 목적 방문 시 전자여행허가(ETA)가 필수입니다. 반드시 정부 공식 'Australian ETA' 앱을 통해서만 신청해야 합니다. 출국 전 발급을 완료하세요.<br><br><strong>뉴질랜드 (NZeTA):</strong> 비자 면제 국가이지만, 입국 전 뉴질랜드 전자여행허가(NZeTA)를 발급받아야 합니다. 신청 시 국제 관광객 보존 및 관광 부담금(IVL)도 함께 결제됩니다."
+    },
+    {
+      "key": "car",
+      "title": "🚗 렌터카 예약 (남섬 필수)",
+      "contentHtml": "<strong>필요성:</strong> 남섬의 광활한 풍경을 자유롭게 즐기기 위한 최적의 방법입니다.<br><br><strong>예약 시점:</strong> 1월은 최성수기이므로 최소 2~3개월 전, 최대한 빨리 예약하는 것이 좋습니다.<br><br><strong>추천 업체:</strong> Pegasus, RaD Car Hire 등 현지 업체는 경쟁력 있는 가격을 제공합니다. <strong>크라이스트처치 픽업 → 퀸스타운 반납</strong> 편도 대여 가능 여부를 확인하세요.<br><br><strong>보험:</strong> 만약을 대비해 완전 면책 보험(Full Cover/Zero Excess) 가입을 강력히 권장합니다.<br><br><strong>면허:</strong> 유효한 영문 운전면허증 또는 국제운전면허증을 반드시 소지해야 합니다."
+    },
+    {
+      "key": "info",
+      "title": "💡 날씨, 준비물 및 기타",
+      "contentHtml": "<strong>1월 날씨:</strong> 따뜻하고 화창한 여름이지만, 산악 지역은 서늘할 수 있어 변화무쌍한 날씨에 대비해야 합니다. 레이어드 착용이 가능한 옷(가벼운 여름 옷, 긴팔, 방수 자켓)을 준비하세요.<br><br><strong>필수품:</strong> 자외선 차단 지수가 높은 선크림, 선글라스, 모자는 뉴질랜드의 강한 햇볕에 필수적입니다.<br><br><strong>투어 예약:</strong> 테카포 별 관측 투어, 퀸스타운 온센 핫풀 등 인기가 많은 액티비티는 수개월 전 예약이 필요할 수 있으므로 최대한 빨리 예약하세요."
+    }
+  ]
+}
+
+
