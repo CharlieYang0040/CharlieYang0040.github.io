@@ -1,5 +1,5 @@
 {
-  "version": 7,
+  "version": 8,
   "days": [
     {
       "dayNumber": 1,
@@ -13,15 +13,15 @@
       "dayNumber": 2,
       "dateLabel": "1월 20일 (화)",
       "locationLabel": "🇦🇺 시드니",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">09:00:</strong> <strong>333번 버스</strong>로 <strong class=\"text-emerald-600\">본다이 비치</strong> 도착. <strong class=\"text-emerald-600\">아이스버그 수영장</strong> (화요일 정상 운영)에서 수영 & 인생샷. (샤워 시설 완비)</li>\n  <li><strong class=\"text-teal-700\">점심 (12:30):</strong> <strong class=\"text-purple-600\">North Bondi Fish</strong>. 수영 후 바로 즐기는 오션뷰 해산물 점심. (예약 권장)</li>\n  <li><strong class=\"text-teal-700\">14:30:</strong> 해변 산책 후 <strong class=\"text-teal-700\">380번 버스</strong> 탑승 (North Bondi → Watsons Bay). 약 35분 소요.</li>\n  <li><strong class=\"text-teal-700\">15:30:</strong> <strong class=\"text-emerald-600\">왓슨스 베이 & 갭팍(Gap Park)</strong>. 절벽 산책 후 <em class=\"text-gray-600\">Watsons Bay Boutique Hotel</em> 야외석에서 맥주 한잔하며 2시간 충분히 휴식.</li>\n  <li><strong class=\"text-teal-700\">18:15:</strong> 페리 선착장 대기 및 탑승 (Watsons Bay → Circular Quay). <strong>해 지기 전 골든아워 감상</strong>.</li>\n  <li><strong class=\"text-teal-700\">19:00:</strong> 서큘러 키 도착. <strong class=\"text-emerald-600\">오페라 바 (Opera Bar)</strong>로 이동. 하버브리지와 오페라 하우스 사이로 떨어지는 <strong>8시 10분 찐 일몰</strong>을 칵테일과 함께 감상.</li>\n  <li><strong class=\"text-teal-700\">저녁 (20:30):</strong> <strong class=\"text-purple-600\">Hurricane's Grill Circular Quay</strong>. 해가 완전히 진 후 화려한 야경을 보며 폭립 식사.</li>\n</ul>",
-      "tipsHtml": "<strong>교통 팁:</strong> 왓슨스 베이에서 서큘러 키로 가는 페리는 오른쪽 좌석에 앉으면 오페라 하우스 뷰가 더 좋습니다. 일몰 시간(20:10)까지 오페라 바에서 여유를 즐기세요.",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">09:00:</strong> <strong>333번 버스</strong>로 <strong class=\"text-emerald-600\">본다이 비치</strong> 도착. <strong class=\"text-emerald-600\">아이스버그 수영장</strong> 수영 & 인생샷. <span class=\"text-stone-500\">(⚠️남풍 예보: 비치타월/겉옷 필수)</span></li>\n  <li><strong class=\"text-teal-700\">점심 (12:30):</strong> <strong class=\"text-purple-600\">North Bondi Fish</strong>. 수영 후 바로 즐기는 오션뷰 해산물 점심.</li>\n  <li><strong class=\"text-teal-700\">14:30:</strong> 해변 산책 후 <strong class=\"text-teal-700\">380번 버스</strong> 탑승 (North Bondi → Watsons Bay). 약 35분 소요.</li>\n  <li><strong class=\"text-teal-700\">15:30:</strong> <strong class=\"text-emerald-600\">왓슨스 베이 & 갭팍</strong>. 절벽 산책 후 <em class=\"text-gray-600\">Watsons Bay Boutique Hotel</em> 야외석에서 맥주 한잔하며 휴식.</li>\n  <li><strong class=\"text-teal-700\">18:15:</strong> 페리 탑승 (Watsons Bay → Circular Quay). <strong>해 지기 전 골든아워 감상</strong>.</li>\n  <li><strong class=\"text-teal-700\">19:30:</strong> 서큘러 키 <strong class=\"text-emerald-600\">오페라 바 (Opera Bar)</strong>. 하버브리지 뷰 <strong>찐 일몰(20:10)</strong> 칵테일 타임.</li>\n  <li><strong class=\"text-teal-700\">저녁 (20:30):</strong> <strong class=\"text-purple-600\">Hurricane's Grill CQ</strong>. 해가 완전히 진 후 화려한 야경을 보며 폭립 식사.</li>\n</ul>",
+      "tipsHtml": "<strong>날씨 팁:</strong> 바람이 차가울 수 있으니 겉옷 준비. <br><strong>일몰 팁:</strong> 식당보다 '오페라 바' 야외석이 일몰 뷰 명당.",
       "lodging": "The Sydney Boulevard Hotel"
     },
     {
       "dayNumber": 3,
       "dateLabel": "1월 21일 (수)",
       "locationLabel": "🇦🇺 시드니",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전 (09:00):</strong> <strong class=\"text-emerald-600\">서큘러 키</strong> 산책, <strong class=\"text-emerald-600\">하버 브리지 파일런 전망대</strong> 등반.</li>\n  <li><strong class=\"text-teal-700\">점심 (12:00):</strong> <strong class=\"text-emerald-600\">더 록스</strong> 펍(The Australian Heritage Hotel 등)에서 피자 또는 피쉬앤칩스.</li>\n  <li><strong class=\"text-blue-700\">[Option A: 시드니대]</strong> 13:30 버스 → <strong>시드니 대학교(Quadrangle)</strong> 스냅 → 16:00 복귀.<br><strong class=\"text-blue-700\">[Option B: 시내]</strong> 13:30 <strong>로열 보타닉 가든</strong> & <strong>미세스 맥콰리 체어</strong> → 도보 복귀.</li>\n  <li><strong class=\"text-teal-700\">17:30:</strong> <strong class=\"text-emerald-600\">천문대 언덕</strong> 노을 감상.</li>\n  <li><strong class=\"text-teal-700\">저녁 (19:00):</strong> <strong class=\"text-purple-600\">The Meat & Wine Co Barangaroo</strong>. 고급 스테이크와 와인.</li>\n</ul>",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전 (09:00):</strong> <strong class=\"text-emerald-600\">서큘러 키</strong> 산책, <strong class=\"text-emerald-600\">하버 브리지 파일런 전망대</strong> 등반.</li>\n  <li><strong class=\"text-teal-700\">점심 (12:00):</strong> <strong class=\"text-emerald-600\">더 록스</strong> 펍(The Australian Heritage Hotel 등)에서 피자 또는 피쉬앤칩스.</li>\n  <li><strong class=\"text-blue-700\">[Option A: 시드니대]</strong> 13:30 버스 → <strong>시드니 대학교(Quadrangle)</strong> 스냅 → 16:00 복귀.<br><strong class=\"text-blue-700\">[Option B: 시내]</strong> 13:30 <strong>로열 보타닉 가든</strong> & <strong>미세스 맥콰리 체어</strong> → 도보 복귀.</li>\n  <li><strong class=\"text-teal-700\">17:30:</strong> <strong class=\"text-emerald-600\">천문대 언덕</strong> 노을 감상. (비 오면 'The Glenmore' 루프탑 추천)</li>\n  <li><strong class=\"text-teal-700\">저녁 (19:00):</strong> <strong class=\"text-purple-600\">The Meat & Wine Co Barangaroo</strong>. 고급 스테이크와 와인.</li>\n</ul>",
       "tipsHtml": "<strong>Barangaroo:</strong> 예약 시간 15분 전 도착 <br> <li><strong class=\"text-emerald-600\">패디스 마켓(Paddy's Market)</strong> 쇼핑. <span class=\"text-stone-600\">(수요일 오픈 10:00~18:00)</span></li> ",
       "lodging": "The Sydney Boulevard Hotel"
     },
@@ -29,8 +29,8 @@
       "dayNumber": 4,
       "dateLabel": "1월 22일 (목)",
       "locationLabel": "🇦🇺 시드니",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">07:30:</strong> <strong>씨 라이프 아쿠아리움 오른편</strong> 집결. <strong class=\"text-emerald-600\">블루마운틴 & 동물원 투어</strong> 출발.</li>\n  <li><strong class=\"text-teal-700\">오전/오후:</strong> 링컨스 락, 세자매봉, 시닉월드, 페더데일 동물원.</li>\n  <li><strong class=\"text-teal-700\">16:15:</strong> 투어 종료 (리지스 월드 스퀘어 하차).</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> 피로도 고려 <strong class=\"text-emerald-600\">월드 스퀘어</strong> 내 <strong class=\"text-purple-600\">Din Tai Fung</strong>(딤섬) 또는 근처 <strong class=\"text-purple-600\">Masala Theory</strong>(모던 인도식) 추천.</li>\n</ul>",
-      "tipsHtml": "<strong>휴식:</strong> 내일 이동 위해 컨디션 조절",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">07:30:</strong> <strong>씨 라이프 아쿠아리움 오른편</strong> 집결. <strong class=\"text-emerald-600\">블루마운틴 & 동물원 투어</strong> 출발.</li>\n  <li><strong class=\"text-teal-700\">오전/오후:</strong> 링컨스 락, 세자매봉, 시닉월드, 페더데일 동물원. (날씨 맑음/27도 예상☀️)</li>\n  <li><strong class=\"text-teal-700\">16:15:</strong> 투어 종료 (리지스 월드 스퀘어 하차).</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> 피로도 고려 <strong class=\"text-emerald-600\">월드 스퀘어</strong> 내 <strong class=\"text-purple-600\">Din Tai Fung</strong>(딤섬) 또는 근처 <strong class=\"text-purple-600\">Masala Theory</strong>(모던 인도식) 추천.</li>\n</ul>",
+      "tipsHtml": "<strong>옷차림:</strong> 산 위는 시내보다 서늘함(약 20도). 얇은 긴팔 준비.",
       "lodging": "The Sydney Boulevard Hotel"
     },
     {
