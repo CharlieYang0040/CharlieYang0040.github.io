@@ -21,8 +21,8 @@
       "dayNumber": 3,
       "dateLabel": "1월 21일 (수)",
       "locationLabel": "🇦🇺 시드니",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전 (09:00):</strong> <strong class=\"text-emerald-600\">서큘러 키</strong> 산책, <strong class=\"text-emerald-600\">하버 브리지 파일런 전망대</strong> 등반.</li>\n  <li><strong class=\"text-teal-700\">점심 (12:00):</strong> <strong class=\"text-emerald-600\">더 록스</strong> 펍(The Australian Heritage Hotel 등)에서 피자 또는 피쉬앤칩스.</li>\n  <li><strong class=\"text-blue-700\">[Option A: 시드니대]</strong> 13:30 버스 → <strong>시드니 대학교(Quadrangle)</strong> 스냅 → 16:00 복귀.<br><strong class=\"text-blue-700\">[Option B: 시내]</strong> 13:30 <strong>로열 보타닉 가든</strong> & <strong>미세스 맥콰리 체어</strong> → 도보 복귀.</li>\n  <li><strong class=\"text-teal-700\">17:30:</strong> <strong class=\"text-emerald-600\">천문대 언덕</strong> 노을 감상. (비 오면 'The Glenmore' 루프탑 추천)</li>\n  <li><strong class=\"text-teal-700\">저녁 (19:00):</strong> <strong class=\"text-purple-600\">The Meat & Wine Co Barangaroo</strong>. 고급 스테이크와 와인.</li>\n</ul>",
-      "tipsHtml": "<strong>Barangaroo:</strong> 예약 시간 15분 전 도착 <br> <li><strong class=\"text-emerald-600\">패디스 마켓(Paddy's Market)</strong> 쇼핑. <span class=\"text-stone-600\">(수요일 오픈 10:00~18:00)</span></li> ",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전 (09:00):</strong> <strong class=\"text-emerald-600\">서큘러 키</strong> 산책, <strong class=\"text-emerald-600\">하버 브리지 파일런 전망대</strong> 등반.</li>\n  <li><strong class=\"text-teal-700\">점심 (12:00):</strong> <strong class=\"text-emerald-600\">더 록스</strong> 펍(The Australian Heritage Hotel 등)에서 피자 또는 피쉬앤칩스.</li>\n  <li><strong class=\"text-pink-700\">[Option C: 마켓 쇼핑]</strong> 13:30 트램(L2/L3) → <strong class=\"text-emerald-600\">패디스 마켓</strong> 기념품 쇼핑 & 차이나타운. <span class=\"text-stone-500\">(수~일 10:00~18:00)</span></li>\n  <li class=\"text-xs text-stone-400\">※ (Option A: 시드니대 스냅 / Option B: 보타닉 가든 & 맥콰리 체어)</li>\n  <li><strong class=\"text-teal-700\">16:30:</strong> 윈야드(Wynyard)로 이동 후 <strong>천문대 언덕</strong> 등반 준비.</li>\n  <li><strong class=\"text-teal-700\">17:30:</strong> <strong class=\"text-emerald-600\">천문대 언덕</strong> 노을 감상. (비 오면 'The Glenmore' 루프탑 추천)</li>\n  <li><strong class=\"text-teal-700\">저녁 (19:00):</strong> <strong class=\"text-purple-600\">The Meat & Wine Co Barangaroo</strong>. 고급 스테이크와 와인.</li>\n</ul>",
+      "tipsHtml": "<strong>교통:</strong> 트램(Light Rail) 이용 시 신용카드/오팔카드 태그 필수.",
       "lodging": "The Sydney Boulevard Hotel"
     },
     {
@@ -38,7 +38,7 @@
       "dateLabel": "1월 23일 (금)",
       "locationLabel": "🇳🇿 크라이스트처치",
       "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">이동 (08:45):</strong> 시드니 출발 → 14:00 <strong class=\"text-emerald-600\">크라이스트처치 공항</strong> 도착.</li>\n  <li><strong class=\"text-teal-700\">렌터카 (16:00):</strong> Snap Rentals 셔틀 → 차량 인수.</li>\n  <li><strong class=\"text-teal-700\">체크인 (16:30):</strong> <strong class=\"text-blue-600\">Hotel Give</strong> (체크인 15:00~).</li>\n  <li><strong class=\"text-teal-700\">저녁 (18:00):</strong> <strong class=\"text-emerald-600\">리버사이드 마켓</strong>. 다양한 푸드코트 음식 즐기기.</li>\n</ul>",
-      "tipsHtml": "<strong>체크아웃:</strong> 내일 10:00 체크아웃 준비",
+      "tipsHtml": "<strong>체크아웃:</strong> 내일 10:00 체크아웃 준비. (☀️날씨: 맑음, 선글라스 필수)",
       "lodging": "Hotel Give"
     },
     {
@@ -46,15 +46,15 @@
       "dateLabel": "1월 24일 (토)",
       "locationLabel": "🇳🇿 테카포",
       "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">10:00:</strong> 체크아웃 후 출발.</li>\n  <li><strong class=\"text-teal-700\">11:30:</strong> <strong class=\"text-emerald-600\">캐슬 힐(Castle Hill)</strong> 산책.</li>\n  <li><strong class=\"text-teal-700\">점심 (13:00):</strong> 이동 중 <strong class=\"text-purple-600\">Fairlie Bakehouse</strong>에서 뉴질랜드 최고의 미트 파이 맛보기.</li>\n  <li><strong class=\"text-teal-700\">15:00:</strong> <strong class=\"text-blue-600\">Haka House Lake Tekapo</strong> 체크인 (14:00~).</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> 선한 목자의 교회, 호숫가 산책.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-purple-600\">Kohan</strong> 일식당. 식사 후 별 관측.</li>\n</ul>",
-      "tipsHtml": "<strong>Fairlie:</strong> 포크 벨리 파이 추천",
+      "tipsHtml": "<strong>Fairlie:</strong> 포크 벨리 파이 추천. <br><strong>추위 주의:</strong> 밤 기온 10도. 별 관측 시 패딩/담요 필수.",
       "lodging": "Haka House Lake Tekapo"
     },
     {
       "dayNumber": 7,
       "dateLabel": "1월 25일 (일)",
       "locationLabel": "🇳🇿 마운트쿡",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">11:30:</strong> 체크아웃(10:00) 후 <strong class=\"text-emerald-600\">푸카키 호수 전망대</strong> 경유하여 출발. (늦어도 12:00엔 출발해야 함)</li>\n  <li><strong class=\"text-teal-700\">13:30:</strong> 마운트쿡 빌리지 도착. <strong class=\"text-blue-600\">Haka House Aoraki Mt Cook</strong> 짐 보관.</li>\n  <li><strong class=\"text-teal-700\">14:30:</strong> <strong>Mount Cook Airport</strong> 이동.</li>\n  <li><strong class=\"text-teal-700\">14:45:</strong> <strong>⚠️ 헬기 투어 체크인 완료 (필수).</strong></li>\n  <li><strong class=\"text-teal-700\">15:30:</strong> <strong class=\"text-emerald-600\">Tasman Taster Flight</strong> 탑승.</li>\n  <li><strong class=\"text-teal-700\">17:00:</strong> 숙소 체크인 및 <strong class=\"text-emerald-600\">키아 포인트</strong> 가벼운 산책 또는 <strong class=\"text-purple-600\">Old Mountaineers' Cafe</strong> 저녁.</li>\n</ul>",
-      "tipsHtml": "<strong>시간엄수:</strong> 헬기 체크인 시간 절대 준수",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">11:30:</strong> 체크아웃(10:00) 후 <strong class=\"text-emerald-600\">푸카키 호수 전망대</strong> 경유하여 출발. (늦어도 12:00엔 출발해야 함)</li>\n  <li><strong class=\"text-teal-700\">13:30:</strong> 마운트쿡 빌리지 도착. <strong class=\"text-blue-600\">Haka House Aoraki Mt Cook</strong> 짐 보관.</li>\n  <li><strong class=\"text-teal-700\">14:30:</strong> <strong>Mount Cook Airport</strong> 이동.</li>\n  <li><strong class=\"text-teal-700\">14:45:</strong> <strong>⚠️ 헬기 투어 체크인 완료 (필수).</strong></li>\n  <li><strong class=\"text-teal-700\">15:30:</strong> <strong class=\"text-emerald-600\">Tasman Taster Flight</strong> 탑승.</li>\n  <li><strong class=\"text-teal-700\">17:00:</strong> 숙소 체크인 (14:00~) 및 <strong class=\"text-emerald-600\">키아 포인트</strong> 가벼운 산책 또는 <strong class=\"text-purple-600\">Old Mountaineers' Cafe</strong> 저녁.</li>\n</ul>",
+      "tipsHtml": "<strong>시간엄수:</strong> 헬기 체크인 시간 절대 준수. (강풍 취소 시: 후커 밸리 트래킹 대체)",
       "lodging": "Haka House Aoraki Mt Cook"
     },
     {
@@ -77,8 +77,8 @@
       "dayNumber": 10,
       "dateLabel": "1월 28일 (수)",
       "locationLabel": "🇳🇿 오클랜드",
-      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">10:00:</strong> <strong>체크아웃(10:00)</strong> 후 공항 이동.</li>\n  <li><strong class=\"text-teal-700\">10:30:</strong> 렌터카 반납 완료.</li>\n  <li><strong class=\"text-teal-700\">12:10:</strong> 퀸스타운 출발 → 14:00 오클랜드 도착.</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> 시내 이동 및 <strong class=\"text-blue-600\">Ramada Suites Victoria St West</strong> 체크인.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-emerald-600\">스카이시티</strong> 주변 구경 및 휴식. (내일 매우 바쁨).</li>\n</ul>",
-      "tipsHtml": "<strong>휴식:</strong> 내일 장거리 운전 위해 음주 자제",
+      "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">10:00:</strong> <strong>체크아웃(10:00)</strong> 후 공항 이동.</li>\n  <li><strong class=\"text-teal-700\">10:30:</strong> 렌터카 반납 완료.</li>\n  <li><strong class=\"text-teal-700\">12:10:</strong> 퀸스타운 출발 → 14:00 오클랜드 도착.</li>\n  <li><strong class=\"text-teal-700\">오후:</strong> 시내 이동 및 <strong class=\"text-blue-600\">Ramada Suites Victoria St West</strong> 체크인 (15:00~).</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-emerald-600\">스카이시티</strong> 주변 구경 및 휴식. (내일 매우 바쁨).</li>\n</ul>",
+      "tipsHtml": "<strong>휴식:</strong> 내일 장거리 운전 위해 음주 자제. (🌡️북섬은 남섬보다 덥고 습함)",
       "lodging": "Ramada Suites Victoria St West"
     },
     {
@@ -86,7 +86,7 @@
       "dateLabel": "1월 29일 (목)",
       "locationLabel": "🇳🇿 로토루아",
       "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">08:00:</strong> <strong class=\"text-emerald-600\">Thrifty Auckland Downtown</strong> 렌터카 픽업. <strong>즉시 출발</strong>.</li>\n  <li><strong class=\"text-teal-700\">10:30:</strong> <strong class=\"text-emerald-600\">와이토모</strong> 도착. 11:00~12:00 글로우웜 투어 진행.</li>\n  <li><strong class=\"text-teal-700\">12:00:</strong> 마타마타로 이동 (1.5h).</li>\n  <li><strong class=\"text-teal-700\">13:30:</strong> <strong class=\"text-purple-600\">The Shire's Rest Cafe</strong> (호비튼 입구)에서 점심.</li>\n  <li><strong class=\"text-teal-700\">15:00:</strong> <strong class=\"text-emerald-600\">호비튼 무비 세트 투어</strong> 시작.</li>\n  <li><strong class=\"text-teal-700\">17:00:</strong> 로토루아로 이동 (1h).</li>\n  <li><strong class=\"text-teal-700\">18:15:</strong> <strong class=\"text-blue-600\">Quest Rotorua Central</strong> 체크인. (⚠️사전에 'Late Arrival' 메일 보내서 키박스 비밀번호 받아둘 것).</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> <strong class=\"text-emerald-600\">Eat Streat</strong> 거리의 식당 이용.</li>\n</ul>",
-      "tipsHtml": "<strong>체크인:</strong> Quest는 리셉션 일찍 닫음. 사전 연락 필수.",
+      "tipsHtml": "<strong>체크인:</strong> Quest는 리셉션 일찍 닫음. 사전 연락 필수. (👟비 오면 진흙 주의, 편한 신발)",
       "lodging": "Quest Rotorua Central"
     },
     {
@@ -94,7 +94,7 @@
       "dateLabel": "1월 30일 (금)",
       "locationLabel": "🇳🇿 오클랜드",
       "planHtml": "<ul>\n  <li><strong class=\"text-teal-700\">오전:</strong> 체크아웃(10:00). <strong class=\"text-emerald-600\">레드우드 숲</strong> 산책.</li>\n  <li><strong class=\"text-teal-700\">13:50:</strong> <strong class=\"text-emerald-600\">Okere Falls (Kaituna Cascades)</strong> 이동.</li>\n  <li><strong class=\"text-teal-700\">14:20:</strong> <strong>⚠️ 래프팅 도착 (시간 엄수)</strong>. 14:30~16:30 투어.</li>\n  <li><strong class=\"text-teal-700\">16:45:</strong> 오클랜드로 출발 (약 3.5~4시간 예상 - 금요일 트래픽).</li>\n  <li><strong class=\"text-teal-700\">20:30:</strong> 오클랜드 도착. <strong class=\"text-blue-600\">Avani Metropolis Residence</strong> 체크인.</li>\n  <li><strong class=\"text-teal-700\">저녁:</strong> 늦은 저녁 (룸서비스 또는 근처 펍).</li>\n</ul>",
-      "tipsHtml": "<strong>교통:</strong> 오클랜드 진입 시 정체 심함",
+      "tipsHtml": "<strong>교통:</strong> 오클랜드 진입 시 정체 심함. <br><strong>준비물:</strong> 래프팅 후 갈아입을 속옷/수건/비닐백 필수.",
       "lodging": "Avani Metropolis Residence"
     },
     {
